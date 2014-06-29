@@ -1,0 +1,18 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+    </plugin-info>
+
+    <!-- ALWAYS use fully qualified rest key, otherwise the rest module will not be found by Jersey -->
+    <rest key="${project.groupId}.${project.artifactId}:project-admin" name="project-admin" path="/project-admin" version="1.0">
+        <description>Provides Project Admin  REST services provided by ${project.artifactId} plugin.</description>
+    </rest>
+
+    <component-import key="permissionManager" interface="com.cenqua.crucible.model.managers.PermissionManager" />
+    <component-import key="projectManager" interface="com.cenqua.crucible.model.managers.ProjectManager" />
+    <component-import key="repositoryManager" interface="com.cenqua.fisheye.config.RepositoryManager" />
+    <component-import key="userManager" interface="com.cenqua.fisheye.user.UserManager" />
+
+</atlassian-plugin>
