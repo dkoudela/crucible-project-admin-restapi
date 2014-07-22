@@ -51,10 +51,15 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.6.4</version>
+            <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-api</artifactId>
+            <version>2.7.1</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.5.8</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -62,11 +67,16 @@
             <version>2.5.2</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2-atlassian-1</version>
+        </dependency>
         <!-- UNIT TESTING DEPENDENCIES START -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.6</version>
+            <version>4.10</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -76,11 +86,24 @@
             <scope>test</scope>
         </dependency>
         <!-- UNIT TESTING DEPENDENCIES END -->
+        <!-- INTEGRATION TESTING WITH Selenium DEPENDENCIES START -->
+        <dependency>
+            <groupId>com.atlassian.selenium</groupId>
+            <artifactId>atlassian-selenium-browsers-auto</artifactId>
+            <version>2.3-m01</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.selenium</groupId>
+            <artifactId>atlassian-selenium</artifactId>
+            <version>2.3-m01</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- INTEGRATION TESTING WITH Selenium DEPENDENCIES END -->
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Used for unit tests -->
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-fecru-plugin</artifactId>
@@ -97,9 +120,19 @@
                                 <productId>fecru</productId>
                             </productIds>
                             <excludes>
-                                <exclude>**/IT*Test.java</exclude>
-                                <exclude>**/IT*TestCase.java</exclude>
+                                <exclude>it/**/IT*Test.java</exclude>
+                                <exclude>it/**/IT*TestCase.java</exclude>
                             </excludes>
+                        </testGroup>
+                        <testGroup>
+                            <id>integration-tests</id>
+                            <productIds>
+                                <productId>fecru</productId>
+                            </productIds>
+                            <includes>
+                                <include>it/**/IT*Test.java</include>
+                                <include>it/**/IT*TestCase.java</include>
+                            </includes>
                         </testGroup>
                     </testGroups>
                 </configuration>
@@ -117,7 +150,7 @@
     <properties>
         <fecru.version>3.5.0-20140722091943</fecru.version>
         <fecru.data.version>2.5.2-20110307050326</fecru.data.version>
-        <amps.version>3.10.4</amps.version>
+        <amps.version>5.0.3</amps.version>
         <plugin.testrunner.version>1.2.0</plugin.testrunner.version>
     </properties>
 
