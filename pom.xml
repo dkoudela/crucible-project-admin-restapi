@@ -139,6 +139,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -150,7 +151,7 @@
     <properties>
         <fecru.version>3.7.0-20150127093303</fecru.version>
         <fecru.data.version>2.5.2-20110307050326</fecru.data.version>
-        <amps.version>5.0.3</amps.version>
+        <amps.version>5.0.13</amps.version>
         <plugin.testrunner.version>1.2.0</plugin.testrunner.version>
     </properties>
 
