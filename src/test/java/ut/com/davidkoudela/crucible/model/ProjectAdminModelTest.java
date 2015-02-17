@@ -56,6 +56,7 @@ public class ProjectAdminModelTest extends TestCase
 	private static final String dmoder="admin";
 	private static final String dtime ="10";
 	private static final String object="myObject";
+	private static final String path="/";
 
 	private static Project project;
 
@@ -103,20 +104,13 @@ public class ProjectAdminModelTest extends TestCase
 		Mockito.verify(projectManager).removeRepositoryMappings(argumentCaptorRepo.capture());
 		assertEquals(repo, argumentCaptorRepo.getValue());
 
-		ArgumentCaptor<Project> argumentCaptorProject = ArgumentCaptor.forClass(Project.class);
+		ArgumentCaptor<String> argumentCaptorProjectKey = ArgumentCaptor.forClass(String.class);
 		argumentCaptorRepo = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<String> argumentCaptorRoot = ArgumentCaptor.forClass(String.class);
-		Mockito.verify(projectManager).addPathToProject(argumentCaptorProject.capture(), argumentCaptorRepo.capture(), argumentCaptorRoot.capture());
-		assertEquals(id, argumentCaptorProject.getValue().getId().intValue());
-		assertEquals(name, argumentCaptorProject.getValue().getName());
-		assertEquals(key, argumentCaptorProject.getValue().getProjKey());
-		assertEquals(StringConverter.string2bool(store), argumentCaptorProject.getValue().isStoreRevisions());
-		assertEquals(scheme, argumentCaptorProject.getValue().getPermissionScheme().getName());
-		assertEquals(! StringConverter.string2bool(emoder), argumentCaptorProject.getValue().isModeratorDisabled());
-		assertEquals(dmoder, argumentCaptorProject.getValue().getDefaultModerator().getUsername());
-		assertEquals(StringConverter.string2Integer(dtime).intValue(), argumentCaptorProject.getValue().getDefaultDuration().intValue());
-		assertEquals(object, argumentCaptorProject.getValue().getDefaultObjectives());
-		assertEquals(repo, argumentCaptorProject.getValue().getDefaultRepositoryName());
+		Mockito.verify(projectManager).addPathToProject(argumentCaptorProjectKey.capture(), argumentCaptorRepo.capture(), argumentCaptorRoot.capture());
+		assertEquals(key, argumentCaptorProjectKey.getValue());
+		assertEquals(repo, argumentCaptorRepo.getValue());
+		assertEquals(path, argumentCaptorRoot.getValue());
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "200");
@@ -179,20 +173,13 @@ public class ProjectAdminModelTest extends TestCase
 		Mockito.verify(projectManager).removeRepositoryMappings(argumentCaptorRepo.capture());
 		assertEquals(repo, argumentCaptorRepo.getValue());
 
-		ArgumentCaptor<Project> argumentCaptorProject = ArgumentCaptor.forClass(Project.class);
+		ArgumentCaptor<String> argumentCaptorProjectKey = ArgumentCaptor.forClass(String.class);
 		argumentCaptorRepo = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<String> argumentCaptorRoot = ArgumentCaptor.forClass(String.class);
-		Mockito.verify(projectManager).addPathToProject(argumentCaptorProject.capture(), argumentCaptorRepo.capture(), argumentCaptorRoot.capture());
-		assertEquals(id, argumentCaptorProject.getValue().getId().intValue());
-		assertEquals(name, argumentCaptorProject.getValue().getName());
-		assertEquals(key, argumentCaptorProject.getValue().getProjKey());
-		assertEquals(StringConverter.string2bool(store), argumentCaptorProject.getValue().isStoreRevisions());
-		assertEquals(scheme, argumentCaptorProject.getValue().getPermissionScheme().getName());
-		assertEquals(! StringConverter.string2bool(emoder), argumentCaptorProject.getValue().isModeratorDisabled());
-		assertEquals(dmoder, argumentCaptorProject.getValue().getDefaultModerator().getUsername());
-		assertEquals(StringConverter.string2Integer(dtime).intValue(), argumentCaptorProject.getValue().getDefaultDuration().intValue());
-		assertEquals(object, argumentCaptorProject.getValue().getDefaultObjectives());
-		assertEquals(repo, argumentCaptorProject.getValue().getDefaultRepositoryName());
+		Mockito.verify(projectManager).addPathToProject(argumentCaptorProjectKey.capture(), argumentCaptorRepo.capture(), argumentCaptorRoot.capture());
+		assertEquals(key, argumentCaptorProjectKey.getValue());
+		assertEquals(repo, argumentCaptorRepo.getValue());
+		assertEquals(path, argumentCaptorRoot.getValue());
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "200");

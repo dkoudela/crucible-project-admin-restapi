@@ -235,7 +235,7 @@ public class ProjectAdminModel
 			this.projectManager.removeRepositoryMappings(repositoryHandle.getName());
 			prefetchProjectFromProjectData.setDefaultRepositoryName(defaultRepositoryName);
 			log.info("Adding repository mappings");
-			this.projectManager.addPathToProject(prefetchProjectFromProjectData, repositoryHandle.getName(), "/");
+			this.projectManager.addPathToProject(prefetchProjectFromProjectData.getProjKey(), repositoryHandle.getName(), "/");
 		}
 		catch (Exception e)
 		{
