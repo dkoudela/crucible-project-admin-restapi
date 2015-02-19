@@ -1,5 +1,6 @@
 package com.davidkoudela.crucible.rest.response;
 
+import com.cenqua.crucible.model.Project;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -17,6 +18,8 @@ import java.util.Map;
 @JsonAutoDetect
 public class ResponseProjectOperation
 {
+	Project relatedProject;
+
 	@JsonProperty
 	Map<String, String> response;
 
@@ -26,16 +29,19 @@ public class ResponseProjectOperation
 	public ResponseProjectOperation()
 	{
 		this.response = new LinkedHashMap<String, String>();
+		this.relatedProject = new Project();
 	}
 
 	/**
 	 * Constructor assigning the provided response
 	 *
 	 * @param response contains key-value pairs used in REST responses indicating the operation result
+	 * @param relatedProject contains project related data
 	 */
-	public ResponseProjectOperation(Map<String, String> response)
+	public ResponseProjectOperation(Map<String, String> response, Project relatedProject)
 	{
 		this.response = response;
+		this.relatedProject = relatedProject;
 	}
 
 	/**
@@ -56,5 +62,25 @@ public class ResponseProjectOperation
 	public void setResponse(Map<String, String> response)
 	{
 		this.response = response;
+	}
+
+	/**
+	 * Getter for Project used by Unit Tests
+	 *
+	 * @return Project containing project related data
+	 */
+	public Project getRelatedProject()
+	{
+	    return relatedProject;
+	}
+	
+	/**
+	 * Setter for Project
+	 *
+	 * @param relatedProject containing containing project related data
+	 */
+	public void setRelatedProject(Project relatedProject)
+	{
+	    this.relatedProject = relatedProject;
 	}
 }

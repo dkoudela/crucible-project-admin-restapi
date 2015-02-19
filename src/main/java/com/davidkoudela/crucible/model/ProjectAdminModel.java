@@ -12,14 +12,12 @@ import com.davidkoudela.crucible.rest.response.ProjectProperties;
 import com.davidkoudela.crucible.rest.response.ResponseFactory;
 import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
-import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Description: Model class containing the logic functionality for Create / Modify / Delete Crucible Projects.
@@ -79,7 +77,7 @@ public class ProjectAdminModel
 							  String defaultDuration,
 							  String defaultObjectives)
 	{
-		Project project;
+		Project project = null;
 		try
 		{
 			log.info("Creating project: name: " + name + " key: " + key);
@@ -88,7 +86,7 @@ public class ProjectAdminModel
 		catch (Exception e)
 		{
 			log.info("Project creation failed: name: " + name + " key: " + key + " message: " + e.getMessage());
-			return ResponseFactory.constructResponse("400", "project creation failed", e.getMessage());
+			return ResponseFactory.constructResponse("400", "project creation failed", e.getMessage(), project);
 		}
 		return submitProject(project, defaultRepositoryName, storeRevisions, permissionSchemeName, moderatorEnabled, defaultModerator, defaultDuration, defaultObjectives);
 	}
@@ -117,7 +115,7 @@ public class ProjectAdminModel
 							  String defaultDuration,
 							  String defaultObjectives)
 	{
-		Project project;
+		Project project = null;
 		try
 		{
 			log.info("Updating project: name: " + name + " key: " + key);
@@ -125,13 +123,13 @@ public class ProjectAdminModel
 			if (project.getName().compareTo(name) != 0)
 			{
 				log.info("Project name and key do not match: name: " + name + " key: " + key);
-				return ResponseFactory.constructResponse("400", "project retrieval failed", "project name and key do not match: expected name: "+project.getName()+" provided name: "+name);
+				return ResponseFactory.constructResponse("400", "project retrieval failed", "project name and key do not match: expected name: "+project.getName()+" provided name: "+name, project);
 			}
 		}
 		catch (Exception e)
 		{
 			log.info("Project retrieval failed: name: " + name + " key: " + key + " message: " + e.getMessage());
-			return ResponseFactory.constructResponse("400", "project retrieval failed", e.getMessage());
+			return ResponseFactory.constructResponse("400", "project retrieval failed", e.getMessage(), project);
 		}
 		return submitProject(project, defaultRepositoryName, storeRevisions, permissionSchemeName, moderatorEnabled, defaultModerator, defaultDuration, defaultObjectives);
 	}
@@ -144,7 +142,7 @@ public class ProjectAdminModel
 	 */
 	public ResponseProjectOperation deleteProject(String key)
 	{
-		Project project;
+		Project project = null;
 		try
 		{
 			log.info("Deleting project: key: " + key);
@@ -154,9 +152,9 @@ public class ProjectAdminModel
 		catch (Exception e)
 		{
 			log.info("Project deleting failed: key: " + key + " message: " + e.getMessage());
-			return ResponseFactory.constructResponse("400", "project delete failed", e.getMessage());
+			return ResponseFactory.constructResponse("400", "project delete failed", e.getMessage(), project);
 		}
-		return ResponseFactory.constructResponse("200", "operation succeeded", "");
+		return ResponseFactory.constructResponse("200", "operation succeeded", "", project);
 	}
 
 	/**
@@ -202,13 +200,14 @@ public class ProjectAdminModel
 	private ResponseProjectOperation submitProject(Project project, String defaultRepositoryName, String storeRevisions, String permissionSchemeName,
 				String moderatorEnabled, String defaultModerator, String defaultDuration, String defaultObjectives)
 	{
+		Project prefetchProjectFromProjectData = null;
 		try
 		{
 			log.error("Submitting project: defaultRepositoryName: " + defaultRepositoryName + " storeRevisions: " + storeRevisions +
 					  " permissionSchemeName: " + permissionSchemeName + " moderatorEnabled: " + moderatorEnabled + " defaultModerator: " + defaultModerator +
 					  " defaultDuration: " + defaultDuration + " defaultObjectives: " + defaultObjectives);
 			ProjectData projectData = new ProjectData(project);
-			Project prefetchProjectFromProjectData = projectManager.getProjectById(projectData.getId());
+			prefetchProjectFromProjectData = projectManager.getProjectById(projectData.getId());
 
 			prefetchProjectFromProjectData.setAllowReviewersToJoin(projectData.isAllowReviewersToJoin());
 			prefetchProjectFromProjectData.setStoreRevisions(StringConverter.string2bool(storeRevisions));
@@ -240,8 +239,8 @@ public class ProjectAdminModel
 		catch (Exception e)
 		{
 			log.info("Project modification failed: message: " + e.getMessage());
-			return ResponseFactory.constructResponse("400", "project modification failed", e.getMessage());
+			return ResponseFactory.constructResponse("400", "project modification failed", e.getMessage(), prefetchProjectFromProjectData);
 		}
-		return ResponseFactory.constructResponse("200", "operation succeeded", "");
+		return ResponseFactory.constructResponse("200", "operation succeeded", "", prefetchProjectFromProjectData);
 	}
 }

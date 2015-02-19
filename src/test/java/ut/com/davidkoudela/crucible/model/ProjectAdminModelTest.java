@@ -11,6 +11,7 @@ import com.cenqua.fisheye.user.UserManager;
 import com.davidkoudela.crucible.exceptions.BadRequestException;
 import com.davidkoudela.crucible.rest.response.ResponseFactory;
 import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
+import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
 import junit.framework.TestCase;
 import org.apache.log4j.spi.LoggerFactory;
 import org.junit.Before;
@@ -98,7 +99,9 @@ public class ProjectAdminModelTest extends TestCase
 		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
 
-		Map mapActual = projectAdminModel.newProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object).getResponse();
+		ResponseProjectOperation responseProjectOperation = projectAdminModel.newProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object);
+		Project relatedProject = responseProjectOperation.getRelatedProject();
+		Map mapActual = responseProjectOperation.getResponse();
 
 		ArgumentCaptor<String> argumentCaptorRepo = ArgumentCaptor.forClass(String.class);
 		Mockito.verify(projectManager).removeRepositoryMappings(argumentCaptorRepo.capture());
@@ -111,6 +114,14 @@ public class ProjectAdminModelTest extends TestCase
 		assertEquals(key, argumentCaptorProjectKey.getValue());
 		assertEquals(repo, argumentCaptorRepo.getValue());
 		assertEquals(path, argumentCaptorRoot.getValue());
+
+		assertEquals(name, relatedProject.getName());
+		assertEquals(key, relatedProject.getProjKey());
+		assertEquals(repo, relatedProject.getDefaultRepositoryName());
+		assertEquals(scheme, relatedProject.getPermissionScheme().getName());
+		assertEquals(dmoder, relatedProject.getDefaultModerator().getUsername());
+		assertEquals(dtime, relatedProject.getDefaultDuration().toString());
+		assertEquals(object, relatedProject.getDefaultObjectives());
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "200");
@@ -167,7 +178,9 @@ public class ProjectAdminModelTest extends TestCase
 		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
 
-		Map mapActual = projectAdminModel.updateProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object).getResponse();
+		ResponseProjectOperation responseProjectOperation = projectAdminModel.updateProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object);
+		Project relatedProject = responseProjectOperation.getRelatedProject();
+		Map mapActual = responseProjectOperation.getResponse();
 
 		ArgumentCaptor<String> argumentCaptorRepo = ArgumentCaptor.forClass(String.class);
 		Mockito.verify(projectManager).removeRepositoryMappings(argumentCaptorRepo.capture());
@@ -180,6 +193,14 @@ public class ProjectAdminModelTest extends TestCase
 		assertEquals(key, argumentCaptorProjectKey.getValue());
 		assertEquals(repo, argumentCaptorRepo.getValue());
 		assertEquals(path, argumentCaptorRoot.getValue());
+
+		assertEquals(name, relatedProject.getName());
+		assertEquals(key, relatedProject.getProjKey());
+		assertEquals(repo, relatedProject.getDefaultRepositoryName());
+		assertEquals(scheme, relatedProject.getPermissionScheme().getName());
+		assertEquals(dmoder, relatedProject.getDefaultModerator().getUsername());
+		assertEquals(dtime, relatedProject.getDefaultDuration().toString());
+		assertEquals(object, relatedProject.getDefaultObjectives());
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "200");

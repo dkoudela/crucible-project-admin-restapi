@@ -1,5 +1,7 @@
 package com.davidkoudela.crucible.rest.response;
 
+import com.cenqua.crucible.model.Project;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +29,27 @@ public class ResponseFactory
 		response.put("code", code);
 		response.put("message", message);
 		response.put("cause", cause);
-		ResponseProjectOperation responseProjectOperation = new ResponseProjectOperation(response);
+		ResponseProjectOperation responseProjectOperation = new ResponseProjectOperation(response, null);
 		return responseProjectOperation;
+	}
+
+	/**
+	 * Constructs ResponseProjectOperation containing provided code, message and cause key-value pairs used in REST responses
+	 *
+	 * @param code contains result code a.k.a. http result code
+	 * @param message contains info about failed operation
+	 * @param cause contains root cause of the failure
+	 * @param relatedProject the related project containing all the already set data
+	 * @return ResponseProjectOperation containing code, message and cause key-value pairs used in REST responses
+	 */
+	public static ResponseProjectOperation constructResponse(String code, String message, String cause, Project relatedProject)
+	{
+	    Map<String, String> response = new LinkedHashMap<String, String>();
+	    response.put("code", code);
+	    response.put("message", message);
+	    response.put("cause", cause);
+	    ResponseProjectOperation responseProjectOperation = new ResponseProjectOperation(response, relatedProject);
+	    return responseProjectOperation;
 	}
 
 	/**
