@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.davidkoudela.crucible</groupId>
     <artifactId>crucible-project-admin-restapi</artifactId>
-    <version>1.3</version>
+    <version>1.4</version>
 
     <organization>
         <name>David Koudela</name>
@@ -110,6 +110,11 @@
             <groupId>com.cenqua.shaj</groupId>
             <artifactId>shaj</artifactId>
             <version>0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>2.5.6.SEC02</version>
         </dependency>
         <!-- UNIT TESTING DEPENDENCIES START -->
         <dependency>
