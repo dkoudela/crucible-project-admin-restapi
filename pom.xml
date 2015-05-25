@@ -72,6 +72,45 @@
             <artifactId>gson</artifactId>
             <version>2.2.2-atlassian-1</version>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.plugins.rest</groupId>
+            <artifactId>atlassian-rest-common</artifactId>
+            <version>2.9.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.orbit</groupId>
+            <artifactId>javax.servlet.jsp</artifactId>
+            <version>2.2.0.v201112011158</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlbeans</groupId>
+            <artifactId>xmlbeans</artifactId>
+            <version>2.3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.extras</groupId>
+            <artifactId>atlassian-extras-common</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.profiling</groupId>
+            <artifactId>atlassian-profiling</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cenqua.shaj</groupId>
+            <artifactId>shaj</artifactId>
+            <version>0.5</version>
+        </dependency>
         <!-- UNIT TESTING DEPENDENCIES START -->
         <dependency>
             <groupId>junit</groupId>
@@ -149,8 +188,8 @@
     </build>
 
     <properties>
-        <fecru.version>3.7.0-20150127093303</fecru.version>
-        <fecru.data.version>2.5.2-20110307050326</fecru.data.version>
+        <fecru.version>3.8.0-20150427140019</fecru.version>
+        <fecru.data.version>3.8.0-20150427140019</fecru.data.version>
         <amps.version>5.0.13</amps.version>
         <plugin.testrunner.version>1.2.0</plugin.testrunner.version>
     </properties>
