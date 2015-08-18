@@ -22,4 +22,10 @@
         </constructor-arg>
     </bean>
 
+    <bean id="repositoryAdminModel" name="RepositoryAdminModel" class="com.davidkoudela.crucible.model.RepositoryAdminModel">
+        <constructor-arg>
+            <ref bean="repositoryAdminService"/>
+        </constructor-arg>
+    </bean>
+
 </beans>

@@ -1,6 +1,6 @@
 package com.davidkoudela.crucible.exceptions;
 
-import com.davidkoudela.crucible.rest.response.ResponseFactory;
+import com.davidkoudela.crucible.rest.response.ResponseProjectFactory;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
 
 /**
@@ -36,8 +36,8 @@ abstract public class ProjectAdminException extends Throwable
 	{
 		Throwable cause = getCause();
 		if (null == cause)
-			return ResponseFactory.constructResponse(code, getMessage(), "");
+			return ResponseProjectFactory.constructResponse(code, getMessage(), "");
 		else
-			return ResponseFactory.constructResponse(code, getMessage(), cause.getMessage());
+			return ResponseProjectFactory.constructResponse(code, getMessage(), cause.getMessage());
 	}
 }

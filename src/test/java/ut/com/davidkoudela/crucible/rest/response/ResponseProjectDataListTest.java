@@ -2,7 +2,7 @@ package ut.com.davidkoudela.crucible.rest.response;
 
 import com.cenqua.crucible.model.Project;
 import com.davidkoudela.crucible.rest.response.ProjectProperties;
-import com.davidkoudela.crucible.rest.response.ResponseFactory;
+import com.davidkoudela.crucible.rest.response.ResponseProjectFactory;
 import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -27,7 +27,7 @@ public class ResponseProjectDataListTest extends TestCase {
 		Project project = new Project();
 		project.setName("Default");
 		projectPropertiesList.add(new ProjectProperties(project));
-		ResponseProjectDataList responseProjectDataList = ResponseFactory.constructResponseWithList("200", "operation succeeded", "", projectPropertiesList);
+		ResponseProjectDataList responseProjectDataList = ResponseProjectFactory.constructResponseWithList("200", "operation succeeded", "", projectPropertiesList);
 		Gson gson = new Gson();
 		String responseProjectDataListAsString = gson.toJson(responseProjectDataList);
 

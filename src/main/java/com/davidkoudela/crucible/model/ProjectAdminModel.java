@@ -9,7 +9,7 @@ import com.cenqua.fisheye.config.RepositoryManager;
 import com.cenqua.fisheye.rep.RepositoryHandle;
 import com.cenqua.fisheye.user.UserManager;
 import com.davidkoudela.crucible.rest.response.ProjectProperties;
-import com.davidkoudela.crucible.rest.response.ResponseFactory;
+import com.davidkoudela.crucible.rest.response.ResponseProjectFactory;
 import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
 import org.slf4j.Logger;
@@ -86,7 +86,7 @@ public class ProjectAdminModel
 		catch (Exception e)
 		{
 			log.info("Project creation failed: name: " + name + " key: " + key + " message: " + e.getMessage());
-			return ResponseFactory.constructResponse("400", "project creation failed", e.getMessage(), project);
+			return ResponseProjectFactory.constructResponse("400", "project creation failed", e.getMessage(), project);
 		}
 		return submitProject(project, defaultRepositoryName, storeRevisions, permissionSchemeName, moderatorEnabled, defaultModerator, defaultDuration, defaultObjectives);
 	}
@@ -123,13 +123,13 @@ public class ProjectAdminModel
 			if (project.getName().compareTo(name) != 0)
 			{
 				log.info("Project name and key do not match: name: " + name + " key: " + key);
-				return ResponseFactory.constructResponse("400", "project retrieval failed", "project name and key do not match: expected name: "+project.getName()+" provided name: "+name, project);
+				return ResponseProjectFactory.constructResponse("400", "project retrieval failed", "project name and key do not match: expected name: " + project.getName() + " provided name: " + name, project);
 			}
 		}
 		catch (Exception e)
 		{
 			log.info("Project retrieval failed: name: " + name + " key: " + key + " message: " + e.getMessage());
-			return ResponseFactory.constructResponse("400", "project retrieval failed", e.getMessage(), project);
+			return ResponseProjectFactory.constructResponse("400", "project retrieval failed", e.getMessage(), project);
 		}
 		return submitProject(project, defaultRepositoryName, storeRevisions, permissionSchemeName, moderatorEnabled, defaultModerator, defaultDuration, defaultObjectives);
 	}
@@ -152,9 +152,9 @@ public class ProjectAdminModel
 		catch (Exception e)
 		{
 			log.info("Project deleting failed: key: " + key + " message: " + e.getMessage());
-			return ResponseFactory.constructResponse("400", "project delete failed", e.getMessage(), project);
+			return ResponseProjectFactory.constructResponse("400", "project delete failed", e.getMessage(), project);
 		}
-		return ResponseFactory.constructResponse("200", "operation succeeded", "", project);
+		return ResponseProjectFactory.constructResponse("200", "operation succeeded", "", project);
 	}
 
 	/**
@@ -179,9 +179,9 @@ public class ProjectAdminModel
 		catch (Exception e)
 		{
 			log.info("Project listing failed: message: " + e.getMessage());
-			return ResponseFactory.constructResponseWithList("400", "project list failed", e.getMessage(), projectPropertiesList);
+			return ResponseProjectFactory.constructResponseWithList("400", "project list failed", e.getMessage(), projectPropertiesList);
 		}
-		return ResponseFactory.constructResponseWithList("200", "operation succeeded", "", projectPropertiesList);
+		return ResponseProjectFactory.constructResponseWithList("200", "operation succeeded", "", projectPropertiesList);
 	}
 
 	/**
@@ -239,8 +239,8 @@ public class ProjectAdminModel
 		catch (Exception e)
 		{
 			log.info("Project modification failed: message: " + e.getMessage());
-			return ResponseFactory.constructResponse("400", "project modification failed", e.getMessage(), prefetchProjectFromProjectData);
+			return ResponseProjectFactory.constructResponse("400", "project modification failed", e.getMessage(), prefetchProjectFromProjectData);
 		}
-		return ResponseFactory.constructResponse("200", "operation succeeded", "", prefetchProjectFromProjectData);
+		return ResponseProjectFactory.constructResponse("200", "operation succeeded", "", prefetchProjectFromProjectData);
 	}
 }

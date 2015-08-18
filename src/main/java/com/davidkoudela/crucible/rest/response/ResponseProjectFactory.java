@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Description: Factory method for Response construction containing result code, result message and result cause
+ * Description: Factory method for Response Project construction containing result code, result message and result cause
  * Copyright (C) 2014 David Koudela
  *
  * @author dkoudela
  * @since 3.6.2014
  */
-public class ResponseFactory
+public class ResponseProjectFactory
 {
 	/**
 	 * Constructs ResponseProjectOperation containing provided code, message and cause key-value pairs used in REST responses

@@ -2,7 +2,7 @@ package ut.com.davidkoudela.crucible.rest.response;
 
 import com.atlassian.fecru.user.User;
 import com.cenqua.crucible.model.Project;
-import com.davidkoudela.crucible.rest.response.ResponseFactory;
+import com.davidkoudela.crucible.rest.response.ResponseProjectFactory;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -31,7 +31,7 @@ public class ResponseProjectOperationTest extends TestCase {
 		project.setDefaultRepositoryName("Repository007");
 		project.setProjKey("DEF");
 		project.setStoreRevisions(true);
-		ResponseProjectOperation responseProjectOperation = ResponseFactory.constructResponse("200", "operation succeeded", "", project);
+		ResponseProjectOperation responseProjectOperation = ResponseProjectFactory.constructResponse("200", "operation succeeded", "", project);
 		Gson gson = new Gson();
 		String responseProjectDataListAsString = gson.toJson(responseProjectOperation);
 
