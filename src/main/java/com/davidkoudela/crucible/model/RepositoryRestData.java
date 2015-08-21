@@ -44,4 +44,5 @@ public class RepositoryRestData implements Serializable
 
 	public boolean isGit() { return null != this.git; }
 	public boolean isP4() { return null != this.p4; }
+	public boolean isCvs() { return false; }
 }

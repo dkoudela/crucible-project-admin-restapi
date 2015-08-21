@@ -28,6 +28,7 @@ public class RepositoryRestExtraData {
 	public TarballRestData tarballSettings;
 	public CommitMessageSyntaxRestData commitMessageSyntaxSettings;
 	public Long maxIndexableSize;
+	public UpdateRestData updateOptions;
 
 	public void verify() throws Exception
 	{
@@ -41,5 +42,7 @@ public class RepositoryRestExtraData {
 			tarballSettings.verify();
 		if (null != commitMessageSyntaxSettings)
 			commitMessageSyntaxSettings.verify();
+		if (null != updateOptions)
+			updateOptions.verify();
 	}
 }

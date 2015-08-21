@@ -117,6 +117,21 @@ public class RepositoryAdminModel
 			}
 		}
 		if (null != repositoryRestData.extraOptions.maxIndexableSize) options.setMaxIndexableSize(repositoryRestData.extraOptions.maxIndexableSize);
+		if (null != repositoryRestData.extraOptions.updateOptions) {
+			UpdateOptions updateOptions = null;
+			if (repositoryRestData.isCvs()) {
+				CvsUpdateRestData cvs = repositoryRestData.extraOptions.updateOptions.cvs;
+				if (null != cvs)
+					updateOptions = new CvsUpdateOptions(
+							repositoryRestData.extraOptions.updateOptions.pollingInterval, cvs.fullScanInterval,
+							cvs.historyFile, cvs.stripPrefix);
+				else
+					updateOptions = CvsUpdateOptions.DEFAULT;
+			} else {
+				updateOptions = new PolledUpdateOptions(repositoryRestData.extraOptions.updateOptions.pollingInterval);
+			}
+			options.setUpdateOptions(updateOptions);
+		}
 
 		return options;
 	}
