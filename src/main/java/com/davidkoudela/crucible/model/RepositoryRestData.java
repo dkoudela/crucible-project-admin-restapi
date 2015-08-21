@@ -27,22 +27,25 @@ public class RepositoryRestData implements Serializable
 	public RepositoryRestExtraData extraOptions;
 	public GitRepositoryRestData git;
 	public P4RepositoryRestData p4;
+	public CvsRepositoryRestData cvs;
 
 	public void verify() throws Exception
 	{
 		if (null == name)
 			throw new Exception("Missing name");
-		if (null == git && null == p4)
-			throw new Exception("Only git and p4 supported and not specified");
+		if (null == git && null == p4 && null == cvs)
+			throw new Exception("Only git, p4 and cvs supported and not specified");
 		if (null != git)
 			git.verify();
 		if (null != p4)
 			p4.verify();
+		if (null != cvs)
+			cvs.verify();
 		if (null != extraOptions)
 			extraOptions.verify();
 	}
 
 	public boolean isGit() { return null != this.git; }
 	public boolean isP4() { return null != this.p4; }
-	public boolean isCvs() { return false; }
+	public boolean isCvs() { return null != this.cvs; }
 }

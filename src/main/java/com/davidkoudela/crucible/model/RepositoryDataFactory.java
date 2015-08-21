@@ -20,6 +20,9 @@ public class RepositoryDataFactory {
 		else if (repositoryRestData.isP4())
 		{
 			repositoryData = createP4RepositoryData(repositoryRestData);
+		} if (repositoryRestData.isCvs())
+		{
+			repositoryData = createCvsRepositoryData(repositoryRestData);
 		}
 
 		if (null != repositoryRestData.description) repositoryData.setDescription(repositoryRestData.description);
@@ -78,5 +81,12 @@ public class RepositoryDataFactory {
 		if (null != repositoryRestData.p4.unicode) p4RepositoryData.setUnicode(repositoryRestData.p4.unicode);
 
 		return p4RepositoryData;
+	}
+
+	private static RepositoryData createCvsRepositoryData(RepositoryRestData repositoryRestData)
+	{
+		CvsRepositoryData cvsRepositoryData = new CvsRepositoryData(repositoryRestData.name, repositoryRestData.cvs.directory);
+		if (null != repositoryRestData.cvs.charset) cvsRepositoryData.setCharset(repositoryRestData.cvs.getCharset());
+		return cvsRepositoryData;
 	}
 }
