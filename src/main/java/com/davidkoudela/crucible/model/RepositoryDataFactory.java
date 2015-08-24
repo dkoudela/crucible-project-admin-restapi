@@ -25,6 +25,10 @@ public class RepositoryDataFactory {
 		{
 			repositoryData = createCvsRepositoryData(repositoryRestData);
 		}
+		else if (repositoryRestData.isHg())
+		{
+			repositoryData = createHgRepositoryData(repositoryRestData);
+		}
 
 		return modifyCommonRepositoryData(repositoryRestData, repositoryData);
 	}
@@ -43,6 +47,10 @@ public class RepositoryDataFactory {
 		{
 			repositoryData = modifyCvsRepositoryData(repositoryRestData, (CvsRepositoryData) repositoryData);
 		}
+		else if (repositoryRestData.isHg())
+		{
+			repositoryData = modifyHgRepositoryData(repositoryRestData, (HgRepositoryData) repositoryData);
+		}
 
 		return modifyCommonRepositoryData(repositoryRestData, repositoryData);
 	}
@@ -55,6 +63,25 @@ public class RepositoryDataFactory {
 		return repositoryData;
 	}
 
+	private static AuthenticationData getAuthenticationData(KeyAuthenticationRestData auth)
+	{
+		AuthenticationData authenticationData = new AuthenticationData();
+		if (null != auth.privateKey && null != auth.publicKey) {
+			if (null != auth.passPhrase) {
+				authenticationData.setAuthenticationStyle(AuthenticationStyle.SSH_KEY_WITH_PASSPHRASE);
+				authenticationData.setPassphrase(auth.passPhrase);
+			} else {
+				authenticationData.setAuthenticationStyle(AuthenticationStyle.SSH_KEY_WITHOUT_PASSPHRASE);
+			}
+			authenticationData.setPublicKey(auth.publicKey);
+			authenticationData.setPrivateKey(auth.privateKey);
+		} else if (null != auth.password) {
+			authenticationData.setAuthenticationStyle(AuthenticationStyle.PASSWORD);
+			authenticationData.setPassword(auth.password);
+		}
+		return authenticationData;
+	}
+
 	private static RepositoryData createGitRepositoryData(RepositoryRestData repositoryRestData)
 	{
 		GitRepositoryData gitRepositoryData = new GitRepositoryData(repositoryRestData.name, repositoryRestData.git.location);
@@ -62,24 +89,7 @@ public class RepositoryDataFactory {
 	}
 	private static RepositoryData modifyGitRepositoryData(RepositoryRestData repositoryRestData, GitRepositoryData gitRepositoryData) {
 		if (null != repositoryRestData.git.location) gitRepositoryData.setLocation(repositoryRestData.git.location);
-		if (null != repositoryRestData.git.auth) {
-			AuthenticationData authenticationData = new AuthenticationData();
-			if (null != repositoryRestData.git.auth.privateKey && null != repositoryRestData.git.auth.publicKey) {
-				if (null != repositoryRestData.git.auth.passPhrase) {
-					authenticationData.setAuthenticationStyle(AuthenticationStyle.SSH_KEY_WITH_PASSPHRASE);
-					authenticationData.setPassphrase(repositoryRestData.git.auth.passPhrase);
-				} else {
-					authenticationData.setAuthenticationStyle(AuthenticationStyle.SSH_KEY_WITHOUT_PASSPHRASE);
-				}
-				authenticationData.setPublicKey(repositoryRestData.git.auth.publicKey);
-				authenticationData.setPrivateKey(repositoryRestData.git.auth.privateKey);
-			} else if (null != repositoryRestData.git.auth.password) {
-				authenticationData.setAuthenticationStyle(AuthenticationStyle.PASSWORD);
-				authenticationData.setPassword(repositoryRestData.git.auth.password);
-			}
-			gitRepositoryData.setAuthentication(authenticationData);
-		}
-
+		if (null != repositoryRestData.git.auth) gitRepositoryData.setAuthentication(getAuthenticationData(repositoryRestData.git.auth));
 		if (null != repositoryRestData.git.path) gitRepositoryData.setPath(repositoryRestData.git.path);
 		if (null != repositoryRestData.git.blockSize) gitRepositoryData.setBlockSize(repositoryRestData.git.blockSize);
 		if (null != repositoryRestData.git.commandTimeout) gitRepositoryData.setCommandTimeout(repositoryRestData.git.commandTimeout);
@@ -126,4 +136,20 @@ public class RepositoryDataFactory {
 		if (null != repositoryRestData.cvs.charset) cvsRepositoryData.setCharset(repositoryRestData.cvs.getCharset());
 		return cvsRepositoryData;
 	}
+
+	private static RepositoryData createHgRepositoryData(RepositoryRestData repositoryRestData)
+	{
+		HgRepositoryData hgRepositoryData = new HgRepositoryData(repositoryRestData.name, repositoryRestData.hg.location);
+		return modifyHgRepositoryData(repositoryRestData, hgRepositoryData);
+	}
+	private static RepositoryData modifyHgRepositoryData(RepositoryRestData repositoryRestData, HgRepositoryData hgRepositoryData)
+	{
+		if (null != repositoryRestData.hg.location) hgRepositoryData.setLocation(repositoryRestData.hg.location);
+		if (null != repositoryRestData.hg.auth) hgRepositoryData.setAuthentication(getAuthenticationData(repositoryRestData.hg.auth));
+		if (null != repositoryRestData.hg.path) hgRepositoryData.setPath(repositoryRestData.hg.path);
+		if (null != repositoryRestData.hg.blockSize) hgRepositoryData.setBlockSize(repositoryRestData.hg.blockSize);
+		if (null != repositoryRestData.hg.commandTimeout) hgRepositoryData.setCommandTimeout(repositoryRestData.hg.commandTimeout);
+		return hgRepositoryData;
+	}
+
 }
