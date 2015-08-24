@@ -29,6 +29,10 @@ public class RepositoryDataFactory {
 		{
 			repositoryData = createHgRepositoryData(repositoryRestData);
 		}
+		else if (repositoryRestData.isSvn())
+		{
+			repositoryData = createSvnRepositoryData(repositoryRestData);
+		}
 
 		return modifyCommonRepositoryData(repositoryRestData, repositoryData);
 	}
@@ -50,6 +54,10 @@ public class RepositoryDataFactory {
 		else if (repositoryRestData.isHg())
 		{
 			repositoryData = modifyHgRepositoryData(repositoryRestData, (HgRepositoryData) repositoryData);
+		}
+		else if (repositoryRestData.isSvn())
+		{
+			repositoryData = modifySvnRepositoryData(repositoryRestData, (SvnRepositoryData) repositoryData);
 		}
 
 		return modifyCommonRepositoryData(repositoryRestData, repositoryData);
@@ -150,6 +158,32 @@ public class RepositoryDataFactory {
 		if (null != repositoryRestData.hg.blockSize) hgRepositoryData.setBlockSize(repositoryRestData.hg.blockSize);
 		if (null != repositoryRestData.hg.commandTimeout) hgRepositoryData.setCommandTimeout(repositoryRestData.hg.commandTimeout);
 		return hgRepositoryData;
+	}
+
+	private static RepositoryData createSvnRepositoryData(RepositoryRestData repositoryRestData)
+	{
+		SvnRepositoryData svnRepositoryData = new SvnRepositoryData(repositoryRestData.name, repositoryRestData.svn.url);
+		return modifySvnRepositoryData(repositoryRestData, svnRepositoryData);
+	}
+	private static RepositoryData modifySvnRepositoryData(RepositoryRestData repositoryRestData, SvnRepositoryData svnRepositoryData)
+	{
+		if (null != repositoryRestData.svn.url) svnRepositoryData.setUrl(repositoryRestData.svn.url);
+		if (null != repositoryRestData.svn.path) svnRepositoryData.setPath(repositoryRestData.svn.path);
+		if (null != repositoryRestData.svn.username) svnRepositoryData.setUsername(repositoryRestData.svn.username);
+		if (null != repositoryRestData.svn.password) svnRepositoryData.setPassword(repositoryRestData.svn.password);
+		if (null != repositoryRestData.svn.blockSize) svnRepositoryData.setBlockSize(repositoryRestData.svn.blockSize);
+		if (null != repositoryRestData.svn.commandTimeout) svnRepositoryData.setCommandTimeout(repositoryRestData.svn.commandTimeout);
+		if (null != repositoryRestData.svn.connectionsPerSecond) svnRepositoryData.setConnectionsPerSecond(repositoryRestData.svn.connectionsPerSecond);
+		if (null != repositoryRestData.svn.charset) svnRepositoryData.setCharset(repositoryRestData.svn.getCharset());
+		if (null != repositoryRestData.svn.accessCode) svnRepositoryData.setAccessCode(repositoryRestData.svn.accessCode);
+		if (null != repositoryRestData.svn.startRevision) svnRepositoryData.setStartRevision(repositoryRestData.svn.startRevision);
+		if (null != repositoryRestData.svn.initialImport) svnRepositoryData.setInitialImport(repositoryRestData.svn.initialImport);
+		if (null != repositoryRestData.svn.followBase) svnRepositoryData.setFollowBase(repositoryRestData.svn.followBase);
+		if (null != repositoryRestData.svn.usingInbuiltSymbolicRules) svnRepositoryData.setUsingInbuiltSymbolicRules(repositoryRestData.svn.usingInbuiltSymbolicRules);
+		if (null != repositoryRestData.svn.trunks) svnRepositoryData.setTrunks(repositoryRestData.svn.getTrunks());
+		if (null != repositoryRestData.svn.branches) svnRepositoryData.setBranches(repositoryRestData.svn.getBranches());
+		if (null != repositoryRestData.svn.tags) svnRepositoryData.setTags(repositoryRestData.svn.getTags());
+		return svnRepositoryData;
 	}
 
 }

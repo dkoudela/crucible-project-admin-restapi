@@ -29,12 +29,13 @@ public class RepositoryRestData implements Serializable
 	public P4RepositoryRestData p4;
 	public CvsRepositoryRestData cvs;
 	public HgRepositoryRestData hg;
+	public SvnRepositoryRestData svn;
 
 	public void verify() throws Exception
 	{
 		verifyOnDelete();
-		if (null == git && null == p4 && null == cvs && null == hg)
-			throw new Exception("Only git, p4, cvs and hg supported and not specified");
+		if (null == git && null == p4 && null == cvs && null == hg && null == svn)
+			throw new Exception("Only git, p4, cvs, hg and svn supported and not specified");
 		if (null != git)
 			git.verify();
 		if (null != p4)
@@ -43,6 +44,8 @@ public class RepositoryRestData implements Serializable
 			cvs.verify();
 		if (null != hg)
 			hg.verify();
+		if (null != svn)
+			svn.verify();
 		if (null != extraOptions)
 			extraOptions.verify();
 	}
@@ -57,4 +60,5 @@ public class RepositoryRestData implements Serializable
 	public boolean isP4() { return null != this.p4; }
 	public boolean isCvs() { return null != this.cvs; }
 	public boolean isHg() { return null != this.hg; }
+	public boolean isSvn() { return null != this.svn; }
 }
