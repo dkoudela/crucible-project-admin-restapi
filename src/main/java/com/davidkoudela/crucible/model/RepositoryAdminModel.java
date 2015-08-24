@@ -158,6 +158,10 @@ public class RepositoryAdminModel
 			}
 			if (null != repositoryRestData.extraOptions.requiredGroups)
 				options.setRequiredGroups(repositoryRestData.extraOptions.requiredGroups);
+			if (null != repositoryRestData.extraOptions.showCheckoutURL)
+				options.setShowCheckoutURL(repositoryRestData.extraOptions.showCheckoutURL);
+			if (null != repositoryRestData.extraOptions.checkoutURL)
+				options.setCheckoutURL(repositoryRestData.extraOptions.checkoutURL);
 		}
 
 		return options;

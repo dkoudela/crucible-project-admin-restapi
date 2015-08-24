@@ -35,6 +35,8 @@ public class RepositoryRestExtraData {
 	public List<AdvancedLinkerRestData> advancedLinkers;
 	public List<IncludeExcludeRestData> hiddenDirectories;
 	public Set<String> requiredGroups;
+	public Boolean showCheckoutURL;
+	public Map<String, String> checkoutURL;
 
 	public void verify() throws Exception
 	{
