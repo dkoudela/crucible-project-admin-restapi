@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Description: Model class containing REST data of FE's extra repository parameters.
@@ -32,6 +34,7 @@ public class RepositoryRestExtraData {
 	public List<SimpleLinkerRestData> simpleLinkers;
 	public List<AdvancedLinkerRestData> advancedLinkers;
 	public List<IncludeExcludeRestData> hiddenDirectories;
+	public Set<String> requiredGroups;
 
 	public void verify() throws Exception
 	{

@@ -156,6 +156,8 @@ public class RepositoryAdminModel
 				}
 				options.setHiddenDirectories(hiddenDirectories);
 			}
+			if (null != repositoryRestData.extraOptions.requiredGroups)
+				options.setRequiredGroups(repositoryRestData.extraOptions.requiredGroups);
 		}
 
 		return options;
