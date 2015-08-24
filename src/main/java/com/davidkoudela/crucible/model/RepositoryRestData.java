@@ -31,8 +31,7 @@ public class RepositoryRestData implements Serializable
 
 	public void verify() throws Exception
 	{
-		if (null == name)
-			throw new Exception("Missing name");
+		verifyOnDelete();
 		if (null == git && null == p4 && null == cvs)
 			throw new Exception("Only git, p4 and cvs supported and not specified");
 		if (null != git)
@@ -43,6 +42,12 @@ public class RepositoryRestData implements Serializable
 			cvs.verify();
 		if (null != extraOptions)
 			extraOptions.verify();
+	}
+
+	public void verifyOnDelete() throws Exception
+	{
+		if (null == name)
+			throw new Exception("Missing name");
 	}
 
 	public boolean isGit() { return null != this.git; }

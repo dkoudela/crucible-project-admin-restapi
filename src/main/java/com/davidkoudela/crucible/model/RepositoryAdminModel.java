@@ -86,6 +86,20 @@ public class RepositoryAdminModel
 		return ResponseRepositoryFactory.constructResponse("200", "operation succeeded", "");
 	}
 
+	public ResponseRepositoryOperation deleteRepository(RepositoryRestData repositoryRestData) {
+		try {
+			repositoryRestData.verifyOnDelete();
+
+			this.repositoryAdminService.delete(repositoryRestData.name);
+		}
+		catch (Exception e)
+		{
+			System.out.println("repository delete failed: " + e);
+			return ResponseRepositoryFactory.constructResponse("400", "repository delete failed", e.getMessage());
+		}
+		return ResponseRepositoryFactory.constructResponse("200", "operation succeeded", "");
+	}
+
 	private RepositoryOptions setRepositoryOptions(RepositoryOptions options, RepositoryRestData repositoryRestData) {
 		if (null != repositoryRestData.extraOptions) {
 			if (null != repositoryRestData.extraOptions.usingDefaultsPermissions)
