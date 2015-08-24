@@ -20,11 +20,35 @@ public class RepositoryDataFactory {
 		else if (repositoryRestData.isP4())
 		{
 			repositoryData = createP4RepositoryData(repositoryRestData);
-		} if (repositoryRestData.isCvs())
+		}
+		else if (repositoryRestData.isCvs())
 		{
 			repositoryData = createCvsRepositoryData(repositoryRestData);
 		}
 
+		return modifyCommonRepositoryData(repositoryRestData, repositoryData);
+	}
+
+	public static RepositoryData modifyRepositoryData(RepositoryRestData repositoryRestData, RepositoryData repositoryData)
+	{
+		if (repositoryRestData.isGit() && RepositoryData.Type.GIT == repositoryData.getType())
+		{
+			repositoryData = modifyGitRepositoryData(repositoryRestData, (GitRepositoryData) repositoryData);
+		}
+		else if (repositoryRestData.isP4() && RepositoryData.Type.PERFORCE == repositoryData.getType())
+		{
+			repositoryData = modifyP4RepositoryData(repositoryRestData, (P4RepositoryData) repositoryData);
+		}
+		else if (repositoryRestData.isCvs() && RepositoryData.Type.CVS == repositoryData.getType())
+		{
+			repositoryData = modifyCvsRepositoryData(repositoryRestData, (CvsRepositoryData) repositoryData);
+		}
+
+		return modifyCommonRepositoryData(repositoryRestData, repositoryData);
+	}
+
+	private static RepositoryData modifyCommonRepositoryData(RepositoryRestData repositoryRestData, RepositoryData repositoryData)
+	{
 		if (null != repositoryRestData.description) repositoryData.setDescription(repositoryRestData.description);
 		if (null != repositoryRestData.storeDiff) repositoryData.setStoreDiff(repositoryRestData.storeDiff);
 
@@ -34,7 +58,10 @@ public class RepositoryDataFactory {
 	private static RepositoryData createGitRepositoryData(RepositoryRestData repositoryRestData)
 	{
 		GitRepositoryData gitRepositoryData = new GitRepositoryData(repositoryRestData.name, repositoryRestData.git.location);
-
+		return modifyGitRepositoryData(repositoryRestData, gitRepositoryData);
+	}
+	private static RepositoryData modifyGitRepositoryData(RepositoryRestData repositoryRestData, GitRepositoryData gitRepositoryData) {
+		if (null != repositoryRestData.git.location) gitRepositoryData.setLocation(repositoryRestData.git.location);
 		if (null != repositoryRestData.git.auth) {
 			AuthenticationData authenticationData = new AuthenticationData();
 			if (null != repositoryRestData.git.auth.privateKey && null != repositoryRestData.git.auth.publicKey) {
@@ -64,7 +91,12 @@ public class RepositoryDataFactory {
 	private static RepositoryData createP4RepositoryData(RepositoryRestData repositoryRestData)
 	{
 		P4RepositoryData p4RepositoryData = new P4RepositoryData(repositoryRestData.name, repositoryRestData.p4.server, repositoryRestData.p4.path);
-
+		return modifyP4RepositoryData(repositoryRestData, p4RepositoryData);
+	}
+	private static RepositoryData modifyP4RepositoryData(RepositoryRestData repositoryRestData, P4RepositoryData p4RepositoryData)
+	{
+		if (null != repositoryRestData.p4.server) p4RepositoryData.setServer(repositoryRestData.p4.server);
+		if (null != repositoryRestData.p4.path) p4RepositoryData.setPath(repositoryRestData.p4.path);
 		if (null != repositoryRestData.p4.username) p4RepositoryData.setUsername(repositoryRestData.p4.username);
 		if (null != repositoryRestData.p4.password) p4RepositoryData.setPassword(repositoryRestData.p4.password);
 		if (null != repositoryRestData.p4.blockSize) p4RepositoryData.setBlockSize(repositoryRestData.p4.blockSize);
@@ -86,6 +118,11 @@ public class RepositoryDataFactory {
 	private static RepositoryData createCvsRepositoryData(RepositoryRestData repositoryRestData)
 	{
 		CvsRepositoryData cvsRepositoryData = new CvsRepositoryData(repositoryRestData.name, repositoryRestData.cvs.directory);
+		return modifyCvsRepositoryData(repositoryRestData, cvsRepositoryData);
+	}
+	private static RepositoryData modifyCvsRepositoryData(RepositoryRestData repositoryRestData, CvsRepositoryData cvsRepositoryData)
+	{
+		if (null != repositoryRestData.cvs.directory) cvsRepositoryData.setDirectory(repositoryRestData.cvs.directory);
 		if (null != repositoryRestData.cvs.charset) cvsRepositoryData.setCharset(repositoryRestData.cvs.getCharset());
 		return cvsRepositoryData;
 	}

@@ -48,6 +48,39 @@ public class RepositoryAdminModel
 		catch (Exception e)
 		{
 			System.out.println("repository creation failed: " + e);
+			return ResponseRepositoryFactory.constructResponse("400", "repository creation failed", e.getMessage());
+		}
+		return ResponseRepositoryFactory.constructResponse("200", "operation succeeded", "");
+	}
+
+	public ResponseRepositoryOperation updateRepository(RepositoryRestData repositoryRestData) {
+		try {
+			repositoryRestData.verify();
+
+			RepositoryData repositoryData = RepositoryDataFactory.modifyRepositoryData(repositoryRestData, this.repositoryAdminService.getRepositoryData(repositoryRestData.name));
+			this.repositoryAdminService.update(repositoryData);
+
+			RepositoryOptions options = this.repositoryAdminService.getRepositoryOptions(repositoryRestData.name);
+			this.repositoryAdminService.setRepositoryOptions(repositoryRestData.name, setRepositoryOptions(options, repositoryRestData));
+
+			if (null != repositoryRestData.enabled) {
+				if (true == repositoryRestData.enabled && false == this.repositoryAdminService.isEnabled(repositoryRestData.name)) {
+					this.repositoryAdminService.enable(repositoryRestData.name);
+					if (null != repositoryRestData.started) {
+						if (true == repositoryRestData.started && RepositoryState.RUNNING != this.repositoryAdminService.getState(repositoryRestData.name)) {
+							this.repositoryAdminService.start(repositoryRestData.name);
+						} else if (false == repositoryRestData.started && RepositoryState.STOPPED != this.repositoryAdminService.getState(repositoryRestData.name)) {
+							this.repositoryAdminService.stop(repositoryRestData.name);
+						}
+					}
+				} else if (false == repositoryRestData.enabled && true == this.repositoryAdminService.isEnabled(repositoryRestData.name)) {
+					this.repositoryAdminService.disable(repositoryRestData.name);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			System.out.println("repository modification failed: " + e);
 			return ResponseRepositoryFactory.constructResponse("400", "repository modification failed", e.getMessage());
 		}
 		return ResponseRepositoryFactory.constructResponse("200", "operation succeeded", "");
