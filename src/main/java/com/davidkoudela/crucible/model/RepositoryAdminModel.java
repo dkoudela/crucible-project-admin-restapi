@@ -148,6 +148,14 @@ public class RepositoryAdminModel
 				}
 				options.setAdvancedLinkers(advancedLinkers);
 			}
+			if (null != repositoryRestData.extraOptions.hiddenDirectories) {
+				List<CaseAwarePath> hiddenDirectories = new ArrayList<CaseAwarePath>();
+				for (IncludeExcludeRestData includeExcludeRestData : repositoryRestData.extraOptions.hiddenDirectories) {
+					CaseAwarePath caseAwarePath = new CaseAwarePath(includeExcludeRestData.path, includeExcludeRestData.caseSensitive);
+					hiddenDirectories.add(caseAwarePath);
+				}
+				options.setHiddenDirectories(hiddenDirectories);
+			}
 		}
 
 		return options;

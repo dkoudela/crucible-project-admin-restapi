@@ -31,6 +31,7 @@ public class RepositoryRestExtraData {
 	public UpdateRestData updateOptions;
 	public List<SimpleLinkerRestData> simpleLinkers;
 	public List<AdvancedLinkerRestData> advancedLinkers;
+	public List<IncludeExcludeRestData> hiddenDirectories;
 
 	public void verify() throws Exception
 	{
@@ -52,5 +53,8 @@ public class RepositoryRestExtraData {
 		if (null != advancedLinkers)
 			for (AdvancedLinkerRestData advancedLinkerRestData : advancedLinkers)
 				advancedLinkerRestData.verify();
+		if (null != hiddenDirectories)
+			for (IncludeExcludeRestData includeExcludeRestData : hiddenDirectories)
+				includeExcludeRestData.verify();
 	}
 }
