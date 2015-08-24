@@ -14,34 +14,34 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 /**
- * Description: Plugin's REST API for FishEye/Crucible Repository Modification operations.
+ * Description: Plugin's REST API for FishEye/Crucible Repository Creation operations.
  * Copyright (C) 2015 David Koudela
  *
  * @author dkoudela
- * @since 13.8.2015
+ * @since 24.8.2015
  */
 @Consumes({MediaType.APPLICATION_JSON})
 @Produces({MediaType.APPLICATION_JSON})
-@Path("/repository-new")
+@Path("/repository-update")
 @Provider()
 @InterceptorChain({ProjectAdminInterceptor.class})
-public class RepositoryNewRestApi {
+public class RepositoryUpdateRestApi {
 	private RepositoryAdminModel repositoryAdminModel;
 
 	@org.springframework.beans.factory.annotation.Autowired
-	public RepositoryNewRestApi(RepositoryAdminModel repositoryAdminModel){ this.repositoryAdminModel = repositoryAdminModel; }
+	public RepositoryUpdateRestApi(RepositoryAdminModel repositoryAdminModel){ this.repositoryAdminModel = repositoryAdminModel; }
 
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response newRepositoryPost(RepositoryRestData repositoryRestData)
+	public Response updateRepositoryPost(RepositoryRestData repositoryRestData)
 	{
 		try
 		{
-			return Response.ok().entity(repositoryAdminModel.newRepository(repositoryRestData)).build();
+			return Response.ok().entity(repositoryAdminModel.updateRepository(repositoryRestData)).build();
 		}
 		catch (Exception e)
 		{
-			System.out.println("Exception in the RepositoryNewRestApi: " + e.getMessage());
+			System.out.println("Exception in the RepositoryUpdateRestApi: " + e.getMessage());
 			return Response.serverError().build();
 		}
 	}
