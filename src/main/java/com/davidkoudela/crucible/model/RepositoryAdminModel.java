@@ -5,7 +5,6 @@ import com.atlassian.fisheye.spi.admin.services.RepositoryAdminService;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryFactory;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryOperation;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -130,6 +129,24 @@ public class RepositoryAdminModel
 					updateOptions = new PolledUpdateOptions(repositoryRestData.extraOptions.updateOptions.pollingInterval);
 				}
 				options.setUpdateOptions(updateOptions);
+			}
+			if (null != repositoryRestData.extraOptions.simpleLinkers) {
+				List<SimpleLinker> simpleLinkers = new ArrayList<SimpleLinker>();
+				for (SimpleLinkerRestData simpleLinkerRestData : repositoryRestData.extraOptions.simpleLinkers) {
+					SimpleLinker simpleLinker = new SimpleLinker(simpleLinkerRestData.getRegex(), simpleLinkerRestData.href);
+					simpleLinker.setDescription(simpleLinkerRestData.description);
+					simpleLinkers.add(simpleLinker);
+				}
+				options.setSimpleLinkers(simpleLinkers);
+			}
+			if (null != repositoryRestData.extraOptions.advancedLinkers) {
+				List<AdvancedLinker> advancedLinkers = new ArrayList<AdvancedLinker>();
+				for (AdvancedLinkerRestData advancedLinkerRestData : repositoryRestData.extraOptions.advancedLinkers) {
+					AdvancedLinker advancedLinker = new AdvancedLinker(advancedLinkerRestData.syntaxDef);
+					advancedLinker.setDescription(advancedLinkerRestData.description);
+					advancedLinkers.add(advancedLinker);
+				}
+				options.setAdvancedLinkers(advancedLinkers);
 			}
 		}
 

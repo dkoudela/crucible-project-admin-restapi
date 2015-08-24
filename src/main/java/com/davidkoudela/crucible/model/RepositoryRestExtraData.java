@@ -29,6 +29,8 @@ public class RepositoryRestExtraData {
 	public CommitMessageSyntaxRestData commitMessageSyntaxSettings;
 	public Long maxIndexableSize;
 	public UpdateRestData updateOptions;
+	public List<SimpleLinkerRestData> simpleLinkers;
+	public List<AdvancedLinkerRestData> advancedLinkers;
 
 	public void verify() throws Exception
 	{
@@ -44,5 +46,11 @@ public class RepositoryRestExtraData {
 			commitMessageSyntaxSettings.verify();
 		if (null != updateOptions)
 			updateOptions.verify();
+		if (null != simpleLinkers)
+			for (SimpleLinkerRestData simpleLinker : simpleLinkers)
+				simpleLinker.verify();
+		if (null != advancedLinkers)
+			for (AdvancedLinkerRestData advancedLinkerRestData : advancedLinkers)
+				advancedLinkerRestData.verify();
 	}
 }
