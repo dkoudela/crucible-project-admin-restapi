@@ -66,15 +66,15 @@ public class RepositoryAdminModel
 			if (null != repositoryRestData.enabled) {
 				if (true == repositoryRestData.enabled && false == this.repositoryAdminService.isEnabled(repositoryRestData.name)) {
 					this.repositoryAdminService.enable(repositoryRestData.name);
-					if (null != repositoryRestData.started) {
-						if (true == repositoryRestData.started && RepositoryState.RUNNING != this.repositoryAdminService.getState(repositoryRestData.name)) {
-							this.repositoryAdminService.start(repositoryRestData.name);
-						} else if (false == repositoryRestData.started && RepositoryState.STOPPED != this.repositoryAdminService.getState(repositoryRestData.name)) {
-							this.repositoryAdminService.stop(repositoryRestData.name);
-						}
-					}
 				} else if (false == repositoryRestData.enabled && true == this.repositoryAdminService.isEnabled(repositoryRestData.name)) {
 					this.repositoryAdminService.disable(repositoryRestData.name);
+				}
+			}
+			if (null != repositoryRestData.started && true == this.repositoryAdminService.isEnabled(repositoryRestData.name)) {
+				if (true == repositoryRestData.started && RepositoryState.RUNNING != this.repositoryAdminService.getState(repositoryRestData.name)) {
+					this.repositoryAdminService.start(repositoryRestData.name);
+				} else if (false == repositoryRestData.started && RepositoryState.STOPPED != this.repositoryAdminService.getState(repositoryRestData.name)) {
+					this.repositoryAdminService.stop(repositoryRestData.name);
 				}
 			}
 		}
