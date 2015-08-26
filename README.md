@@ -1,17 +1,13 @@
 crucible-project-admin-restapi
 ==============================
-
 This is the Crucible Project Admin RestAPI plugin for Atlassian FishEye/Crucible.
 
+## Provided features
 
-Here are the SDK commands you'll use immediately:
+* Crucible Project Management REST API
+* FishEye Repository Management REST API
 
-- atlas-run   -- installs this plugin into Fisheye/Crucible and starts it on http://<machinename>:3990/fecru
-- atlas-debug -- same as atlas-run, but allows a debugger to attach at port 5005
-- atlas-cli   -- after atlas-run or atlas-debug, opens a Maven command line window:
-                 - 'pi' reinstalls the plugin into the running Fisheye/Crucible instance
-- atlas-help  -- prints description for all commands in the SDK
+For more information see [User Documentation](https://github.com/dkoudela/crucible-project-admin-restapi/wiki/User-Documentation)
 
-Full documentation is always available at:
-
-https://developer.atlassian.com/display/DOCS/Developing+with+the+Atlassian+Plugin+SDK
+## Atlassian Marketplace
+The plugin can be downloaded and installed from [Atlassian Marketplace](https://marketplace.atlassian.com/plugins/com.davidkoudela.crucible.crucible-project-admin-restapi)
