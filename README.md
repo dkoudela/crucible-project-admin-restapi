@@ -1,4 +1,4 @@
-Crucible Project Admin RESTAPI
+Crucible Project Admin REST API
 ==============================
 This is the Crucible Project Admin RestAPI plugin for Atlassian FishEye/Crucible.
 
