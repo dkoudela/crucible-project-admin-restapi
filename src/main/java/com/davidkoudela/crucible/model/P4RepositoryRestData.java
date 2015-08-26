@@ -25,7 +25,7 @@ public class P4RepositoryRestData {
 	public Integer blockSize;
 	public Boolean caseSensitive;
 	public Boolean disableMutli;
-	public Charset charset;
+	public CharsetRestData charset;
 	public String commandTimeout;
 	public Float connectionsPerSecond;
 	public Integer fileLogLimit;
@@ -41,5 +41,7 @@ public class P4RepositoryRestData {
 			throw new Exception("Missing p4.server");
 		if (null == path)
 			throw new Exception("Missing p4.path");
+		if (null != charset)
+			charset.verify();
 	}
 }

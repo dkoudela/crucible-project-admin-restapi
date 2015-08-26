@@ -120,7 +120,7 @@ public class RepositoryDataFactory {
 		if (null != repositoryRestData.p4.blockSize) p4RepositoryData.setBlockSize(repositoryRestData.p4.blockSize);
 		if (null != repositoryRestData.p4.caseSensitive) p4RepositoryData.setCaseSensitive(repositoryRestData.p4.caseSensitive);
 		if (null != repositoryRestData.p4.disableMutli) p4RepositoryData.setDisableMutli(repositoryRestData.p4.disableMutli);
-		if (null != repositoryRestData.p4.charset) p4RepositoryData.setCharset(repositoryRestData.p4.charset);
+		if (null != repositoryRestData.p4.charset) p4RepositoryData.setCharset(repositoryRestData.p4.charset.getCharset());
 		if (null != repositoryRestData.p4.commandTimeout) p4RepositoryData.setCommandTimeout(repositoryRestData.p4.commandTimeout);
 		if (null != repositoryRestData.p4.connectionsPerSecond) p4RepositoryData.setConnectionsPerSecond(repositoryRestData.p4.connectionsPerSecond);
 		if (null != repositoryRestData.p4.fileLogLimit) p4RepositoryData.setFileLogLimit(repositoryRestData.p4.fileLogLimit);
@@ -141,7 +141,7 @@ public class RepositoryDataFactory {
 	private static RepositoryData modifyCvsRepositoryData(RepositoryRestData repositoryRestData, CvsRepositoryData cvsRepositoryData)
 	{
 		if (null != repositoryRestData.cvs.directory) cvsRepositoryData.setDirectory(repositoryRestData.cvs.directory);
-		if (null != repositoryRestData.cvs.charset) cvsRepositoryData.setCharset(repositoryRestData.cvs.getCharset());
+		if (null != repositoryRestData.cvs.charset) cvsRepositoryData.setCharset(repositoryRestData.cvs.charset.getCharset());
 		return cvsRepositoryData;
 	}
 
