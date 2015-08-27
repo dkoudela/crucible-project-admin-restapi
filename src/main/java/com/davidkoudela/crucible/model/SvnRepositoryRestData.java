@@ -33,7 +33,7 @@ public class SvnRepositoryRestData {
 	public Integer blockSize;
 	public String commandTimeout;
 	public Float connectionsPerSecond;
-	public String charset;
+	public CharsetRestData charset;
 	public String accessCode;
 	public Long startRevision;
 	public ImportMode initialImport;
@@ -46,18 +46,9 @@ public class SvnRepositoryRestData {
 	public void verify() throws Exception {
 		if (null == url)
 			throw new Exception("Missing svn.url");
-		Set<String> availableCharset = getAvailableCharset();
-		if (null != charset && false == availableCharset.contains(charset)) {
-			throw new Exception("svn.charset is not supported. Supported types are: " + availableCharset.toString());
+		if (null != charset) {
+			charset.verify();
 		}
-	}
-
-	public Set<String> getAvailableCharset() {
-		return Charset.availableCharsets().keySet();
-	}
-
-	public Charset getCharset() {
-		return Charset.forName(charset);
 	}
 
 	public Collection<SvnRepositoryData.SymbolicRule> getTrunks()

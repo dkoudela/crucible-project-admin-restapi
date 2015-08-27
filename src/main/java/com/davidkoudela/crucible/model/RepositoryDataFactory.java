@@ -174,7 +174,7 @@ public class RepositoryDataFactory {
 		if (null != repositoryRestData.svn.blockSize) svnRepositoryData.setBlockSize(repositoryRestData.svn.blockSize);
 		if (null != repositoryRestData.svn.commandTimeout) svnRepositoryData.setCommandTimeout(repositoryRestData.svn.commandTimeout);
 		if (null != repositoryRestData.svn.connectionsPerSecond) svnRepositoryData.setConnectionsPerSecond(repositoryRestData.svn.connectionsPerSecond);
-		if (null != repositoryRestData.svn.charset) svnRepositoryData.setCharset(repositoryRestData.svn.getCharset());
+		if (null != repositoryRestData.svn.charset) svnRepositoryData.setCharset(repositoryRestData.svn.charset.getCharset());
 		if (null != repositoryRestData.svn.accessCode) svnRepositoryData.setAccessCode(repositoryRestData.svn.accessCode);
 		if (null != repositoryRestData.svn.startRevision) svnRepositoryData.setStartRevision(repositoryRestData.svn.startRevision);
 		if (null != repositoryRestData.svn.initialImport) svnRepositoryData.setInitialImport(repositoryRestData.svn.initialImport);
