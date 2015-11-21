@@ -1,6 +1,5 @@
 package com.davidkoudela.crucible.rest.response;
 
-import com.cenqua.crucible.model.Project;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonProperty;
 

@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 /**
- * Description: Plugin's REST API for FishEye/Crucible Repository Modification operations.
+ * Description: Plugin's REST API for FishEye/Crucible Repository Creation operations.
  * Copyright (C) 2015 David Koudela
  *
  * @author dkoudela

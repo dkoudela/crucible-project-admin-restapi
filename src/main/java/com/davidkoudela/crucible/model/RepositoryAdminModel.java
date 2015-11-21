@@ -3,11 +3,10 @@ package com.davidkoudela.crucible.model;
 import com.atlassian.fisheye.spi.admin.data.*;
 import com.atlassian.fisheye.spi.admin.services.RepositoryAdminService;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryFactory;
+import com.davidkoudela.crucible.rest.response.ResponseRepositoryNameList;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryOperation;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Description: Model class containing the logic functionality for Create / Modify / Delete Crucible Repositories.
@@ -98,6 +97,19 @@ public class RepositoryAdminModel
 			return ResponseRepositoryFactory.constructResponse("400", "repository delete failed", e.getMessage());
 		}
 		return ResponseRepositoryFactory.constructResponse("200", "operation succeeded", "");
+	}
+
+	public ResponseRepositoryNameList listRepository(RepositoryRestData repositoryRestData) {
+		Set<String> names = new LinkedHashSet<String>();
+		try {
+			names.addAll(this.repositoryAdminService.getNames());
+		}
+		catch (Exception e)
+		{
+			System.out.println("repository list failed: " + e);
+			return ResponseRepositoryFactory.constructResponseWithList("400", "repository list failed", e.getMessage(), names);
+		}
+		return ResponseRepositoryFactory.constructResponseWithList("200", "operation succeeded", "", names);
 	}
 
 	private RepositoryOptions setRepositoryOptions(RepositoryOptions options, RepositoryRestData repositoryRestData) {

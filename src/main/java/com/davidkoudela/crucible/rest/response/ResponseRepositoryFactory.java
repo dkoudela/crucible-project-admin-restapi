@@ -1,7 +1,9 @@
 package com.davidkoudela.crucible.rest.response;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Description: Factory method for Response Repository construction containing result code, result message and result cause
@@ -19,5 +21,15 @@ public class ResponseRepositoryFactory {
 		response.put("cause", cause);
 		ResponseRepositoryOperation responseRepositoryOperation = new ResponseRepositoryOperation(response);
 		return responseRepositoryOperation;
+	}
+
+	public static ResponseRepositoryNameList constructResponseWithList(String code, String message, String cause, Set<String> names)
+	{
+		Map<String, String> response = new LinkedHashMap<String, String>();
+		response.put("code", code);
+		response.put("message", message);
+		response.put("cause", cause);
+		ResponseRepositoryNameList responseRepositoryNameList = new ResponseRepositoryNameList(response, names);
+		return responseRepositoryNameList;
 	}
 }
