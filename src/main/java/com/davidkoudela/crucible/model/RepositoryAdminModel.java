@@ -2,6 +2,7 @@ package com.davidkoudela.crucible.model;
 
 import com.atlassian.fisheye.spi.admin.data.*;
 import com.atlassian.fisheye.spi.admin.services.RepositoryAdminService;
+import com.davidkoudela.crucible.rest.response.ResponseRepositoryData;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryFactory;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryNameList;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryOperation;
@@ -99,7 +100,7 @@ public class RepositoryAdminModel
 		return ResponseRepositoryFactory.constructResponse("200", "operation succeeded", "");
 	}
 
-	public ResponseRepositoryNameList listRepository(RepositoryRestData repositoryRestData) {
+	public ResponseRepositoryNameList listRepository() {
 		Set<String> names = new LinkedHashSet<String>();
 		try {
 			names.addAll(this.repositoryAdminService.getNames());
@@ -110,6 +111,19 @@ public class RepositoryAdminModel
 			return ResponseRepositoryFactory.constructResponseWithList("400", "repository list failed", e.getMessage(), names);
 		}
 		return ResponseRepositoryFactory.constructResponseWithList("200", "operation succeeded", "", names);
+	}
+
+	public ResponseRepositoryData listRepository(String repositoryName) {
+		RepositoryData repositoryData = null;
+		try {
+			repositoryData = this.repositoryAdminService.getRepositoryData(repositoryName);
+		}
+		catch (Exception e)
+		{
+			System.out.println("repository list failed: " + e);
+			return ResponseRepositoryFactory.constructResponseWithRepositoryData("400", "repository list failed", e.getMessage(), repositoryData);
+		}
+		return ResponseRepositoryFactory.constructResponseWithRepositoryData("200", "operation succeeded", "", repositoryData);
 	}
 
 	private RepositoryOptions setRepositoryOptions(RepositoryOptions options, RepositoryRestData repositoryRestData) {

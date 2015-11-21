@@ -37,7 +37,11 @@ public class RepositoryListRestApi {
 	{
 		try
 		{
-			return Response.ok().entity(repositoryAdminModel.listRepository(repositoryRestData)).build();
+			if (null != repositoryRestData.name && false == repositoryRestData.name.isEmpty()) {
+				return Response.ok().entity(repositoryAdminModel.listRepository(repositoryRestData.name)).build();
+			} else {
+				return Response.ok().entity(repositoryAdminModel.listRepository()).build();
+			}
 		}
 		catch (Exception e)
 		{

@@ -1,5 +1,7 @@
 package com.davidkoudela.crucible.rest.response;
 
+import com.atlassian.fisheye.spi.admin.data.RepositoryData;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,5 +33,15 @@ public class ResponseRepositoryFactory {
 		response.put("cause", cause);
 		ResponseRepositoryNameList responseRepositoryNameList = new ResponseRepositoryNameList(response, names);
 		return responseRepositoryNameList;
+	}
+
+	public static ResponseRepositoryData constructResponseWithRepositoryData(String code, String message, String cause, RepositoryData repositoryData)
+	{
+		Map<String, String> response = new LinkedHashMap<String, String>();
+		response.put("code", code);
+		response.put("message", message);
+		response.put("cause", cause);
+		ResponseRepositoryData responseRepositoryData = new ResponseRepositoryData(response, repositoryData);
+		return responseRepositoryData;
 	}
 }
