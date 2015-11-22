@@ -1,6 +1,6 @@
 package com.davidkoudela.crucible.rest.response;
 
-import com.atlassian.fisheye.spi.admin.data.RepositoryData;
+import com.davidkoudela.crucible.model.RepositoryRestData;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -20,16 +20,16 @@ public class ResponseRepositoryData {
 	@JsonProperty
 	Map<String, String> response;
 	@JsonProperty
-	RepositoryData repositoryData;
+	RepositoryRestData repositoryRestData;
 
-	public ResponseRepositoryData(Map<String, String> response, RepositoryData repositoryData) {
+	public ResponseRepositoryData(Map<String, String> response, RepositoryRestData repositoryRestData) {
 		this.response = response;
-		this.repositoryData = repositoryData;
+		this.repositoryRestData = repositoryRestData;
 	}
 
 	public ResponseRepositoryData() {
 		this.response = new LinkedHashMap<String, String>();
-		this.repositoryData = null;
+		this.repositoryRestData = null;
 	}
 
 	public Map<String, String> getResponse() {
@@ -40,11 +40,11 @@ public class ResponseRepositoryData {
 		this.response = response;
 	}
 
-	public RepositoryData getRepositoryData() {
-		return repositoryData;
+	public RepositoryRestData getRepositoryRestData() {
+		return repositoryRestData;
 	}
 
-	public void setRepositoryData(RepositoryData repositoryData) {
-		this.repositoryData = repositoryData;
+	public void setRepositoryRestData(RepositoryRestData repositoryRestData) {
+		this.repositoryRestData = repositoryRestData;
 	}
 }

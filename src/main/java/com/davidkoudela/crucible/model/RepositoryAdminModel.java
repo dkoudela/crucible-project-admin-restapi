@@ -114,16 +114,18 @@ public class RepositoryAdminModel
 	}
 
 	public ResponseRepositoryData listRepository(String repositoryName) {
-		RepositoryData repositoryData = null;
+		RepositoryRestData repositoryRestData = new RepositoryRestData();
 		try {
-			repositoryData = this.repositoryAdminService.getRepositoryData(repositoryName);
+			RepositoryData repositoryData = this.repositoryAdminService.getRepositoryData(repositoryName);
+			RepositoryOptions options = this.repositoryAdminService.getRepositoryOptions(repositoryName);
+			setRepositoryRestData(options, repositoryData, repositoryRestData);
 		}
 		catch (Exception e)
 		{
 			System.out.println("repository list failed: " + e);
-			return ResponseRepositoryFactory.constructResponseWithRepositoryData("400", "repository list failed", e.getMessage(), repositoryData);
+			return ResponseRepositoryFactory.constructResponseWithRepositoryData("400", "repository list failed", e.getMessage(), repositoryRestData);
 		}
-		return ResponseRepositoryFactory.constructResponseWithRepositoryData("200", "operation succeeded", "", repositoryData);
+		return ResponseRepositoryFactory.constructResponseWithRepositoryData("200", "operation succeeded", "", repositoryRestData);
 	}
 
 	private RepositoryOptions setRepositoryOptions(RepositoryOptions options, RepositoryRestData repositoryRestData) {
@@ -238,5 +240,51 @@ public class RepositoryAdminModel
 		}
 
 		return options;
+	}
+
+	private RepositoryRestData setRepositoryRestData(RepositoryOptions options, RepositoryData repositoryData, RepositoryRestData repositoryRestData) {
+		if (null == repositoryRestData.extraOptions)
+			repositoryRestData.extraOptions = new RepositoryRestExtraData();
+		repositoryRestData.extraOptions.usingDefaultsPermissions = options.isUsingDefaultsPermissions();
+		repositoryRestData.extraOptions.allowAnon = options.isAllowAnon();
+		repositoryRestData.extraOptions.allowLoggedUsers = options.isAllowLoggedUsers();
+		repositoryRestData.extraOptions.watchesEnabled = options.isWatchesEnabled();
+		repositoryRestData.extraOptions.changesetDiscussionsEnabled = options.isChangesetDiscussionsEnabled();
+		repositoryRestData.extraOptions.allowIncludes = new ArrayList<IncludeExcludeRestData>();
+		for (CaseAwarePath caseAwarePath : options.getAllowIncludes()) {
+			IncludeExcludeRestData includeExcludeRestData = new IncludeExcludeRestData();
+			includeExcludeRestData.caseSensitive = caseAwarePath.isCaseSensitive();
+			includeExcludeRestData.path = caseAwarePath.getPath();
+			repositoryRestData.extraOptions.allowIncludes.add(includeExcludeRestData);
+		}
+		repositoryRestData.extraOptions.allowExcludes = new ArrayList<IncludeExcludeRestData>();
+		for (CaseAwarePathGlob caseAwarePathGlob : options.getAllowExcludes()) {
+			IncludeExcludeRestData includeExcludeRestData = new IncludeExcludeRestData();
+			includeExcludeRestData.caseSensitive = caseAwarePathGlob.isCaseSensitive();
+			includeExcludeRestData.path = caseAwarePathGlob.getGlob();
+			repositoryRestData.extraOptions.allowExcludes.add(includeExcludeRestData);
+		}
+		TarballSettings tarballSettings = options.getTarballSettings();
+		if (null != tarballSettings) {
+			repositoryRestData.extraOptions.tarballSettings = new TarballRestData();
+			repositoryRestData.extraOptions.tarballSettings.enabled = tarballSettings.isEnabled();
+			repositoryRestData.extraOptions.tarballSettings.maxFiles = tarballSettings.getMaxFiles();
+			repositoryRestData.extraOptions.tarballSettings.excludes = new ArrayList<TarballExcludesRestData>();
+			for (TarballSettings.Exclude exclude : tarballSettings.getExcludes()) {
+				TarballExcludesRestData tarballExcludesRestData = new TarballExcludesRestData();
+				tarballExcludesRestData.baseDirectory = exclude.getDirectoryPath();
+				tarballExcludesRestData.excludeSubdirs = exclude.isExcludeSubDirs();
+				repositoryRestData.extraOptions.tarballSettings.excludes.add(tarballExcludesRestData);
+			}
+		}
+		CommitMessageSyntaxSettings commitMessageSyntaxSettings = options.getCommitMessageSyntaxSettings();
+		if (null != commitMessageSyntaxSettings) {
+			repositoryRestData.extraOptions.commitMessageSyntaxSettings = new CommitMessageSyntaxRestData();
+			repositoryRestData.extraOptions.commitMessageSyntaxSettings.syntaxType = CommitMessageSyntaxRestData.SyntaxType.create(commitMessageSyntaxSettings.getSyntaxType().name());
+			repositoryRestData.extraOptions.commitMessageSyntaxSettings.wikiSyntaxStartDate = commitMessageSyntaxSettings.getWikiSyntaxStartDate();
+		}
+		repositoryRestData.extraOptions.maxIndexableSize = options.getMaxIndexableSize();
+
+		return repositoryRestData;
 	}
 }

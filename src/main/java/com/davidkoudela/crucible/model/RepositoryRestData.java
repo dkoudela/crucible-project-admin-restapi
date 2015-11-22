@@ -1,5 +1,6 @@
 package com.davidkoudela.crucible.model;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,6 +18,7 @@ import java.io.Serializable;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonIgnoreProperties(ignoreUnknown=true)
+@JsonAutoDetect
 public class RepositoryRestData implements Serializable
 {
 	public String name;
