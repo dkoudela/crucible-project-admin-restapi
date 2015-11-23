@@ -1,5 +1,6 @@
 package com.davidkoudela.crucible.model;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -48,5 +49,15 @@ public class GitRepositoryRestData implements Serializable
 				return 4;
 		}
 		return 1;
+	}
+	public void setRenameDetectionInteger(Integer integer)
+	{
+		switch (integer) {
+			case 1: this.renameDetection = NONE; break;
+			case 2: this.renameDetection = COPIES; break;
+			case 3: this.renameDetection = MOVES; break;
+			case 4: this.renameDetection = DETAILED; break;
+			default: this.renameDetection = NONE;
+		}
 	}
 }

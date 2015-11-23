@@ -2,6 +2,10 @@ package com.davidkoudela.crucible.model;
 
 import com.atlassian.fisheye.spi.admin.data.*;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Description: Factory method for creating {@link com.atlassian.fisheye.spi.admin.data.RepositoryData}.
  * Copyright (C) 2015 David Koudela
@@ -13,23 +17,23 @@ public class RepositoryDataFactory {
 	public static RepositoryData createRepositoryData(RepositoryRestData repositoryRestData)
 	{
 		RepositoryData repositoryData = null;
-		if (repositoryRestData.isGit())
+		if (repositoryRestData.isItGit())
 		{
 			repositoryData = createGitRepositoryData(repositoryRestData);
 		}
-		else if (repositoryRestData.isP4())
+		else if (repositoryRestData.isItP4())
 		{
 			repositoryData = createP4RepositoryData(repositoryRestData);
 		}
-		else if (repositoryRestData.isCvs())
+		else if (repositoryRestData.isItCvs())
 		{
 			repositoryData = createCvsRepositoryData(repositoryRestData);
 		}
-		else if (repositoryRestData.isHg())
+		else if (repositoryRestData.isItHg())
 		{
 			repositoryData = createHgRepositoryData(repositoryRestData);
 		}
-		else if (repositoryRestData.isSvn())
+		else if (repositoryRestData.isItSvn())
 		{
 			repositoryData = createSvnRepositoryData(repositoryRestData);
 		}
@@ -39,23 +43,23 @@ public class RepositoryDataFactory {
 
 	public static RepositoryData modifyRepositoryData(RepositoryRestData repositoryRestData, RepositoryData repositoryData)
 	{
-		if (repositoryRestData.isGit() && RepositoryData.Type.GIT == repositoryData.getType())
+		if (repositoryRestData.isItGit() && RepositoryData.Type.GIT == repositoryData.getType())
 		{
 			repositoryData = modifyGitRepositoryData(repositoryRestData, (GitRepositoryData) repositoryData);
 		}
-		else if (repositoryRestData.isP4() && RepositoryData.Type.PERFORCE == repositoryData.getType())
+		else if (repositoryRestData.isItP4() && RepositoryData.Type.PERFORCE == repositoryData.getType())
 		{
 			repositoryData = modifyP4RepositoryData(repositoryRestData, (P4RepositoryData) repositoryData);
 		}
-		else if (repositoryRestData.isCvs() && RepositoryData.Type.CVS == repositoryData.getType())
+		else if (repositoryRestData.isItCvs() && RepositoryData.Type.CVS == repositoryData.getType())
 		{
 			repositoryData = modifyCvsRepositoryData(repositoryRestData, (CvsRepositoryData) repositoryData);
 		}
-		else if (repositoryRestData.isHg())
+		else if (repositoryRestData.isItHg())
 		{
 			repositoryData = modifyHgRepositoryData(repositoryRestData, (HgRepositoryData) repositoryData);
 		}
-		else if (repositoryRestData.isSvn())
+		else if (repositoryRestData.isItSvn())
 		{
 			repositoryData = modifySvnRepositoryData(repositoryRestData, (SvnRepositoryData) repositoryData);
 		}
@@ -88,6 +92,11 @@ public class RepositoryDataFactory {
 			authenticationData.setPassword(auth.password);
 		}
 		return authenticationData;
+	}
+	private static KeyAuthenticationRestData getKeyAuthenticationRestData(AuthenticationData auth)
+	{
+		KeyAuthenticationRestData keyAuthenticationRestData = new KeyAuthenticationRestData();
+		return keyAuthenticationRestData;
 	}
 
 	private static RepositoryData createGitRepositoryData(RepositoryRestData repositoryRestData)
@@ -186,4 +195,246 @@ public class RepositoryDataFactory {
 		return svnRepositoryData;
 	}
 
+	public static RepositoryOptions setRepositoryOptions(RepositoryOptions options, RepositoryRestData repositoryRestData) {
+		if (null != repositoryRestData.extraOptions) {
+			if (null != repositoryRestData.extraOptions.usingDefaultsPermissions)
+				options.setUsingDefaultsPermissions(repositoryRestData.extraOptions.usingDefaultsPermissions);
+			if (null != repositoryRestData.extraOptions.allowAnon)
+				options.setAllowAnon(repositoryRestData.extraOptions.allowAnon);
+			if (null != repositoryRestData.extraOptions.allowLoggedUsers)
+				options.setAllowLoggedUsers(repositoryRestData.extraOptions.allowLoggedUsers);
+			if (null != repositoryRestData.extraOptions.watchesEnabled)
+				options.setWatchesEnabled(repositoryRestData.extraOptions.watchesEnabled);
+			if (null != repositoryRestData.extraOptions.changesetDiscussionsEnabled)
+				options.setChangesetDiscussionsEnabled(repositoryRestData.extraOptions.changesetDiscussionsEnabled);
+			if (null != repositoryRestData.extraOptions.allowIncludes) {
+				List<CaseAwarePath> allowIncludes = new ArrayList<CaseAwarePath>();
+				for (IncludeExcludeRestData includeExcludeRestData : repositoryRestData.extraOptions.allowIncludes) {
+					CaseAwarePath caseAwarePath = new CaseAwarePath(includeExcludeRestData.path, includeExcludeRestData.caseSensitive);
+					allowIncludes.add(caseAwarePath);
+				}
+				options.setAllowIncludes(allowIncludes);
+			}
+			if (null != repositoryRestData.extraOptions.allowExcludes) {
+				List<CaseAwarePathGlob> allowExcludes = new ArrayList<CaseAwarePathGlob>();
+				for (IncludeExcludeRestData includeExcludeRestData : repositoryRestData.extraOptions.allowExcludes) {
+					CaseAwarePathGlob caseAwarePathGlob = new CaseAwarePathGlob(includeExcludeRestData.path, includeExcludeRestData.caseSensitive);
+					allowExcludes.add(caseAwarePathGlob);
+				}
+				options.setAllowExcludes(allowExcludes);
+			}
+			if (null != repositoryRestData.extraOptions.tarballSettings) {
+				if (null != repositoryRestData.extraOptions.tarballSettings.enabled)
+				{
+					TarballSettings tarballSettings = new TarballSettings();
+					if (true == repositoryRestData.extraOptions.tarballSettings.enabled) {
+						tarballSettings.setEnabled(true);
+						if (null != repositoryRestData.extraOptions.tarballSettings.maxFiles)
+							tarballSettings.setMaxFiles(repositoryRestData.extraOptions.tarballSettings.maxFiles);
+						if (null != repositoryRestData.extraOptions.tarballSettings.excludes) {
+							List<TarballSettings.Exclude> excludes = new ArrayList<TarballSettings.Exclude>();
+							for (TarballExcludesRestData restExclude : repositoryRestData.extraOptions.tarballSettings.excludes) {
+								TarballSettings.Exclude exclude = new TarballSettings.Exclude(restExclude.baseDirectory, restExclude.excludeSubdirs);
+								excludes.add(exclude);
+							}
+							tarballSettings.setExcludes(excludes);
+						}
+					} else {
+						tarballSettings.setEnabled(false);
+					}
+					options.setTarballSettings(tarballSettings);
+				}
+			}
+			if (null != repositoryRestData.extraOptions.commitMessageSyntaxSettings) {
+				CommitMessageSyntaxSettings commitMessageSyntaxSettings = null;
+				if (CommitMessageSyntaxRestData.SyntaxType.WIKI == repositoryRestData.extraOptions.commitMessageSyntaxSettings.syntaxType)
+				{
+					commitMessageSyntaxSettings = new CommitMessageSyntaxSettings(CommitMessageSyntaxSettings.SyntaxType.WIKI,
+							repositoryRestData.extraOptions.commitMessageSyntaxSettings.wikiSyntaxStartDate);
+				} else {
+					commitMessageSyntaxSettings = new CommitMessageSyntaxSettings(CommitMessageSyntaxSettings.SyntaxType.PLAIN, new Date());
+				}
+				options.setCommitMessageSyntaxSettings(commitMessageSyntaxSettings);
+			}
+			if (null != repositoryRestData.extraOptions.maxIndexableSize) options.setMaxIndexableSize(repositoryRestData.extraOptions.maxIndexableSize);
+			if (null != repositoryRestData.extraOptions.updateOptions) {
+				UpdateOptions updateOptions = null;
+				if (repositoryRestData.isItCvs()) {
+					CvsUpdateRestData cvs = repositoryRestData.extraOptions.updateOptions.cvs;
+					if (null != cvs)
+						updateOptions = new CvsUpdateOptions(
+								repositoryRestData.extraOptions.updateOptions.pollingInterval, cvs.fullScanInterval,
+								cvs.historyFile, cvs.stripPrefix);
+					else
+						updateOptions = CvsUpdateOptions.DEFAULT;
+				} else {
+					updateOptions = new PolledUpdateOptions(repositoryRestData.extraOptions.updateOptions.pollingInterval);
+				}
+				options.setUpdateOptions(updateOptions);
+			}
+			if (null != repositoryRestData.extraOptions.simpleLinkers) {
+				List<SimpleLinker> simpleLinkers = new ArrayList<SimpleLinker>();
+				for (SimpleLinkerRestData simpleLinkerRestData : repositoryRestData.extraOptions.simpleLinkers) {
+					SimpleLinker simpleLinker = new SimpleLinker(simpleLinkerRestData.getRegex(), simpleLinkerRestData.href);
+					simpleLinker.setDescription(simpleLinkerRestData.description);
+					simpleLinkers.add(simpleLinker);
+				}
+				options.setSimpleLinkers(simpleLinkers);
+			}
+			if (null != repositoryRestData.extraOptions.advancedLinkers) {
+				List<AdvancedLinker> advancedLinkers = new ArrayList<AdvancedLinker>();
+				for (AdvancedLinkerRestData advancedLinkerRestData : repositoryRestData.extraOptions.advancedLinkers) {
+					AdvancedLinker advancedLinker = new AdvancedLinker(advancedLinkerRestData.syntaxDef);
+					advancedLinker.setDescription(advancedLinkerRestData.description);
+					advancedLinkers.add(advancedLinker);
+				}
+				options.setAdvancedLinkers(advancedLinkers);
+			}
+			if (null != repositoryRestData.extraOptions.hiddenDirectories) {
+				List<CaseAwarePath> hiddenDirectories = new ArrayList<CaseAwarePath>();
+				for (IncludeExcludeRestData includeExcludeRestData : repositoryRestData.extraOptions.hiddenDirectories) {
+					CaseAwarePath caseAwarePath = new CaseAwarePath(includeExcludeRestData.path, includeExcludeRestData.caseSensitive);
+					hiddenDirectories.add(caseAwarePath);
+				}
+				options.setHiddenDirectories(hiddenDirectories);
+			}
+			if (null != repositoryRestData.extraOptions.requiredGroups)
+				options.setRequiredGroups(repositoryRestData.extraOptions.requiredGroups);
+			if (null != repositoryRestData.extraOptions.showCheckoutURL)
+				options.setShowCheckoutURL(repositoryRestData.extraOptions.showCheckoutURL);
+			if (null != repositoryRestData.extraOptions.checkoutURL)
+				options.setCheckoutURL(repositoryRestData.extraOptions.checkoutURL);
+		}
+
+		return options;
+	}
+
+	public static RepositoryRestData setRepositoryRestData(RepositoryOptions options, RepositoryData repositoryData, RepositoryRestData repositoryRestData) {
+		setScmDetails(repositoryData, repositoryRestData);
+
+		if (null == repositoryRestData.extraOptions)
+			repositoryRestData.extraOptions = new RepositoryRestExtraData();
+		repositoryRestData.extraOptions.usingDefaultsPermissions = options.isUsingDefaultsPermissions();
+		repositoryRestData.extraOptions.allowAnon = options.isAllowAnon();
+		repositoryRestData.extraOptions.allowLoggedUsers = options.isAllowLoggedUsers();
+		repositoryRestData.extraOptions.watchesEnabled = options.isWatchesEnabled();
+		repositoryRestData.extraOptions.changesetDiscussionsEnabled = options.isChangesetDiscussionsEnabled();
+		repositoryRestData.extraOptions.allowIncludes = new ArrayList<IncludeExcludeRestData>();
+		for (CaseAwarePath caseAwarePath : options.getAllowIncludes()) {
+			IncludeExcludeRestData includeExcludeRestData = new IncludeExcludeRestData();
+			includeExcludeRestData.caseSensitive = caseAwarePath.isCaseSensitive();
+			includeExcludeRestData.path = caseAwarePath.getPath();
+			repositoryRestData.extraOptions.allowIncludes.add(includeExcludeRestData);
+		}
+		repositoryRestData.extraOptions.allowExcludes = new ArrayList<IncludeExcludeRestData>();
+		for (CaseAwarePathGlob caseAwarePathGlob : options.getAllowExcludes()) {
+			IncludeExcludeRestData includeExcludeRestData = new IncludeExcludeRestData();
+			includeExcludeRestData.caseSensitive = caseAwarePathGlob.isCaseSensitive();
+			includeExcludeRestData.path = caseAwarePathGlob.getGlob();
+			repositoryRestData.extraOptions.allowExcludes.add(includeExcludeRestData);
+		}
+		TarballSettings tarballSettings = options.getTarballSettings();
+		if (null != tarballSettings) {
+			repositoryRestData.extraOptions.tarballSettings = new TarballRestData();
+			repositoryRestData.extraOptions.tarballSettings.enabled = tarballSettings.isEnabled();
+			repositoryRestData.extraOptions.tarballSettings.maxFiles = tarballSettings.getMaxFiles();
+			repositoryRestData.extraOptions.tarballSettings.excludes = new ArrayList<TarballExcludesRestData>();
+			for (TarballSettings.Exclude exclude : tarballSettings.getExcludes()) {
+				TarballExcludesRestData tarballExcludesRestData = new TarballExcludesRestData();
+				tarballExcludesRestData.baseDirectory = exclude.getDirectoryPath();
+				tarballExcludesRestData.excludeSubdirs = exclude.isExcludeSubDirs();
+				repositoryRestData.extraOptions.tarballSettings.excludes.add(tarballExcludesRestData);
+			}
+		}
+		CommitMessageSyntaxSettings commitMessageSyntaxSettings = options.getCommitMessageSyntaxSettings();
+		if (null != commitMessageSyntaxSettings) {
+			repositoryRestData.extraOptions.commitMessageSyntaxSettings = new CommitMessageSyntaxRestData();
+			repositoryRestData.extraOptions.commitMessageSyntaxSettings.syntaxType = CommitMessageSyntaxRestData.SyntaxType.create(commitMessageSyntaxSettings.getSyntaxType().name());
+			repositoryRestData.extraOptions.commitMessageSyntaxSettings.wikiSyntaxStartDate = commitMessageSyntaxSettings.getWikiSyntaxStartDate();
+		}
+		repositoryRestData.extraOptions.maxIndexableSize = options.getMaxIndexableSize();
+		UpdateOptions updateOptions = options.getUpdateOptions();
+		if (null != updateOptions) {
+			repositoryRestData.extraOptions.updateOptions = new UpdateRestData();
+			if (RepositoryData.Type.CVS == repositoryData.getType()) {
+				repositoryRestData.extraOptions.updateOptions.cvs = new CvsUpdateRestData();
+				CvsUpdateOptions cvsUpdateOptions = (CvsUpdateOptions) updateOptions;
+				repositoryRestData.extraOptions.updateOptions.cvs.fullScanInterval = cvsUpdateOptions.getFullScanInterval();
+				repositoryRestData.extraOptions.updateOptions.cvs.historyFile = cvsUpdateOptions.getHistoryFile();
+				repositoryRestData.extraOptions.updateOptions.cvs.stripPrefix = cvsUpdateOptions.getStripPrefix();
+				repositoryRestData.extraOptions.updateOptions.pollingInterval = cvsUpdateOptions.getPollInterval();
+			} else {
+				PolledUpdateOptions polledUpdateOptions = (PolledUpdateOptions) updateOptions;
+				repositoryRestData.extraOptions.updateOptions.pollingInterval = polledUpdateOptions.getPollInterval();
+			}
+		}
+		repositoryRestData.extraOptions.simpleLinkers = new ArrayList<SimpleLinkerRestData>();
+		for (SimpleLinker simpleLinker : options.getSimpleLinkers()) {
+			SimpleLinkerRestData simpleLinkerRestData = new SimpleLinkerRestData();
+			simpleLinkerRestData.description = simpleLinker.getDescription();
+			simpleLinkerRestData.regex = simpleLinker.getRegex().toString();
+			simpleLinkerRestData.href = simpleLinker.getHref();
+			repositoryRestData.extraOptions.simpleLinkers.add(simpleLinkerRestData);
+		}
+		repositoryRestData.extraOptions.advancedLinkers = new ArrayList<AdvancedLinkerRestData>();
+		for (AdvancedLinker advancedLinker : options.getAdvancedLinkers()) {
+			AdvancedLinkerRestData advancedLinkerRestData = new AdvancedLinkerRestData();
+			advancedLinkerRestData.description = advancedLinker.getDescription();
+			advancedLinkerRestData.syntaxDef = advancedLinker.getSyntaxDef();
+			repositoryRestData.extraOptions.advancedLinkers.add(advancedLinkerRestData);
+		}
+		repositoryRestData.extraOptions.hiddenDirectories = new ArrayList<IncludeExcludeRestData>();
+		for (CaseAwarePath caseAwarePath : options.getHiddenDirectories()) {
+			IncludeExcludeRestData includeExcludeRestData = new IncludeExcludeRestData();
+			includeExcludeRestData.caseSensitive = caseAwarePath.isCaseSensitive();
+			includeExcludeRestData.path = caseAwarePath.getPath();
+			repositoryRestData.extraOptions.hiddenDirectories.add(includeExcludeRestData);
+		}
+		repositoryRestData.extraOptions.requiredGroups = options.getRequiredGroups();
+		repositoryRestData.extraOptions.showCheckoutURL = options.getShowCheckoutURL();
+		repositoryRestData.extraOptions.checkoutURL = options.getCheckoutURL();
+
+		return repositoryRestData;
+	}
+
+	private static RepositoryRestData setScmDetails(RepositoryData repositoryData, RepositoryRestData repositoryRestData) {
+		repositoryRestData.description = repositoryData.getDescription();
+		repositoryRestData.storeDiff = repositoryData.isStoreDiff();
+		if (RepositoryData.Type.GIT == repositoryData.getType()) {
+			GitRepositoryData gitRepositoryData = (GitRepositoryData) repositoryData;
+			repositoryRestData.git = new GitRepositoryRestData();
+			repositoryRestData.git.location = gitRepositoryData.getLocation();
+			repositoryRestData.git.auth = getKeyAuthenticationRestData(gitRepositoryData.getAuthentication());
+			repositoryRestData.git.path = gitRepositoryData.getPath();
+			repositoryRestData.git.blockSize = gitRepositoryData.getBlockSize();
+			repositoryRestData.git.commandTimeout = gitRepositoryData.getCommandTimeout();
+			repositoryRestData.git.setRenameDetectionInteger(gitRepositoryData.getRenameOption());
+		} else if (RepositoryData.Type.PERFORCE == repositoryData.getType()) {
+			P4RepositoryData p4RepositoryData = (P4RepositoryData) repositoryData;
+			repositoryRestData.p4 = new P4RepositoryRestData();
+			repositoryRestData.p4.server = p4RepositoryData.getServer();
+			repositoryRestData.p4.path = p4RepositoryData.getPath();
+			repositoryRestData.p4.username = p4RepositoryData.getUsername();
+			repositoryRestData.p4.blockSize = p4RepositoryData.getBlockSize();
+			repositoryRestData.p4.caseSensitive = p4RepositoryData.isCaseSensitive();
+			repositoryRestData.p4.disableMutli = p4RepositoryData.isDisableMutli();
+			if (null != p4RepositoryData.getCharset()) {
+				repositoryRestData.p4.charset = new CharsetRestData();
+				repositoryRestData.p4.charset.charsetName = p4RepositoryData.getCharset().name();
+			}
+			repositoryRestData.p4.commandTimeout = p4RepositoryData.getCommandTimeout();
+			repositoryRestData.p4.connectionsPerSecond = p4RepositoryData.getConnectionsPerSecond();
+			repositoryRestData.p4.fileLogLimit = p4RepositoryData.getFileLogLimit();
+			repositoryRestData.p4.initialImport = p4RepositoryData.isInitialImport();
+			repositoryRestData.p4.port = p4RepositoryData.getPort();
+			repositoryRestData.p4.skipLabels = p4RepositoryData.isSkipLabels();
+			repositoryRestData.p4.startRevision = p4RepositoryData.getStartRevision();
+			repositoryRestData.p4.unicode = p4RepositoryData.isUnicode();
+		} else if (RepositoryData.Type.CVS == repositoryData.getType()) {
+		} else if (RepositoryData.Type.HG == repositoryData.getType()) {
+		} else if (RepositoryData.Type.SUBVERSION == repositoryData.getType()) {
+		}
+
+		return repositoryRestData;
+	}
 }

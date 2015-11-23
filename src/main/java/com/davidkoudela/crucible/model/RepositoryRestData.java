@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonIgnoreProperties(ignoreUnknown=true, value = { "itGit","itP4","itCvs","itHg","itSvn" })
 @JsonAutoDetect
 public class RepositoryRestData implements Serializable
 {
@@ -58,9 +58,15 @@ public class RepositoryRestData implements Serializable
 			throw new Exception("Missing name");
 	}
 
-	public boolean isGit() { return null != this.git; }
-	public boolean isP4() { return null != this.p4; }
-	public boolean isCvs() { return null != this.cvs; }
-	public boolean isHg() { return null != this.hg; }
-	public boolean isSvn() { return null != this.svn; }
+	public boolean isItGit() { return null != this.git; }
+	public boolean isItP4() { return null != this.p4; }
+	public boolean isItCvs() { return null != this.cvs; }
+	public boolean isItHg() { return null != this.hg; }
+	public boolean isItSvn() { return null != this.svn; }
+
+	public GitRepositoryRestData getGit() { return this.git; }
+	public P4RepositoryRestData getP4() { return this.p4; }
+	public CvsRepositoryRestData getCvs() { return this.cvs; }
+	public HgRepositoryRestData getHg() { return this.hg; }
+	public SvnRepositoryRestData getSvn() { return this.svn; }
 }
