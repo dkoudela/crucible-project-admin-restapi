@@ -284,6 +284,46 @@ public class RepositoryAdminModel
 			repositoryRestData.extraOptions.commitMessageSyntaxSettings.wikiSyntaxStartDate = commitMessageSyntaxSettings.getWikiSyntaxStartDate();
 		}
 		repositoryRestData.extraOptions.maxIndexableSize = options.getMaxIndexableSize();
+		UpdateOptions updateOptions = options.getUpdateOptions();
+		if (null != updateOptions) {
+			repositoryRestData.extraOptions.updateOptions = new UpdateRestData();
+			if (RepositoryData.Type.CVS == repositoryData.getType()) {
+				repositoryRestData.extraOptions.updateOptions.cvs = new CvsUpdateRestData();
+				CvsUpdateOptions cvsUpdateOptions = (CvsUpdateOptions) updateOptions;
+				repositoryRestData.extraOptions.updateOptions.cvs.fullScanInterval = cvsUpdateOptions.getFullScanInterval();
+				repositoryRestData.extraOptions.updateOptions.cvs.historyFile = cvsUpdateOptions.getHistoryFile();
+				repositoryRestData.extraOptions.updateOptions.cvs.stripPrefix = cvsUpdateOptions.getStripPrefix();
+				repositoryRestData.extraOptions.updateOptions.pollingInterval = cvsUpdateOptions.getPollInterval();
+			} else {
+				PolledUpdateOptions polledUpdateOptions = (PolledUpdateOptions) updateOptions;
+				repositoryRestData.extraOptions.updateOptions.pollingInterval = polledUpdateOptions.getPollInterval();
+			}
+		}
+		repositoryRestData.extraOptions.simpleLinkers = new ArrayList<SimpleLinkerRestData>();
+		for (SimpleLinker simpleLinker : options.getSimpleLinkers()) {
+			SimpleLinkerRestData simpleLinkerRestData = new SimpleLinkerRestData();
+			simpleLinkerRestData.description = simpleLinker.getDescription();
+			simpleLinkerRestData.regex = simpleLinker.getRegex().toString();
+			simpleLinkerRestData.href = simpleLinker.getHref();
+			repositoryRestData.extraOptions.simpleLinkers.add(simpleLinkerRestData);
+		}
+		repositoryRestData.extraOptions.advancedLinkers = new ArrayList<AdvancedLinkerRestData>();
+		for (AdvancedLinker advancedLinker : options.getAdvancedLinkers()) {
+			AdvancedLinkerRestData advancedLinkerRestData = new AdvancedLinkerRestData();
+			advancedLinkerRestData.description = advancedLinker.getDescription();
+			advancedLinkerRestData.syntaxDef = advancedLinker.getSyntaxDef();
+			repositoryRestData.extraOptions.advancedLinkers.add(advancedLinkerRestData);
+		}
+		repositoryRestData.extraOptions.hiddenDirectories = new ArrayList<IncludeExcludeRestData>();
+		for (CaseAwarePath caseAwarePath : options.getHiddenDirectories()) {
+			IncludeExcludeRestData includeExcludeRestData = new IncludeExcludeRestData();
+			includeExcludeRestData.caseSensitive = caseAwarePath.isCaseSensitive();
+			includeExcludeRestData.path = caseAwarePath.getPath();
+			repositoryRestData.extraOptions.hiddenDirectories.add(includeExcludeRestData);
+		}
+		repositoryRestData.extraOptions.requiredGroups = options.getRequiredGroups();
+		repositoryRestData.extraOptions.showCheckoutURL = options.getShowCheckoutURL();
+		repositoryRestData.extraOptions.checkoutURL = options.getCheckoutURL();
 
 		return repositoryRestData;
 	}
