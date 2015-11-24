@@ -402,6 +402,7 @@ public class RepositoryDataFactory {
 		repositoryRestData.storeDiff = repositoryData.isStoreDiff();
 		if (RepositoryData.Type.GIT == repositoryData.getType()) {
 			GitRepositoryData gitRepositoryData = (GitRepositoryData) repositoryData;
+			repositoryRestData.name = gitRepositoryData.getName();
 			repositoryRestData.git = new GitRepositoryRestData();
 			repositoryRestData.git.location = gitRepositoryData.getLocation();
 			repositoryRestData.git.auth = getKeyAuthenticationRestData(gitRepositoryData.getAuthentication());
@@ -411,9 +412,10 @@ public class RepositoryDataFactory {
 			repositoryRestData.git.setRenameDetectionInteger(gitRepositoryData.getRenameOption());
 		} else if (RepositoryData.Type.PERFORCE == repositoryData.getType()) {
 			P4RepositoryData p4RepositoryData = (P4RepositoryData) repositoryData;
+			repositoryRestData.name = p4RepositoryData.getName();
 			repositoryRestData.p4 = new P4RepositoryRestData();
-			repositoryRestData.p4.server = p4RepositoryData.getServer();
 			repositoryRestData.p4.path = p4RepositoryData.getPath();
+			repositoryRestData.p4.server = p4RepositoryData.getServer();
 			repositoryRestData.p4.username = p4RepositoryData.getUsername();
 			repositoryRestData.p4.blockSize = p4RepositoryData.getBlockSize();
 			repositoryRestData.p4.caseSensitive = p4RepositoryData.isCaseSensitive();
@@ -431,8 +433,44 @@ public class RepositoryDataFactory {
 			repositoryRestData.p4.startRevision = p4RepositoryData.getStartRevision();
 			repositoryRestData.p4.unicode = p4RepositoryData.isUnicode();
 		} else if (RepositoryData.Type.CVS == repositoryData.getType()) {
+			CvsRepositoryData cvsRepositoryData = (CvsRepositoryData) repositoryData;
+			repositoryRestData.name = cvsRepositoryData.getName();
+			repositoryRestData.cvs = new CvsRepositoryRestData();
+			repositoryRestData.cvs.directory = cvsRepositoryData.getDirectory();
+			if (null != cvsRepositoryData.getCharset()) {
+				repositoryRestData.cvs.charset = new CharsetRestData();
+				repositoryRestData.cvs.charset.charsetName = cvsRepositoryData.getCharset().name();
+			}
 		} else if (RepositoryData.Type.HG == repositoryData.getType()) {
+			HgRepositoryData hgRepositoryData = (HgRepositoryData) repositoryData;
+			repositoryRestData.name = hgRepositoryData.getName();
+			repositoryRestData.hg = new HgRepositoryRestData();
+			repositoryRestData.hg.location = hgRepositoryData.getLocation();
+			repositoryRestData.hg.auth = getKeyAuthenticationRestData(hgRepositoryData.getAuthentication());
+			repositoryRestData.hg.blockSize = hgRepositoryData.getBlockSize();
+			repositoryRestData.hg.commandTimeout = hgRepositoryData.getCommandTimeout();
 		} else if (RepositoryData.Type.SUBVERSION == repositoryData.getType()) {
+			SvnRepositoryData svnRepositoryData = (SvnRepositoryData) repositoryData;
+			repositoryRestData.name = svnRepositoryData.getName();
+			repositoryRestData.svn = new SvnRepositoryRestData();
+			repositoryRestData.svn.url = svnRepositoryData.getUrl();
+			repositoryRestData.svn.path = svnRepositoryData.getPath();
+			repositoryRestData.svn.username = svnRepositoryData.getUsername();
+			repositoryRestData.svn.blockSize = svnRepositoryData.getBlockSize();
+			repositoryRestData.svn.commandTimeout = svnRepositoryData.getCommandTimeout();
+			repositoryRestData.svn.connectionsPerSecond = svnRepositoryData.getConnectionsPerSecond();
+			if (null != svnRepositoryData.getCharset()) {
+				repositoryRestData.svn.charset = new CharsetRestData();
+				repositoryRestData.svn.charset.charsetName = svnRepositoryData.getCharset().name();
+			}
+			repositoryRestData.svn.accessCode = svnRepositoryData.getAccessCode();
+			repositoryRestData.svn.startRevision = svnRepositoryData.getStartRevision();
+			repositoryRestData.svn.initialImport = svnRepositoryData.getInitialImport();
+			repositoryRestData.svn.followBase = svnRepositoryData.isFollowBase();
+			repositoryRestData.svn.usingInbuiltSymbolicRules = svnRepositoryData.isUsingInbuiltSymbolicRules();
+			repositoryRestData.svn.setTrunks(svnRepositoryData.getTrunks());
+			repositoryRestData.svn.setBranches(svnRepositoryData.getBranches());
+			repositoryRestData.svn.setTags(svnRepositoryData.getTags());
 		}
 
 		return repositoryRestData;

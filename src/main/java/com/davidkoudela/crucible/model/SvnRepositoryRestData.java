@@ -2,11 +2,9 @@ package com.davidkoudela.crucible.model;
 
 import com.atlassian.fisheye.spi.admin.data.ImportMode;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import com.atlassian.fisheye.spi.admin.data.SvnRepositoryData;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -53,15 +51,31 @@ public class SvnRepositoryRestData {
 
 	public Collection<SvnRepositoryData.SymbolicRule> getTrunks()
 	{
-		return getSymbolicRule(trunks);
+		return getSymbolicRule(this.trunks);
 	}
 	public Collection<SvnRepositoryData.SymbolicRule> getBranches()
 	{
-		return getSymbolicRule(branches);
+		return getSymbolicRule(this.branches);
 	}
 	public Collection<SvnRepositoryData.SymbolicRule> getTags()
 	{
-		return getSymbolicRule(tags);
+		return getSymbolicRule(this.tags);
+	}
+
+	public void setTrunks(Collection<SvnRepositoryData.SymbolicRule> symbolicRuleCollection)
+	{
+		this.trunks = new ArrayList<SymbolicRuleRestData>();
+		setSymbolicRule(symbolicRuleCollection, this.trunks);
+	}
+	public void setBranches(Collection<SvnRepositoryData.SymbolicRule> symbolicRuleCollection)
+	{
+		this.branches = new ArrayList<SymbolicRuleRestData>();
+		setSymbolicRule(symbolicRuleCollection, this.branches);
+	}
+	public void setTags(Collection<SvnRepositoryData.SymbolicRule> symbolicRuleCollection)
+	{
+		this.tags = new ArrayList<SymbolicRuleRestData>();
+		setSymbolicRule(symbolicRuleCollection, this.tags);
 	}
 
 	private Collection<SvnRepositoryData.SymbolicRule> getSymbolicRule(List<SymbolicRuleRestData> symbolicRuleRestDataList) {
@@ -73,5 +87,13 @@ public class SvnRepositoryRestData {
 		}
 		return symbolicRules;
 	}
-
+	private void setSymbolicRule(Collection<SvnRepositoryData.SymbolicRule> symbolicRuleCollection, List<SymbolicRuleRestData> symbolicRuleRestDataList) {
+		for (SvnRepositoryData.SymbolicRule symbolicRule : symbolicRuleCollection) {
+			SymbolicRuleRestData symbolicRuleRestData = new SymbolicRuleRestData();
+			symbolicRuleRestData.logicalPathPrefix = symbolicRule.getLogicalPathPrefix();
+			symbolicRuleRestData.name = symbolicRule.getName();
+			symbolicRuleRestData.regex = symbolicRule.getRegex();
+			symbolicRuleRestDataList.add(symbolicRuleRestData);
+		}
+	}
 }
