@@ -1,5 +1,8 @@
-package com.davidkoudela.crucible.exceptions;
+package ut.com.davidkoudela.crucible.exceptions;
 
+import com.davidkoudela.crucible.exceptions.BadRequestException;
+import com.davidkoudela.crucible.exceptions.InternalErrorException;
+import com.davidkoudela.crucible.exceptions.ProjectAdminException;
 import junit.framework.TestCase;
 import org.junit.Test;
 

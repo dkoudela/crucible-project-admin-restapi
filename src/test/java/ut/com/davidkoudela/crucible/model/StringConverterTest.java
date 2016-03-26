@@ -1,5 +1,6 @@
-package com.davidkoudela.crucible.model;
+package ut.com.davidkoudela.crucible.model;
 
+import com.davidkoudela.crucible.model.StringConverter;
 import junit.framework.TestCase;
 import org.junit.Test;
 

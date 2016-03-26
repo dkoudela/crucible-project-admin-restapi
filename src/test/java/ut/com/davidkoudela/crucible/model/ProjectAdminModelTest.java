@@ -1,4 +1,4 @@
-package com.davidkoudela.crucible.model;
+package ut.com.davidkoudela.crucible.model;
 
 import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.PermissionScheme;
@@ -8,6 +8,8 @@ import com.cenqua.crucible.model.managers.ProjectManager;
 import com.cenqua.fisheye.config.RepositoryManager;
 import com.cenqua.fisheye.rep.RepositoryHandle;
 import com.cenqua.fisheye.user.UserManager;
+import com.davidkoudela.crucible.model.ProjectAdminModel;
+import com.davidkoudela.crucible.model.StringConverter;
 import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
 import junit.framework.TestCase;
@@ -285,7 +287,7 @@ public class ProjectAdminModelTest extends TestCase
 		assertEquals("[{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					 "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					 "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					 "\"defaultObjectives\":\"I object !!!\n\"} ]",
+					 "\"defaultObjectives\":\"I object !!!\"} ]",
 					 responseProjectDataList.getProjectList().toString());
 	}
 
@@ -308,11 +310,11 @@ public class ProjectAdminModelTest extends TestCase
 		assertEquals("[{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					  "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					  "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					  "\"defaultObjectives\":\"I object !!!\n\"} , " +
+					  "\"defaultObjectives\":\"I object !!!\"} , " +
 					  "{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					  "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					  "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					  "\"defaultObjectives\":\"I object !!!\n\"} ]",
+					  "\"defaultObjectives\":\"I object !!!\"} ]",
 					 responseProjectDataList.getProjectList().toString());
 	}
 
