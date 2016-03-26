@@ -1,6 +1,6 @@
 package ut.com.davidkoudela.crucible.rest.response;
 
-import com.atlassian.fecru.user.User;
+import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.Project;
 import com.davidkoudela.crucible.rest.response.ResponseProjectFactory;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
@@ -25,7 +25,7 @@ public class ResponseProjectOperationTest extends TestCase {
 		project.setName("Default");
 		project.setAllowReviewersToJoin(true);
 		project.setDefaultDuration(3600);
-		project.setDefaultModerator(new User("dkoudela"));
+		project.setDefaultModerator(new FecruUser("dkoudela"));
 		project.setDefaultObjectives("Default Objective");
 		project.setId(666);
 		project.setDefaultRepositoryName("Repository007");

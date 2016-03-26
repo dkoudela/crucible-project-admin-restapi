@@ -1,6 +1,6 @@
 package com.davidkoudela.crucible.model;
 
-import com.atlassian.fecru.user.User;
+import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.PermissionScheme;
 import com.cenqua.crucible.model.Project;
 import com.cenqua.crucible.model.managers.PermissionManager;
@@ -77,7 +77,7 @@ public class ProjectAdminModelTest extends TestCase
 		project.setStoreRevisions(false);
 		project.setPermissionScheme(new PermissionScheme("Development"));
 		project.setModeratorDisabled(StringConverter.string2bool(emoder));
-		project.setDefaultModerator(new User(666, "dkoudela"));
+		project.setDefaultModerator(new FecruUser(666, "dkoudela"));
 		project.setDefaultDuration(1000);
 		project.setDefaultObjectives("I object !!!");
 	}
@@ -89,7 +89,7 @@ public class ProjectAdminModelTest extends TestCase
 		Mockito.when(projectManager.getProjectById(id)).thenReturn(project);
 		PermissionScheme permissionScheme = new PermissionScheme(scheme);
 		Mockito.when(permissionManager.findPermissionSchemeByName(scheme)).thenReturn(permissionScheme);
-		User user = new User(1, dmoder);
+		FecruUser user = new FecruUser(1, dmoder);
 		Mockito.when(userManager.getUser(dmoder)).thenReturn(user);
 		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
@@ -147,7 +147,7 @@ public class ProjectAdminModelTest extends TestCase
 		Mockito.when(projectManager.getProjectById(id)).thenReturn(project);
 		PermissionScheme permissionScheme = new PermissionScheme(scheme);
 		Mockito.when(permissionManager.findPermissionSchemeByName(scheme)).thenReturn(permissionScheme);
-		User user = new User(1, dmoder);
+		FecruUser user = new FecruUser(1, dmoder);
 		Mockito.when(userManager.getUser(dmoder)).thenReturn(user);
 		Mockito.when(repositoryManager.getRepository(repo)).thenThrow(new RuntimeException("test exception"));
 
@@ -168,7 +168,7 @@ public class ProjectAdminModelTest extends TestCase
 		Mockito.when(projectManager.getProjectById(id)).thenReturn(project);
 		PermissionScheme permissionScheme = new PermissionScheme(scheme);
 		Mockito.when(permissionManager.findPermissionSchemeByName(scheme)).thenReturn(permissionScheme);
-		User user = new User(1, dmoder);
+		FecruUser user = new FecruUser(1, dmoder);
 		Mockito.when(userManager.getUser(dmoder)).thenReturn(user);
 		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);

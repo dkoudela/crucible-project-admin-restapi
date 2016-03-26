@@ -1,7 +1,6 @@
 package com.davidkoudela.crucible.rest.response;
 
-import com.atlassian.crucible.actions.admin.project.ProjectData;
-import com.atlassian.crucible.actions.admin.project.UserData;
+import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.Project;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -43,19 +42,18 @@ public class ProjectProperties
 	 */
 	public ProjectProperties(Project project)
 	{
-		ProjectData projectData = new ProjectData(project);
-		name = projectData.getName();
-		key = projectData.getKey();
-		defaultRepositoryName = projectData.getDefaultRepositoryName();
-		storeRevisions = projectData.isStoreRevisions();
-		permissionSchemeId = projectData.getPermissionSchemeId();
-		moderatorEnabled = projectData.isModeratorEnabled();
+		name = project.getName();
+		key = project.getProjKey();
+		defaultRepositoryName = project.getDefaultRepositoryName();
+		storeRevisions = project.isStoreRevisions();
+		permissionSchemeId = project.getPermissionScheme().getId();
+		moderatorEnabled = project.isModeratorEnabled();
 		defaultModerator = null;
-		UserData defaultModeratorUser = projectData.getDefaultModerator();
+		FecruUser defaultModeratorUser = project.getDefaultModerator();
 		if (null != defaultModeratorUser)
 			defaultModerator = defaultModeratorUser.getUsername();
-		defaultDuration = projectData.getDefaultDuration();
-		defaultObjectives = projectData.getDefaultObjectives();
+		defaultDuration = project.getDefaultDuration();
+		defaultObjectives = project.getDefaultObjectives();
 	}
 
 	/**

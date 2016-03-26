@@ -1,7 +1,6 @@
 package com.davidkoudela.crucible.model;
 
-import com.atlassian.crucible.actions.admin.project.ProjectData;
-import com.atlassian.fecru.user.User;
+import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.Project;
 import com.cenqua.crucible.model.managers.PermissionManager;
 import com.cenqua.crucible.model.managers.ProjectManager;
@@ -9,8 +8,8 @@ import com.cenqua.fisheye.config.RepositoryManager;
 import com.cenqua.fisheye.rep.RepositoryHandle;
 import com.cenqua.fisheye.user.UserManager;
 import com.davidkoudela.crucible.rest.response.ProjectProperties;
-import com.davidkoudela.crucible.rest.response.ResponseProjectFactory;
 import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
+import com.davidkoudela.crucible.rest.response.ResponseProjectFactory;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -206,26 +205,25 @@ public class ProjectAdminModel
 			log.error("Submitting project: defaultRepositoryName: " + defaultRepositoryName + " storeRevisions: " + storeRevisions +
 					  " permissionSchemeName: " + permissionSchemeName + " moderatorEnabled: " + moderatorEnabled + " defaultModerator: " + defaultModerator +
 					  " defaultDuration: " + defaultDuration + " defaultObjectives: " + defaultObjectives);
-			ProjectData projectData = new ProjectData(project);
-			prefetchProjectFromProjectData = projectManager.getProjectById(projectData.getId());
+			prefetchProjectFromProjectData = projectManager.getProjectById(project.getId());
 
-			prefetchProjectFromProjectData.setAllowReviewersToJoin(projectData.isAllowReviewersToJoin());
+			prefetchProjectFromProjectData.setAllowReviewersToJoin(project.isAllowReviewersToJoin());
 			prefetchProjectFromProjectData.setStoreRevisions(StringConverter.string2bool(storeRevisions));
-			prefetchProjectFromProjectData.setDefaultReviewerGroups(projectData.getDefaultReviewerGroups());
-			prefetchProjectFromProjectData.setProjKey(projectData.getKey());
-			prefetchProjectFromProjectData.setName(projectData.getName());
+			prefetchProjectFromProjectData.setDefaultReviewerGroups(project.getDefaultReviewerGroups());
+			prefetchProjectFromProjectData.setProjKey(project.getProjKey());
+			prefetchProjectFromProjectData.setName(project.getName());
 			prefetchProjectFromProjectData.setPermissionScheme(this.permissionManager.findPermissionSchemeByName(permissionSchemeName));
 			boolean moderatorEnabledBoolean = StringConverter.string2bool(moderatorEnabled);
 			prefetchProjectFromProjectData.setModeratorDisabled(!moderatorEnabledBoolean);
 			if (0 != defaultModerator.length() && true == moderatorEnabledBoolean)
 			{
 				log.info("Moderator is enabled and Default Moderator is set");
-				User user = this.userManager.getUser(defaultModerator);
+				FecruUser user = this.userManager.getUser(defaultModerator);
 				prefetchProjectFromProjectData.setDefaultModerator(user);
 			}
-			prefetchProjectFromProjectData.setSuggestedReviewerConfig(projectData.getSuggestedReviewerConfig());
+			prefetchProjectFromProjectData.setSuggestedReviewerConfig(project.getSuggestedReviewerConfig());
 			prefetchProjectFromProjectData.setDefaultDuration(StringConverter.string2Integer(defaultDuration));
-			prefetchProjectFromProjectData.setContentRoots(new HashSet(projectData.getContentRoots()));
+			prefetchProjectFromProjectData.setContentRoots(new HashSet(project.getContentRoots()));
 			prefetchProjectFromProjectData.setDefaultObjectives(defaultObjectives);
 
 			log.info("Getting repository handle");
