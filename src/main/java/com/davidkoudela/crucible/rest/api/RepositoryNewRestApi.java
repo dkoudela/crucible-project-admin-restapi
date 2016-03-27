@@ -1,5 +1,6 @@
 package com.davidkoudela.crucible.rest.api;
 
+import com.atlassian.annotations.security.XsrfProtectionExcluded;
 import com.atlassian.plugins.rest.common.interceptor.InterceptorChain;
 import com.davidkoudela.crucible.model.RepositoryAdminModel;
 import com.davidkoudela.crucible.model.RepositoryRestData;
@@ -32,7 +33,9 @@ public class RepositoryNewRestApi {
 	public RepositoryNewRestApi(RepositoryAdminModel repositoryAdminModel){ this.repositoryAdminModel = repositoryAdminModel; }
 
 	@POST
+	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
+	@XsrfProtectionExcluded()
 	public Response newRepositoryPost(RepositoryRestData repositoryRestData)
 	{
 		try
