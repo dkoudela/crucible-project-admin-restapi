@@ -1,0 +1,72 @@
+language: java
+jdk:
+# Explicitly declare the right JDK
+    - oraclejdk8
+
+sudo: required
+
+before_install:
+# Install Atlassian SDK
+    - sudo sh -c 'echo "deb http://sdkrepo.atlassian.com/debian/ stable contrib" >>/etc/apt/sources.list'
+    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B07804338C015B73
+    - sudo apt-get update
+    - sudo apt-get install atlassian-plugin-sdk
+# Install GnuPG and download GnuPG public key
+    - sudo apt-get install gnupg
+    - wget http://davidkoudela.cz/github/Common/keys/pubkey.txt -O /tmp/pubkey.txt
+    - gpg --import /tmp/pubkey.txt
+    - export DEBUG_LOG=/tmp/debug.log
+# Install git-lfs repo and packages for managing large files in GIT
+    - curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+    - sudo apt-get install git-lfs
+
+install:
+# Setup the global Git hooks for Git LFS
+    - git lfs install
+    - atlas-mvn -q org.apache.maven.plugins:maven-dependency-plugin:resolve-plugins
+
+script:
+# Explicitly switch to the right JDK
+    - jdk_switcher use oraclejdk8
+# Unit tests are part of the Integration tests.
+# It is kept only for further test downgrade
+#    - sudo atlas-unit-test
+    - sudo atlas-integration-test
+
+after_success:
+# Create GIT tag
+    - git config --global user.email "$CIEMAIL"
+    - git config --global user.name "Travis CI"
+    - git config --global push.default simple
+    - git config remote.origin.url https://$GITHUBKEY@github.com/dkoudela/crucible-project-admin-restapi.git
+    - export GIT_TAG=ci-build-$TRAVIS_BRANCH-$(date -u "+%Y-%m-%d")#$TRAVIS_BUILD_NUMBER
+    - echo $GIT_TAG
+    - git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
+    - git push origin $GIT_TAG >$DEBUG_LOG 2>&1
+# Upload of the jar files and their md5sums
+    - export REPO_SUBDIR=CiBuild$TRAVIS_BUILD_NUMBER$TRAVIS_BRANCH
+    - mkdir /tmp/target
+    - for I in `ls target/*.jar`; do md5sum $I > /tmp/$I.md5sum; done
+    - ls target/*.jar /tmp/target/*.md5sum | xargs -ielem curl --ftp-create-dirs --ftp-ssl-control --insecure -T "elem" "$REPOSITORYURL/$REPO_SUBDIR/"
+# Upload of the code coverage files from the JaCoCo tool
+    - cd target/site
+    - find * -type f -exec curl --ftp-create-dirs --ftp-ssl-control --insecure -T {} "$REPOSITORYURL/$REPO_SUBDIR/{}" \;
+    - cd ../..
+
+after_script:
+# Encrypt and upload the debug log
+    - gpg --output $DEBUG_LOG.pgp -r $GPGEMAIL --trust-model always --encrypt $DEBUG_LOG
+    - curl --ftp-create-dirs --ftp-ssl-control --insecure -T $DEBUG_LOG.pgp "$REPOSITORYURL/$REPO_SUBDIR/"
+
+branches:
+    except:
+# Never build a commit after it is labeled by CI to avoid cyclic build dependencies.
+        - /^ci-build-[0-9]*[0-9a-z\-#]*.*/
+# Never build a label for the model tracking purposes.
+        - /^model_v[0-9][0-9\.]*.*/
+
+cache:
+# Caching is not allowed for 'sudo: required' builds.
+# It is kept for future usage.
+    directories:
+        - $HOME/.m2
