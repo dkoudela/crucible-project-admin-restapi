@@ -281,8 +281,10 @@
     </build>
 
     <properties>
-        <fecru.version>4.0.3-20160323115009</fecru.version>
-        <fecru.data.version>4.0.3-20160323115009</fecru.data.version>
+        <fecru.version>4.1.1-20160708100607</fecru.version>
+        <fecru.data.version>4.1.1-20160708100607</fecru.data.version>
+        <!--fecru.version>4.0.3-20160323115009</fecru.version>
+        <fecru.data.version>4.0.3-20160323115009</fecru.data.version-->
         <!--fecru.version>3.10.1-20151028191103</fecru.version>
         <fecru.data.version>3.10.1-20151028191103</fecru.data.version-->
         <!--fecru.version>3.9.0-20150804094455</fecru.version>
