@@ -146,6 +146,30 @@
             <version>${jacoco.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- WIRED TEST RUNNER DEPENDENCIES -->
+        <dependency>
+            <groupId>com.atlassian.plugins</groupId>
+            <artifactId>atlassian-plugins-osgi-testrunner</artifactId>
+            <version>${plugin.testrunner.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>jsr311-api</artifactId>
+            <version>1.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2-atlassian-1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.upm</groupId>
+            <artifactId>upm-api</artifactId>
+            <version>2.1.4</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -159,6 +183,7 @@
                     <instanceId>fecru</instanceId>
                     <productVersion>${fecru.version}</productVersion>
                     <productDataVersion>${fecru.data.version}</productDataVersion>
+                    <jvmArgs>-Xms1g -Xmx2g -XX:MaxPermSize=1g -XX:-UseGCOverheadLimit -server</jvmArgs>
                     <testGroups>
                         <testGroup>
                             <id>unit-tests</id>
@@ -166,8 +191,8 @@
                                 <productId>fecru</productId>
                             </productIds>
                             <excludes>
-                                <exclude>it/**/IT*Test.java</exclude>
-                                <exclude>it/**/IT*TestCase.java</exclude>
+                                <exclude>it/**/*Test.java</exclude>
+                                <exclude>it/**/*TestCase.java</exclude>
                             </excludes>
                         </testGroup>
                         <testGroup>
@@ -176,8 +201,8 @@
                                 <productId>fecru</productId>
                             </productIds>
                             <includes>
-                                <include>it/**/IT*Test.java</include>
-                                <include>it/**/IT*TestCase.java</include>
+                                <include>it/**/*Test.java</include>
+                                <include>it/**/*TestCase.java</include>
                             </includes>
                         </testGroup>
                     </testGroups>
@@ -281,6 +306,8 @@
     </build>
 
     <properties>
+        <!--fecru.version>4.2.0-20160928073034</fecru.version>
+        <fecru.data.version>4.2.0-20160928073034</fecru.data.version-->
         <fecru.version>4.1.1-20160708100607</fecru.version>
         <fecru.data.version>4.1.1-20160708100607</fecru.data.version>
         <!--fecru.version>4.0.3-20160323115009</fecru.version>
@@ -290,6 +317,9 @@
         <!--fecru.version>3.9.0-20150804094455</fecru.version>
         <fecru.data.version>3.9.0-20150804094455</fecru.data.version-->
         <amps.version>5.0.13</amps.version>
+
+        <!--amps.version>6.2.3</amps.version-->
+        <!--amps.version>5.1.18</amps.version-->
         <plugin.testrunner.version>1.2.0</plugin.testrunner.version>
         <jacoco.version>0.7.5.201505241946</jacoco.version>
     </properties>

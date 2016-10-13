@@ -31,7 +31,9 @@ script:
 # Unit tests are part of the Integration tests.
 # It is kept only for further test downgrade
 #    - sudo atlas-unit-test
-    - sudo atlas-integration-test
+#
+# To avoid timeout during plugin loading for integration tests, the timeout value is prolonged
+    - sudo atlas-integration-test -Datlassian.plugins.enable.wait=600
 
 after_success:
 # Create GIT tag
