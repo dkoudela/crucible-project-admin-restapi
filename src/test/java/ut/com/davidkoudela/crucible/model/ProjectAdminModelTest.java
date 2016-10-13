@@ -5,7 +5,9 @@ import com.cenqua.crucible.model.PermissionScheme;
 import com.cenqua.crucible.model.Project;
 import com.cenqua.crucible.model.managers.PermissionManager;
 import com.cenqua.crucible.model.managers.ProjectManager;
+import com.cenqua.fisheye.RepositoryConfig;
 import com.cenqua.fisheye.config.RepositoryManager;
+import com.cenqua.fisheye.config1.RepositoryType;
 import com.cenqua.fisheye.rep.RepositoryHandle;
 import com.cenqua.fisheye.user.UserManager;
 import com.davidkoudela.crucible.model.ProjectAdminModel;
@@ -93,6 +95,9 @@ public class ProjectAdminModelTest extends TestCase
 		Mockito.when(permissionManager.findPermissionSchemeByName(scheme)).thenReturn(permissionScheme);
 		FecruUser user = new FecruUser(1, dmoder);
 		Mockito.when(userManager.getUser(dmoder)).thenReturn(user);
+		//RepositoryConfig repositoryConfig = Mockito.mock(RepositoryConfig.class);
+		//Mockito.when(repositoryConfig.getName()).thenReturn(repo);
+		//RepositoryHandle repositoryHandle = new RepositoryHandle(repositoryConfig, null, null);
 		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
 
@@ -172,6 +177,9 @@ public class ProjectAdminModelTest extends TestCase
 		Mockito.when(permissionManager.findPermissionSchemeByName(scheme)).thenReturn(permissionScheme);
 		FecruUser user = new FecruUser(1, dmoder);
 		Mockito.when(userManager.getUser(dmoder)).thenReturn(user);
+		//RepositoryConfig repositoryConfig = Mockito.mock(RepositoryConfig.class);
+		//Mockito.when(repositoryConfig.getName()).thenReturn(repo);
+		//RepositoryHandle repositoryHandle = new RepositoryHandle(repositoryConfig, null, null);
 		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
 
