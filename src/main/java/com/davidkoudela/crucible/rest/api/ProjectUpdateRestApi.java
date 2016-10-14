@@ -1,7 +1,7 @@
 package com.davidkoudela.crucible.rest.api;
 
 import com.atlassian.plugins.rest.common.interceptor.InterceptorChain;
-import com.davidkoudela.crucible.model.ProjectAdminModel;
+import com.davidkoudela.crucible.model.ProjectAdminModelImpl;
 import com.davidkoudela.crucible.rest.intercept.ProjectAdminInterceptor;
 
 import javax.ws.rs.FormParam;
@@ -28,17 +28,17 @@ import javax.ws.rs.ext.Provider;
 @InterceptorChain({ProjectAdminInterceptor.class})
 public class ProjectUpdateRestApi
 {
-	private ProjectAdminModel projectAdminModel;
+	private ProjectAdminModelImpl projectAdminModelImpl;
 
 	/**
 	 * Constructor for Spring class injection.
 	 *
-	 * @param projectAdminModel used for all Project admin tasks (Create / Modify / Delete / List)
+	 * @param projectAdminModelImpl used for all Project admin tasks (Create / Modify / Delete / List)
 	 */
 	@org.springframework.beans.factory.annotation.Autowired
-	public ProjectUpdateRestApi(ProjectAdminModel projectAdminModel)
+	public ProjectUpdateRestApi(ProjectAdminModelImpl projectAdminModelImpl)
 	{
-		this.projectAdminModel = projectAdminModel;
+		this.projectAdminModelImpl = projectAdminModelImpl;
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class ProjectUpdateRestApi
 	{
 		try
 		{
-			return Response.ok().entity(projectAdminModel.updateProject(name, key, defaultRepositoryName, storeRevisions, permissionSchemeName,
+			return Response.ok().entity(projectAdminModelImpl.updateProject(name, key, defaultRepositoryName, storeRevisions, permissionSchemeName,
 																		moderatorEnabled, defaultModerator, defaultDuration, defaultObjectives)).build();
 		}
 		catch (Exception e)

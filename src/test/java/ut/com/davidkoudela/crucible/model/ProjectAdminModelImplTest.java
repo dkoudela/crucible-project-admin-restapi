@@ -5,12 +5,10 @@ import com.cenqua.crucible.model.PermissionScheme;
 import com.cenqua.crucible.model.Project;
 import com.cenqua.crucible.model.managers.PermissionManager;
 import com.cenqua.crucible.model.managers.ProjectManager;
-import com.cenqua.fisheye.RepositoryConfig;
 import com.cenqua.fisheye.config.RepositoryManager;
-import com.cenqua.fisheye.config1.RepositoryType;
 import com.cenqua.fisheye.rep.RepositoryHandle;
 import com.cenqua.fisheye.user.UserManager;
-import com.davidkoudela.crucible.model.ProjectAdminModel;
+import com.davidkoudela.crucible.model.ProjectAdminModelImpl;
 import com.davidkoudela.crucible.model.StringConverter;
 import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
@@ -29,14 +27,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Description: Testing {@link ProjectAdminModel}
+ * Description: Testing {@link ProjectAdminModelImpl}
  * Copyright (C) 2014 David Koudela
  *
  * @author dkoudela
  * @since 6/4/14
  */
 @RunWith(MockitoJUnitRunner.class)
-public class ProjectAdminModelTest extends TestCase
+public class ProjectAdminModelImplTest extends TestCase
 {
 	private static PermissionManager permissionManager;
 	private static ProjectManager projectManager;
@@ -44,7 +42,7 @@ public class ProjectAdminModelTest extends TestCase
 	private static UserManager userManager;
 	public static Logger loggerMockStatic;
 
-	private static ProjectAdminModel projectAdminModel;
+	private static ProjectAdminModelImpl projectAdminModelImpl;
 
 	private static final int    id   = 1;
 	private static final String name = "MyOwnProject";
@@ -69,7 +67,7 @@ public class ProjectAdminModelTest extends TestCase
 		repositoryManager = Mockito.mock(RepositoryManager.class);
 		userManager = Mockito.mock(UserManager.class);
 
-		projectAdminModel = new ProjectAdminModel(permissionManager, projectManager, repositoryManager, userManager);
+		projectAdminModelImpl = new ProjectAdminModelImpl(permissionManager, projectManager, repositoryManager, userManager);
 
 		project = new Project();
 
@@ -101,7 +99,7 @@ public class ProjectAdminModelTest extends TestCase
 		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
 
-		ResponseProjectOperation responseProjectOperation = projectAdminModel.newProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object);
+		ResponseProjectOperation responseProjectOperation = projectAdminModelImpl.newProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object);
 		Project relatedProject = responseProjectOperation.getRelatedProject();
 		Map mapActual = responseProjectOperation.getResponse();
 
@@ -137,7 +135,7 @@ public class ProjectAdminModelTest extends TestCase
 	public void testNewProjectCreateProjectException()
 	{
 		Mockito.when(projectManager.createProject(name, key)).thenThrow(new RuntimeException("test exception", null));
-		Map mapActual = projectAdminModel.newProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object).getResponse();
+		Map mapActual = projectAdminModelImpl.newProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object).getResponse();
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "400");
@@ -158,7 +156,7 @@ public class ProjectAdminModelTest extends TestCase
 		Mockito.when(userManager.getUser(dmoder)).thenReturn(user);
 		Mockito.when(repositoryManager.getRepository(repo)).thenThrow(new RuntimeException("test exception"));
 
-		Map mapActual = projectAdminModel.newProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object).getResponse();
+		Map mapActual = projectAdminModelImpl.newProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object).getResponse();
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "400");
@@ -183,7 +181,7 @@ public class ProjectAdminModelTest extends TestCase
 		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
 
-		ResponseProjectOperation responseProjectOperation = projectAdminModel.updateProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object);
+		ResponseProjectOperation responseProjectOperation = projectAdminModelImpl.updateProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object);
 		Project relatedProject = responseProjectOperation.getRelatedProject();
 		Map mapActual = responseProjectOperation.getResponse();
 
@@ -220,7 +218,7 @@ public class ProjectAdminModelTest extends TestCase
 	{
 		Mockito.when(projectManager.getProjectByKey(key)).thenReturn(project);
 
-		Map mapActual = projectAdminModel.updateProject("wrong"+name,key,repo,store,scheme,emoder,dmoder,dtime,object).getResponse();
+		Map mapActual = projectAdminModelImpl.updateProject("wrong"+name,key,repo,store,scheme,emoder,dmoder,dtime,object).getResponse();
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "400");
@@ -235,7 +233,7 @@ public class ProjectAdminModelTest extends TestCase
 	{
 		Mockito.when(projectManager.getProjectByKey(key)).thenThrow(new RuntimeException("test exception"));
 
-		Map mapActual = projectAdminModel.updateProject("wrong"+name,key,repo,store,scheme,emoder,dmoder,dtime,object).getResponse();
+		Map mapActual = projectAdminModelImpl.updateProject("wrong"+name,key,repo,store,scheme,emoder,dmoder,dtime,object).getResponse();
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "400");
@@ -250,7 +248,7 @@ public class ProjectAdminModelTest extends TestCase
 	{
 		Mockito.when(projectManager.getProjectByKey(key)).thenReturn(project);
 
-		Map mapActual = projectAdminModel.deleteProject(key).getResponse();
+		Map mapActual = projectAdminModelImpl.deleteProject(key).getResponse();
 
 		Mockito.verify(projectManager).deleteProject(project);
 
@@ -267,7 +265,7 @@ public class ProjectAdminModelTest extends TestCase
 	{
 		Mockito.when(projectManager.getProjectByKey(key)).thenThrow(new RuntimeException("test exception"));
 
-		Map mapActual = projectAdminModel.deleteProject(key).getResponse();
+		Map mapActual = projectAdminModelImpl.deleteProject(key).getResponse();
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "400");
@@ -284,7 +282,7 @@ public class ProjectAdminModelTest extends TestCase
 		projects.add(project);
 		Mockito.when(projectManager.getAllProjects()).thenReturn(projects);
 
-		ResponseProjectDataList responseProjectDataList = projectAdminModel.listProject();
+		ResponseProjectDataList responseProjectDataList = projectAdminModelImpl.listProject();
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "200");
@@ -307,7 +305,7 @@ public class ProjectAdminModelTest extends TestCase
 		projects.add(project);
 		Mockito.when(projectManager.getAllProjects()).thenReturn(projects);
 
-		ResponseProjectDataList responseProjectDataList = projectAdminModel.listProject();
+		ResponseProjectDataList responseProjectDataList = projectAdminModelImpl.listProject();
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "200");
@@ -331,7 +329,7 @@ public class ProjectAdminModelTest extends TestCase
 	{
 		Mockito.when(projectManager.getAllProjects()).thenThrow(new RuntimeException("test exception"));
 
-		Map mapActual = projectAdminModel.listProject().getResponse();
+		Map mapActual = projectAdminModelImpl.listProject().getResponse();
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "400");

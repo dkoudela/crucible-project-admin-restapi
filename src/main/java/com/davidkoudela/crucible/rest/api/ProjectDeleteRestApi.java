@@ -1,7 +1,7 @@
 package com.davidkoudela.crucible.rest.api;
 
 import com.atlassian.plugins.rest.common.interceptor.InterceptorChain;
-import com.davidkoudela.crucible.model.ProjectAdminModel;
+import com.davidkoudela.crucible.model.ProjectAdminModelImpl;
 import com.davidkoudela.crucible.rest.intercept.ProjectAdminInterceptor;
 
 import javax.ws.rs.FormParam;
@@ -28,17 +28,17 @@ import javax.ws.rs.ext.Provider;
 @InterceptorChain({ProjectAdminInterceptor.class})
 public class ProjectDeleteRestApi
 {
-	private ProjectAdminModel projectAdminModel;
+	private ProjectAdminModelImpl projectAdminModelImpl;
 
 	/**
 	 * Constructor for Spring class injection.
 	 *
-	 * @param projectAdminModel used for all Project admin tasks (Create / Modify / Delete / List)
+	 * @param projectAdminModelImpl used for all Project admin tasks (Create / Modify / Delete / List)
 	 */
 	@org.springframework.beans.factory.annotation.Autowired
-	public ProjectDeleteRestApi(ProjectAdminModel projectAdminModel)
+	public ProjectDeleteRestApi(ProjectAdminModelImpl projectAdminModelImpl)
 	{
-		this.projectAdminModel = projectAdminModel;
+		this.projectAdminModelImpl = projectAdminModelImpl;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class ProjectDeleteRestApi
 	{
 		try
 		{
-			return Response.ok().entity(projectAdminModel.deleteProject(key)).build();
+			return Response.ok().entity(projectAdminModelImpl.deleteProject(key)).build();
 		}
 		catch (Exception e)
 		{

@@ -2,7 +2,7 @@ package com.davidkoudela.crucible.rest.api;
 
 import com.atlassian.annotations.security.XsrfProtectionExcluded;
 import com.atlassian.plugins.rest.common.interceptor.InterceptorChain;
-import com.davidkoudela.crucible.model.RepositoryAdminModel;
+import com.davidkoudela.crucible.model.RepositoryAdminModelImpl;
 import com.davidkoudela.crucible.model.RepositoryRestData;
 import com.davidkoudela.crucible.rest.intercept.ProjectAdminInterceptor;
 
@@ -27,10 +27,10 @@ import javax.ws.rs.ext.Provider;
 @Provider()
 @InterceptorChain({ProjectAdminInterceptor.class})
 public class RepositoryDeleteRestApi {
-	private RepositoryAdminModel repositoryAdminModel;
+	private RepositoryAdminModelImpl repositoryAdminModelImpl;
 
 	@org.springframework.beans.factory.annotation.Autowired
-	public RepositoryDeleteRestApi(RepositoryAdminModel repositoryAdminModel){ this.repositoryAdminModel = repositoryAdminModel; }
+	public RepositoryDeleteRestApi(RepositoryAdminModelImpl repositoryAdminModelImpl){ this.repositoryAdminModelImpl = repositoryAdminModelImpl; }
 
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -40,7 +40,7 @@ public class RepositoryDeleteRestApi {
 	{
 		try
 		{
-			return Response.ok().entity(repositoryAdminModel.deleteRepository(repositoryRestData)).build();
+			return Response.ok().entity(repositoryAdminModelImpl.deleteRepository(repositoryRestData)).build();
 		}
 		catch (Exception e)
 		{

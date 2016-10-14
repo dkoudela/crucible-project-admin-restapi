@@ -160,11 +160,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.2.2-atlassian-1</version>
-        </dependency>
-        <dependency>
             <groupId>com.atlassian.upm</groupId>
             <artifactId>upm-api</artifactId>
             <version>2.1.4</version>
@@ -183,7 +178,7 @@
                     <instanceId>fecru</instanceId>
                     <productVersion>${fecru.version}</productVersion>
                     <productDataVersion>${fecru.data.version}</productDataVersion>
-                    <jvmArgs>-Xms1g -Xmx2g -XX:MaxPermSize=1g -XX:-UseGCOverheadLimit -server</jvmArgs>
+                    <!--jvmArgs>-Xms1g -Xmx2g -XX:MaxPermSize=1g -XX:-UseGCOverheadLimit -server</jvmArgs-->
                     <testGroups>
                         <testGroup>
                             <id>unit-tests</id>
@@ -316,9 +311,9 @@
         <fecru.data.version>3.10.1-20151028191103</fecru.data.version-->
         <!--fecru.version>3.9.0-20150804094455</fecru.version>
         <fecru.data.version>3.9.0-20150804094455</fecru.data.version-->
-        <amps.version>5.0.13</amps.version>
+        <!--amps.version>5.0.13</amps.version-->
 
-        <!--amps.version>6.2.3</amps.version-->
+        <amps.version>6.2.3</amps.version>
         <!--amps.version>5.1.18</amps.version-->
         <plugin.testrunner.version>1.2.0</plugin.testrunner.version>
         <jacoco.version>0.7.5.201505241946</jacoco.version>
