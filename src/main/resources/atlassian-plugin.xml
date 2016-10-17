@@ -19,6 +19,10 @@
     <component key="repositoryAdminModel" class="com.davidkoudela.crucible.model.RepositoryAdminModelImpl" public="true">
         <interface>com.davidkoudela.crucible.model.RepositoryAdminModel</interface>
     </component>
+    <!-- publish Integration test components -->
+    <component key="responseRepositoryNameList" class="com.davidkoudela.crucible.rest.response.ResponseRepositoryNameListImpl" public="true">
+        <interface>com.davidkoudela.crucible.rest.response.ResponseRepositoryNameList</interface>
+    </component>
 
     <!-- import from the product container -->
     <component-import key="permissionManager" interface="com.cenqua.crucible.model.managers.PermissionManager" />

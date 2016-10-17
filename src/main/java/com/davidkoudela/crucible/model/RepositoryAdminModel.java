@@ -1,6 +1,6 @@
 package com.davidkoudela.crucible.model;
 
-import com.davidkoudela.crucible.rest.response.ResponseRepositoryNameList;
+import com.davidkoudela.crucible.rest.response.ResponseRepositoryNameListImpl;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryOperation;
 
 /**
@@ -14,5 +14,5 @@ public interface RepositoryAdminModel {
 	public ResponseRepositoryOperation newRepository(RepositoryRestData repositoryRestData);
 	public ResponseRepositoryOperation updateRepository(RepositoryRestData repositoryRestData);
 	public ResponseRepositoryOperation deleteRepository(RepositoryRestData repositoryRestData);
-	public ResponseRepositoryNameList listRepository();
+	public ResponseRepositoryNameListImpl listRepository();
 }
