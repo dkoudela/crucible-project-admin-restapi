@@ -178,7 +178,7 @@
                     <instanceId>fecru</instanceId>
                     <productVersion>${fecru.version}</productVersion>
                     <productDataVersion>${fecru.data.version}</productDataVersion>
-                    <!--jvmArgs>-Xms1g -Xmx2g -XX:MaxPermSize=1g -XX:-UseGCOverheadLimit -server</jvmArgs-->
+                    <jvmArgs>-Xms1g -Xmx2g -XX:MaxPermSize=1g -XX:-UseGCOverheadLimit -server</jvmArgs>
                     <testGroups>
                         <testGroup>
                             <id>unit-tests</id>
@@ -204,6 +204,11 @@
                     <systemPropertyVariables>
                         <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
                     </systemPropertyVariables>
+
+                    <!-- This should resolve problem with Spring-Context: header with a timeout, namely *;timeout:=60 -->
+                    <!--instructions>
+                        <Spring-Context>*</Spring-Context>
+                    </instructions-->
                 </configuration>
             </plugin>
             <plugin>

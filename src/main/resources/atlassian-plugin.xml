@@ -25,5 +25,6 @@
     <component-import key="projectManager" interface="com.cenqua.crucible.model.managers.ProjectManager" />
     <component-import key="repositoryManager" interface="com.cenqua.fisheye.config.RepositoryManager" />
     <component-import key="userManager" interface="com.cenqua.fisheye.user.UserManager" />
+    <component-import key="repositoryAdminService" interface="com.atlassian.fisheye.spi.admin.services.RepositoryAdminService" />
 
 </atlassian-plugin>
