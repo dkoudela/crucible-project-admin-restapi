@@ -12,12 +12,12 @@ import static org.junit.Assert.assertEquals;
 public class RepositoryListRestApiWiredTest
 {
     private final ApplicationProperties applicationProperties;
-    //private final RepositoryAdminModel repositoryAdminModel;
+    private final RepositoryAdminModel repositoryAdminModel;
 
-    public RepositoryListRestApiWiredTest(ApplicationProperties applicationProperties/*, RepositoryAdminModel repositoryAdminModel*/)
+    public RepositoryListRestApiWiredTest(ApplicationProperties applicationProperties, RepositoryAdminModel repositoryAdminModel)
     {
         this.applicationProperties = applicationProperties;
-        //this.repositoryAdminModel = repositoryAdminModel;
+        this.repositoryAdminModel = repositoryAdminModel;
     }
 
     @Test
