@@ -1,4 +1,4 @@
-package it.com.davidkoudela.crucible;
+package it.com.davidkoudela.crucible.tests;
 
 import com.davidkoudela.crucible.model.RepositoryAdminModel;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryNameList;

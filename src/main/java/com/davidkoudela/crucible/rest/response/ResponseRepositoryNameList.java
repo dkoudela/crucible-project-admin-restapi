@@ -4,7 +4,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by dkoudela on 17 Oct 16.
+ * Description: Response Repository Name List interface
+ *              containing provided code, message, cause and repository names used in REST responses
+ * Copyright (C) 2016 David Koudela
+ *
+ * @author dkoudela
+ * @since 17.10.2016
  */
 public interface ResponseRepositoryNameList {
 	public Set<String> getRepositoryNames();
