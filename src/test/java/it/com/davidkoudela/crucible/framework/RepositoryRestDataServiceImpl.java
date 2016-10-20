@@ -2,6 +2,7 @@ package it.com.davidkoudela.crucible.framework;
 
 import com.davidkoudela.crucible.model.RepositoryRestData;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 public class RepositoryRestDataServiceImpl implements RepositoryRestDataService {
 	public RepositoryRestData createRepositoryData(String json) {
-		RepositoryRestData repositoryRestData = new Gson().fromJson(json, RepositoryRestData.class);
+		RepositoryRestData repositoryRestData = new GsonBuilder().setDateFormat("yyyy-MM-dd").create().fromJson(json, RepositoryRestData.class);
 		return repositoryRestData;
 	}
 
