@@ -8,8 +8,8 @@
        http://www.springframework.org/schema/osgi/spring-osgi.xsd http://atlassian.com/schema/spring/plugin http://atlassian.com/schema/spring/plugin.xsd">
 
     <!-- Integration test framework beans -->
-    <bean id="repositoryDataService" name="RepositoryDataService" class="it.com.davidkoudela.crucible.framework.RepositoryDataServiceImpl">
-        <plugin:interface>it.com.davidkoudela.crucible.framework.RepositoryDataService</plugin:interface>
+    <bean id="repositoryRestDataService" name="RepositoryDataService" class="it.com.davidkoudela.crucible.framework.RepositoryRestDataServiceImpl">
+        <plugin:interface>it.com.davidkoudela.crucible.framework.RepositoryRestDataService</plugin:interface>
     </bean>
 
 </beans>

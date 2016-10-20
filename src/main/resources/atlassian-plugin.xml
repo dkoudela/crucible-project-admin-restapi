@@ -23,6 +23,13 @@
     <component key="responseRepositoryNameList" class="com.davidkoudela.crucible.rest.response.ResponseRepositoryNameListImpl" public="true">
         <interface>com.davidkoudela.crucible.rest.response.ResponseRepositoryNameList</interface>
     </component>
+    <component key="responseRepositoryData" class="com.davidkoudela.crucible.rest.response.ResponseRepositoryDataImpl" public="true">
+        <interface>com.davidkoudela.crucible.rest.response.ResponseRepositoryData</interface>
+    </component>
+    <!-- publish stub components -->
+    <component key="userManagementStub" class="com.davidkoudela.crucible.stub.UserManagementStubImpl" public="true">
+        <interface>com.davidkoudela.crucible.stub.UserManagementStub</interface>
+    </component>
 
     <!-- import from the product container -->
     <component-import key="permissionManager" interface="com.cenqua.crucible.model.managers.PermissionManager" />
@@ -30,5 +37,7 @@
     <component-import key="repositoryManager" interface="com.cenqua.fisheye.config.RepositoryManager" />
     <component-import key="userManager" interface="com.cenqua.fisheye.user.UserManager" />
     <component-import key="repositoryAdminService" interface="com.atlassian.fisheye.spi.admin.services.RepositoryAdminService" />
+    <component-import key="effectiveUserProvider" interface="com.atlassian.fecru.user.EffectiveUserProvider" />
+    <component-import key="adminUserConfig" interface="com.cenqua.fisheye.user.AdminUserConfig" />
 
 </atlassian-plugin>

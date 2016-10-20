@@ -34,5 +34,22 @@
     <bean id="responseRepositoryNameList" name="ResponseRepositoryNameList" class="com.davidkoudela.crucible.rest.response.ResponseRepositoryNameListImpl">
         <plugin:interface>com.davidkoudela.crucible.rest.response.ResponseRepositoryNameList</plugin:interface>
     </bean>
+    <bean id="responseRepositoryData" name="ResponseRepositoryData" class="com.davidkoudela.crucible.rest.response.ResponseRepositoryDataImpl">
+        <plugin:interface>com.davidkoudela.crucible.rest.response.ResponseRepositoryData</plugin:interface>
+    </bean>
+
+    <!-- Integration test stub beans -->
+    <bean id="userManagementStub" name="UserManagementStub" class="com.davidkoudela.crucible.stub.UserManagementStubImpl">
+        <plugin:interface>com.davidkoudela.crucible.stub.UserManagementStub</plugin:interface>
+        <constructor-arg>
+            <ref bean="userManager"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="adminUserConfig"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="effectiveUserProvider"/>
+        </constructor-arg>
+    </bean>
 
 </beans>

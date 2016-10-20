@@ -2,7 +2,7 @@ package com.davidkoudela.crucible.model;
 
 import com.atlassian.fisheye.spi.admin.data.*;
 import com.atlassian.fisheye.spi.admin.services.RepositoryAdminService;
-import com.davidkoudela.crucible.rest.response.ResponseRepositoryData;
+import com.davidkoudela.crucible.rest.response.ResponseRepositoryDataImpl;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryFactory;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryNameListImpl;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryOperation;
@@ -113,7 +113,7 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 		return ResponseRepositoryFactory.constructResponseWithList("200", "operation succeeded", "", names);
 	}
 
-	public ResponseRepositoryData listRepository(String repositoryName) {
+	public ResponseRepositoryDataImpl listRepository(String repositoryName) {
 		RepositoryRestData repositoryRestData = new RepositoryRestData();
 		try {
 			RepositoryData repositoryData = this.repositoryAdminService.getRepositoryData(repositoryName);

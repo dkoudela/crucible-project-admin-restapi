@@ -34,13 +34,13 @@ public class ResponseRepositoryFactory {
 		return responseRepositoryNameList;
 	}
 
-	public static ResponseRepositoryData constructResponseWithRepositoryData(String code, String message, String cause, RepositoryRestData repositoryRestData)
+	public static ResponseRepositoryDataImpl constructResponseWithRepositoryData(String code, String message, String cause, RepositoryRestData repositoryRestData)
 	{
 		Map<String, String> response = new LinkedHashMap<String, String>();
 		response.put("code", code);
 		response.put("message", message);
 		response.put("cause", cause);
-		ResponseRepositoryData responseRepositoryData = new ResponseRepositoryData(response, repositoryRestData);
-		return responseRepositoryData;
+		ResponseRepositoryDataImpl responseRepositoryDataImpl = new ResponseRepositoryDataImpl(response, repositoryRestData);
+		return responseRepositoryDataImpl;
 	}
 }
