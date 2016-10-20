@@ -34,7 +34,20 @@ public class RepositoryCRUDRestApiWiredTest
 			"\"name\":\"corp-cvs\"," +
 			"\"description\":\"corp-cvs description\"," +
 			"\"storeDiff\":false," +
-			"\"extraOptions\":{\"usingDefaultsPermissions\":true,\"allowAnon\":false,\"allowLoggedUsers\":false,\"allowIncludes\":[],\"allowExcludes\":[],\"simpleLinkers\":[],\"advancedLinkers\":[],\"hiddenDirectories\":[],\"requiredGroups\":[],\"checkoutURL\":{}},\"cvs\":{\"directory\":\"c:\\\\\",\"charset\":{\"charsetName\":\"ISO-8859-1\"}}}";
+			"\"extraOptions\":{" +
+				"\"usingDefaultsPermissions\":true," +
+				"\"allowAnon\":false," +
+				"\"allowLoggedUsers\":false," +
+				"\"allowIncludes\":[]," +
+				"\"allowExcludes\":[]," +
+				"\"simpleLinkers\":[]," +
+				"\"advancedLinkers\":[]," +
+				"\"hiddenDirectories\":[]," +
+				"\"requiredGroups\":[]," +
+				"\"checkoutURL\":{}" +
+			"}," +
+			"\"cvs\":{\"directory\":\"c:\\\\\",\"charset\":{\"charsetName\":\"ISO-8859-1\"}}" +
+			"}";
 	private final RepositoryAdminModel repositoryAdminModel;
 	private final RepositoryRestDataService repositoryRestDataService;
 	private final UserManagementStub userManagementStub;
