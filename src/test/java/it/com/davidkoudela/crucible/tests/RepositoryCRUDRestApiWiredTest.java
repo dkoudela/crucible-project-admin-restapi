@@ -316,7 +316,6 @@ public class RepositoryCRUDRestApiWiredTest
 			"  \"enabled\" : false,\n" +
 			"  \"started\" : false\n" +
 			"}";
-	// TODO
 	private final static String P4_BASIC_RESPONSE = "{" +
 			"\"name\":\"corp-p4\"," +
 			"\"description\":\"corp-p4 description\"," +
@@ -387,7 +386,50 @@ public class RepositoryCRUDRestApiWiredTest
 			"  \"enabled\" : false,\n" +
 			"  \"started\" : false\n" +
 			"}";
-	private final static String SVN_BASIC_RESPONSE = "{\"name\":\"corp-svn\",\"description\":\"corp-svn description\",\"storeDiff\":false,\"extraOptions\":{\"usingDefaultsPermissions\":true,\"allowAnon\":false,\"allowLoggedUsers\":false,\"allowIncludes\":[],\"allowExcludes\":[],\"simpleLinkers\":[],\"advancedLinkers\":[],\"hiddenDirectories\":[],\"requiredGroups\":[],\"checkoutURL\":{}},\"svn\":{\"url\":\"svn.example.com/crucible-plugin/\",\"path\":\"src\",\"username\":\"user\",\"blockSize\":1024,\"commandTimeout\":\"30 minute\",\"connectionsPerSecond\":20.0,\"charset\":{\"charsetName\":\"ISO-8859-1\"},\"accessCode\":\"md5:dc0c08df1f3e80b599c90f53d7dd05ec\",\"startRevision\":1,\"initialImport\":\"NO_IMPORT\",\"followBase\":true,\"usingInbuiltSymbolicRules\":false,\"trunks\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"},{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}],\"branches\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"},{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}],\"tags\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"},{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}]}}";
+	// TODO
+	private final static String SVN_BASIC_RESPONSE = "{" +
+			"\"name\":\"corp-svn\"," +
+			"\"description\":\"corp-svn description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+				"\"usingDefaultsPermissions\":true," +
+				"\"allowAnon\":false," +
+				"\"allowLoggedUsers\":false," +
+				"\"allowIncludes\":[]," +
+				"\"allowExcludes\":[]," +
+				"\"simpleLinkers\":[]," +
+				"\"advancedLinkers\":[]," +
+				"\"hiddenDirectories\":[]," +
+				"\"requiredGroups\":[]," +
+				"\"checkoutURL\":{}" +
+			"}," +
+			"\"svn\":{" +
+				"\"url\":\"svn.example.com/crucible-plugin/\"," +
+				"\"path\":\"src\"," +
+				"\"username\":\"user\"," +
+				"\"blockSize\":1024," +
+				"\"commandTimeout\":\"30 minute\"," +
+				"\"connectionsPerSecond\":20.0," +
+				"\"charset\":{\"charsetName\":\"ISO-8859-1\"}," +
+				"\"accessCode\":\"md5:dc0c08df1f3e80b599c90f53d7dd05ec\"," +
+				"\"startRevision\":1," +
+				"\"initialImport\":\"NO_IMPORT\"," +
+				"\"followBase\":true," +
+				"\"usingInbuiltSymbolicRules\":false," +
+				"\"trunks\":[" +
+					"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+					"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+				"]," +
+				"\"branches\":[" +
+					"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+					"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+				"]," +
+				"\"tags\":[" +
+					"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+					"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+				"]" +
+			"}" +
+		"}";
 	private final static String SVN_EXTRA_REQUEST = "{\n" +
 			"  \"svn\" : { \"url\" : \"svn.example.com/crucible-plugin/\", \"path\" : \"src\", \n" +
 			"            \"username\" : \"user\", \"password\" : \"pwd\", \n" +
