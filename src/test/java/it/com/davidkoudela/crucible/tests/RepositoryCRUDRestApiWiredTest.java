@@ -42,7 +42,7 @@ public class RepositoryCRUDRestApiWiredTest
 				"\"checkoutURL\":{}" +
 			"}," +
 			"\"cvs\":{\"directory\":\"c:\\\\\",\"charset\":{\"charsetName\":\"ISO-8859-1\"}}" +
-			"}";
+		"}";
 	private final static String CVS_EXTRA_REQUEST = "{\n" +
 			"  \"cvs\" : { \"directory\" : \"c:\\\\\", \"charset\" : { \"charsetName\" : \"ISO-8859-1\" } },\n" +
 			"  \"name\" : \"corp-cvs\",\n" +
@@ -70,15 +70,16 @@ public class RepositoryCRUDRestApiWiredTest
 				"\"allowExcludes\":[]," +
 				"\"updateOptions\":{" +
 					"\"pollingInterval\":\"45s\"," +
-					"\"cvs\":{\"fullScanInterval\":\"55min\",\"historyFile\":\"./CVSROOT/history\",\"stripPrefix\":\"opt\"}}," +
-					"\"simpleLinkers\":[]," +
-					"\"advancedLinkers\":[]," +
-					"\"hiddenDirectories\":[]," +
-					"\"requiredGroups\":[]," +
-					"\"checkoutURL\":{}" +
+					"\"cvs\":{\"fullScanInterval\":\"55min\",\"historyFile\":\"./CVSROOT/history\",\"stripPrefix\":\"opt\"}" +
 				"}," +
-				"\"cvs\":{\"directory\":\"c:\\\\\",\"charset\":{\"charsetName\":\"ISO-8859-1\"}}" +
-			"}";
+				"\"simpleLinkers\":[]," +
+				"\"advancedLinkers\":[]," +
+				"\"hiddenDirectories\":[]," +
+				"\"requiredGroups\":[]," +
+				"\"checkoutURL\":{}" +
+			"}," +
+			"\"cvs\":{\"directory\":\"c:\\\\\",\"charset\":{\"charsetName\":\"ISO-8859-1\"}}" +
+		"}";
 
 	private final static String GIT_NAME = "corp-git";
 	private final static String GIT_BASIC_REQUEST = "{\n" +
@@ -92,7 +93,31 @@ public class RepositoryCRUDRestApiWiredTest
 			"  \"started\" : false\n" +
 			"}";
 // TODO
-	private final static String GIT_BASIC_RESPONSE = "{\"name\":\"corp-git\",\"description\":\"corp-git description\",\"storeDiff\":false,\"extraOptions\":{\"usingDefaultsPermissions\":true,\"allowAnon\":false,\"allowLoggedUsers\":false,\"allowIncludes\":[],\"allowExcludes\":[],\"simpleLinkers\":[],\"advancedLinkers\":[],\"hiddenDirectories\":[],\"requiredGroups\":[],\"checkoutURL\":{\"URL\":\"git@git.example.com:plugins/crucible-plugin.git\"}},\"git\":{\"location\":\"git@git.example.com:plugins/crucible-plugin.git\",\"path\":\"src\",\"auth\":{},\"blockSize\":1024,\"commandTimeout\":\"30 minute\",\"renameDetection\":\"COPIES\"}}";
+	private final static String GIT_BASIC_RESPONSE = "{" +
+			"\"name\":\"corp-git\"," +
+			"\"description\":\"corp-git description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+					"\"usingDefaultsPermissions\":true," +
+					"\"allowAnon\":false," +
+					"\"allowLoggedUsers\":false," +
+					"\"allowIncludes\":[]," +
+					"\"allowExcludes\":[]," +
+					"\"simpleLinkers\":[]," +
+					"\"advancedLinkers\":[]," +
+					"\"hiddenDirectories\":[]," +
+					"\"requiredGroups\":[]," +
+					"\"checkoutURL\":{\"URL\":\"git@git.example.com:plugins/crucible-plugin.git\"}" +
+			"}," +
+			"\"git\":{" +
+					"\"location\":\"git@git.example.com:plugins/crucible-plugin.git\"," +
+					"\"path\":\"src\"," +
+					"\"auth\":{}," +
+					"\"blockSize\":1024," +
+					"\"commandTimeout\":\"30 minute\"," +
+					"\"renameDetection\":\"COPIES\"" +
+			"}" +
+		"}";
 	private final static String GIT_PASSWORD_REQUEST = "{\n" +
 			"  \"git\" : { \"location\" : \"git@git.example.com:plugins/crucible-plugin.git\", \n" +
 			"          \"auth\" : { \"password\" : \"topSecret\" }\n" +
