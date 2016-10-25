@@ -446,6 +446,7 @@ public class RepositoryDataFactory {
 			repositoryRestData.name = hgRepositoryData.getName();
 			repositoryRestData.hg = new HgRepositoryRestData();
 			repositoryRestData.hg.location = hgRepositoryData.getLocation();
+			repositoryRestData.hg.path = hgRepositoryData.getPath();
 			repositoryRestData.hg.auth = getKeyAuthenticationRestData(hgRepositoryData.getAuthentication());
 			repositoryRestData.hg.blockSize = hgRepositoryData.getBlockSize();
 			repositoryRestData.hg.commandTimeout = hgRepositoryData.getCommandTimeout();
