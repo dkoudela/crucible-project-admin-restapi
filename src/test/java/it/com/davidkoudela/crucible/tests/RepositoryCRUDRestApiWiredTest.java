@@ -270,7 +270,6 @@ public class RepositoryCRUDRestApiWiredTest
 			"  \"enabled\" : false,\n" +
 			"  \"started\" : false\n" +
 			"}";
-	// TODO
 	private final static String MERCURIAL_KEYPAIR_RESPONSE = "{" +
 			"\"name\":\"corp-hg\"," +
 			"\"description\":\"corp-hg description\"," +
@@ -317,7 +316,41 @@ public class RepositoryCRUDRestApiWiredTest
 			"  \"enabled\" : false,\n" +
 			"  \"started\" : false\n" +
 			"}";
-	private final static String P4_BASIC_RESPONSE = "{\"name\":\"corp-p4\",\"description\":\"corp-p4 description\",\"storeDiff\":false,\"extraOptions\":{\"usingDefaultsPermissions\":true,\"allowAnon\":false,\"allowLoggedUsers\":false,\"allowIncludes\":[],\"allowExcludes\":[],\"simpleLinkers\":[],\"advancedLinkers\":[],\"hiddenDirectories\":[],\"requiredGroups\":[],\"checkoutURL\":{\"Host\":\"ssl:p4.example.com\",\"Port\":\"1667\",\"Path\":\"//depot/crucible-plugin/\"}},\"p4\":{\"server\":\"ssl:p4.example.com\",\"path\":\"//depot/crucible-plugin/\",\"username\":\"p4user\",\"blockSize\":1024,\"caseSensitive\":false,\"disableMutli\":true,\"charset\":{\"charsetName\":\"ISO-8859-2\"},\"commandTimeout\":\"30 minute\",\"connectionsPerSecond\":20.0,\"fileLogLimit\":666,\"initialImport\":false,\"port\":1667,\"skipLabels\":true,\"startRevision\":1,\"unicode\":true}}";
+	// TODO
+	private final static String P4_BASIC_RESPONSE = "{" +
+			"\"name\":\"corp-p4\"," +
+			"\"description\":\"corp-p4 description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+				"\"usingDefaultsPermissions\":true," +
+				"\"allowAnon\":false," +
+				"\"allowLoggedUsers\":false," +
+				"\"allowIncludes\":[]," +
+				"\"allowExcludes\":[]," +
+				"\"simpleLinkers\":[]," +
+				"\"advancedLinkers\":[]," +
+				"\"hiddenDirectories\":[]," +
+				"\"requiredGroups\":[]," +
+				"\"checkoutURL\":{\"Host\":\"ssl:p4.example.com\",\"Port\":\"1667\",\"Path\":\"//depot/crucible-plugin/\"}" +
+			"}," +
+			"\"p4\":{" +
+				"\"server\":\"ssl:p4.example.com\"," +
+				"\"path\":\"//depot/crucible-plugin/\"," +
+				"\"username\":\"p4user\"," +
+				"\"blockSize\":1024," +
+				"\"caseSensitive\":false," +
+				"\"disableMutli\":true," +
+				"\"charset\":{\"charsetName\":\"ISO-8859-2\"}," +
+				"\"commandTimeout\":\"30 minute\"," +
+				"\"connectionsPerSecond\":20.0," +
+				"\"fileLogLimit\":666," +
+				"\"initialImport\":false," +
+				"\"port\":1667," +
+				"\"skipLabels\":true," +
+				"\"startRevision\":1," +
+				"\"unicode\":true" +
+			"}" +
+		"}";
 
 	private final static String SVN_NAME = "corp-svn";
 	private final static String SVN_BASIC_REQUEST = "{\n" +
