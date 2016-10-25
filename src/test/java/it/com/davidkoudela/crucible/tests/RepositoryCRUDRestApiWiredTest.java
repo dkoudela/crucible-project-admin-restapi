@@ -127,7 +127,6 @@ public class RepositoryCRUDRestApiWiredTest
 			"  \"enabled\" : false,\n" +
 			"  \"started\" : false\n" +
 			"}";
-	// TODO
 	private final static String GIT_PASSWORD_RESPONSE = "{" +
 			"\"name\":\"corp-git\"," +
 			"\"description\":\"corp-git description\"," +
@@ -162,7 +161,29 @@ public class RepositoryCRUDRestApiWiredTest
 			"  \"enabled\" : false,\n" +
 			"  \"started\" : false\n" +
 			"}";
-	private final static String GIT_KEYPAIR_RESPONSE = "{\"name\":\"corp-git\",\"description\":\"corp-git description\",\"storeDiff\":false,\"extraOptions\":{\"usingDefaultsPermissions\":true,\"allowAnon\":false,\"allowLoggedUsers\":false,\"allowIncludes\":[],\"allowExcludes\":[],\"simpleLinkers\":[],\"advancedLinkers\":[],\"hiddenDirectories\":[],\"requiredGroups\":[],\"checkoutURL\":{\"URL\":\"git@git.example.com:plugins/crucible-plugin.git\"}},\"git\":{\"location\":\"git@git.example.com:plugins/crucible-plugin.git\",\"auth\":{},\"renameDetection\":\"NONE\"}}";
+	// TODO
+	private final static String GIT_KEYPAIR_RESPONSE = "{" +
+			"\"name\":\"corp-git\"," +
+			"\"description\":\"corp-git description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+				"\"usingDefaultsPermissions\":true," +
+				"\"allowAnon\":false," +
+				"\"allowLoggedUsers\":false," +
+				"\"allowIncludes\":[]," +
+				"\"allowExcludes\":[]," +
+				"\"simpleLinkers\":[]," +
+				"\"advancedLinkers\":[]," +
+				"\"hiddenDirectories\":[]," +
+				"\"requiredGroups\":[]," +
+				"\"checkoutURL\":{\"URL\":\"git@git.example.com:plugins/crucible-plugin.git\"}" +
+			"}," +
+			"\"git\":{" +
+				"\"location\":\"git@git.example.com:plugins/crucible-plugin.git\"," +
+				"\"auth\":{}," +
+				"\"renameDetection\":\"NONE\"" +
+			"}" +
+		"}";
 
 	private final static String MERCURIAL_NAME = "corp-hg";
 	private final static String MERCURIAL_BASIC_REQUEST = "{\n" +
