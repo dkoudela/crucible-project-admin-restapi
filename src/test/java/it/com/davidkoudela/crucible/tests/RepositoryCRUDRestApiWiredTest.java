@@ -233,7 +233,29 @@ public class RepositoryCRUDRestApiWiredTest
 			"  \"started\" : false\n" +
 			"}";
 	// TODO
-	private final static String MERCURIAL_PASSWORD_RESPONSE = "{\"name\":\"corp-hg\",\"description\":\"corp-hg description\",\"storeDiff\":false,\"extraOptions\":{\"usingDefaultsPermissions\":true,\"allowAnon\":false,\"allowLoggedUsers\":false,\"allowIncludes\":[],\"allowExcludes\":[],\"simpleLinkers\":[],\"advancedLinkers\":[],\"hiddenDirectories\":[],\"requiredGroups\":[],\"checkoutURL\":{\"URL\":\"c:\\\\hg-repo\\\\crucible-plugin-hg\"}},\"hg\":{\"location\":\"c:\\\\hg-repo\\\\crucible-plugin-hg\",\"auth\":{},\"commandTimeout\":\"30 minute\",\"blockSize\":1024}}";
+	private final static String MERCURIAL_PASSWORD_RESPONSE = "{" +
+			"\"name\":\"corp-hg\"," +
+			"\"description\":\"corp-hg description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+				"\"usingDefaultsPermissions\":true," +
+				"\"allowAnon\":false," +
+				"\"allowLoggedUsers\":false," +
+				"\"allowIncludes\":[]," +
+				"\"allowExcludes\":[]," +
+				"\"simpleLinkers\":[]," +
+				"\"advancedLinkers\":[]," +
+				"\"hiddenDirectories\":[]," +
+				"\"requiredGroups\":[]," +
+				"\"checkoutURL\":{\"URL\":\"c:\\\\hg-repo\\\\crucible-plugin-hg\"}" +
+			"}," +
+			"\"hg\":{" +
+				"\"location\":\"c:\\\\hg-repo\\\\crucible-plugin-hg\"," +
+				"\"auth\":{}," +
+				"\"commandTimeout\":\"30 minute\"," +
+				"\"blockSize\":1024" +
+			"}" +
+		"}";
 	private final static String MERCURIAL_KEYPAIR_REQUEST = "{\n" +
 			"  \"hg\" : { \"location\" : \"c:\\\\hg-repo\\\\crucible-plugin-hg\", \n" +
 			"           \"path\" : \"src\", \"blockSize\" : 1024, \n" +
