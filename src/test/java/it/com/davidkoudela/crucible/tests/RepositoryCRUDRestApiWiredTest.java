@@ -386,7 +386,6 @@ public class RepositoryCRUDRestApiWiredTest
 			"  \"enabled\" : false,\n" +
 			"  \"started\" : false\n" +
 			"}";
-	// TODO
 	private final static String SVN_BASIC_RESPONSE = "{" +
 			"\"name\":\"corp-svn\"," +
 			"\"description\":\"corp-svn description\"," +
@@ -508,7 +507,82 @@ public class RepositoryCRUDRestApiWiredTest
 			"                        \"Path\" : \"/opt\" }\n" +
 			"  }\n" +
 			"}";
-	private final static String SVN_EXTRA_RESPONSE = "{\"name\":\"corp-svn\",\"description\":\"corp-svn description\",\"storeDiff\":false,\"extraOptions\":{\"usingDefaultsPermissions\":false,\"allowAnon\":true,\"allowLoggedUsers\":true,\"watchesEnabled\":true,\"changesetDiscussionsEnabled\":true,\"allowIncludes\":[{\"path\":\"test\",\"caseSensitive\":false},{\"path\":\"testautomation\",\"caseSensitive\":false}],\"allowExcludes\":[{\"path\":\"var\",\"caseSensitive\":false},{\"path\":\"log\",\"caseSensitive\":true}],\"tarballSettings\":{\"maxFiles\":1024,\"enabled\":true,\"excludes\":[{\"baseDirectory\":\"test\",\"excludeSubdirs\":false},{\"baseDirectory\":\"testautomation\",\"excludeSubdirs\":true}]},\"commitMessageSyntaxSettings\":{\"syntaxType\":\"WIKI\",\"wikiSyntaxStartDate\":\"Aug 17, 2015 12:00:00 AM\"},\"maxIndexableSize\":5242880,\"updateOptions\":{\"pollingInterval\":\"45s\"},\"simpleLinkers\":[{\"description\":\"SLD1\",\"href\":\"http://example.com\",\"regex\":\"^example\"},{\"description\":\"SLD2\",\"href\":\"http://foo.com\",\"regex\":\"^foo\"}],\"advancedLinkers\":[{\"description\":\"ALD1\",\"syntaxDef\":\"^[0-9]\"},{\"description\":\"ALD1\",\"syntaxDef\":\"^[A-Z]\"}],\"hiddenDirectories\":[{\"path\":\"test\",\"caseSensitive\":false},{\"path\":\"testautomation\",\"caseSensitive\":false}],\"requiredGroups\":[],\"showCheckoutURL\":true,\"checkoutURL\":{\"URL\":\"\"}},\"svn\":{\"url\":\"svn.example.com/crucible-plugin/\",\"path\":\"src\",\"username\":\"user\",\"blockSize\":1024,\"commandTimeout\":\"30 minute\",\"connectionsPerSecond\":20.0,\"charset\":{\"charsetName\":\"ISO-8859-1\"},\"accessCode\":\"md5:dc0c08df1f3e80b599c90f53d7dd05ec\",\"startRevision\":1,\"initialImport\":\"NO_IMPORT\",\"followBase\":true,\"usingInbuiltSymbolicRules\":false,\"trunks\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"},{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}],\"branches\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"},{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}],\"tags\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"},{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}]}}";
+	// TODO
+	private final static String SVN_EXTRA_RESPONSE = "{" +
+			"\"name\":\"corp-svn\"," +
+			"\"description\":\"corp-svn description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+				"\"usingDefaultsPermissions\":false," +
+				"\"allowAnon\":true," +
+				"\"allowLoggedUsers\":true," +
+				"\"watchesEnabled\":true," +
+				"\"changesetDiscussionsEnabled\":true," +
+				"\"allowIncludes\":[" +
+					"{\"path\":\"test\",\"caseSensitive\":false}," +
+					"{\"path\":\"testautomation\",\"caseSensitive\":false}" +
+				"]," +
+				"\"allowExcludes\":[" +
+					"{\"path\":\"var\",\"caseSensitive\":false}," +
+					"{\"path\":\"log\",\"caseSensitive\":true}" +
+				"]," +
+				"\"tarballSettings\":{" +
+					"\"maxFiles\":1024," +
+					"\"enabled\":true," +
+					"\"excludes\":[" +
+						"{\"baseDirectory\":\"test\",\"excludeSubdirs\":false}," +
+						"{\"baseDirectory\":\"testautomation\",\"excludeSubdirs\":true}" +
+					"]" +
+				"}," +
+				"\"commitMessageSyntaxSettings\":{" +
+					"\"syntaxType\":\"WIKI\"," +
+					"\"wikiSyntaxStartDate\":\"Aug 17, 2015 12:00:00 AM\"" +
+				"}," +
+				"\"maxIndexableSize\":5242880," +
+				"\"updateOptions\":{\"pollingInterval\":\"45s\"}," +
+				"\"simpleLinkers\":[" +
+					"{\"description\":\"SLD1\",\"href\":\"http://example.com\",\"regex\":\"^example\"}," +
+					"{\"description\":\"SLD2\",\"href\":\"http://foo.com\",\"regex\":\"^foo\"}" +
+				"]," +
+				"\"advancedLinkers\":[" +
+					"{\"description\":\"ALD1\",\"syntaxDef\":\"^[0-9]\"}," +
+					"{\"description\":\"ALD1\",\"syntaxDef\":\"^[A-Z]\"}" +
+				"]," +
+				"\"hiddenDirectories\":[" +
+					"{\"path\":\"test\",\"caseSensitive\":false}," +
+					"{\"path\":\"testautomation\",\"caseSensitive\":false}" +
+				"]," +
+				"\"requiredGroups\":[]," +
+				"\"showCheckoutURL\":true," +
+				"\"checkoutURL\":{\"URL\":\"\"}"+
+			"}," +
+			"\"svn\":{" +
+				"\"url\":\"svn.example.com/crucible-plugin/\"," +
+				"\"path\":\"src\"," +
+				"\"username\":\"user\"," +
+				"\"blockSize\":1024," +
+				"\"commandTimeout\":\"30 minute\"," +
+				"\"connectionsPerSecond\":20.0," +
+				"\"charset\":{\"charsetName\":\"ISO-8859-1\"}," +
+				"\"accessCode\":\"md5:dc0c08df1f3e80b599c90f53d7dd05ec\"," +
+				"\"startRevision\":1," +
+				"\"initialImport\":\"NO_IMPORT\"," +
+				"\"followBase\":true," +
+				"\"usingInbuiltSymbolicRules\":false," +
+				"\"trunks\":[" +
+					"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+					"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+				"]," +
+				"\"branches\":[" +
+					"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+					"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+				"]," +
+				"\"tags\":[" +
+					"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+					"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+				"]" +
+			"}" +
+"		}";
 
 	private final RepositoryAdminModel repositoryAdminModel;
 	private final RepositoryRestDataService repositoryRestDataService;
