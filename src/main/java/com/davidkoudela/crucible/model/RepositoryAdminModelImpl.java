@@ -7,7 +7,7 @@ import com.atlassian.fisheye.spi.admin.services.RepositoryConfigException;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryDataImpl;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryFactory;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryNameListImpl;
-import com.davidkoudela.crucible.rest.response.ResponseRepositoryOperation;
+import com.davidkoudela.crucible.rest.response.ResponseRepositoryOperationImpl;
 import com.google.common.collect.Sets;
 
 import java.util.*;
@@ -30,7 +30,7 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 		this.repositoryAdminService = repositoryAdminService;
 	}
 
-	public ResponseRepositoryOperation newRepository(RepositoryRestData repositoryRestData)
+	public ResponseRepositoryOperationImpl newRepository(RepositoryRestData repositoryRestData)
 	{
 		try {
 			repositoryRestData.verify();
@@ -57,7 +57,7 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 		return ResponseRepositoryFactory.constructResponse("200", "operation succeeded", "");
 	}
 
-	public ResponseRepositoryOperation updateRepository(RepositoryRestData repositoryRestData) {
+	public ResponseRepositoryOperationImpl updateRepository(RepositoryRestData repositoryRestData) {
 		try {
 			repositoryRestData.verify();
 
@@ -91,7 +91,7 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 		return ResponseRepositoryFactory.constructResponse("200", "operation succeeded", "");
 	}
 
-	public ResponseRepositoryOperation deleteRepository(RepositoryRestData repositoryRestData) {
+	public ResponseRepositoryOperationImpl deleteRepository(RepositoryRestData repositoryRestData) {
 		try {
 			repositoryRestData.verifyOnDelete();
 

@@ -26,6 +26,9 @@
     <component key="responseRepositoryData" class="com.davidkoudela.crucible.rest.response.ResponseRepositoryDataImpl" public="true">
         <interface>com.davidkoudela.crucible.rest.response.ResponseRepositoryData</interface>
     </component>
+    <component key="responseRepositoryOperation" class="com.davidkoudela.crucible.rest.response.ResponseRepositoryOperationImpl" public="true">
+        <interface>com.davidkoudela.crucible.rest.response.ResponseRepositoryOperation</interface>
+    </component>
     <!-- publish stub components -->
     <component key="userManagementStub" class="com.davidkoudela.crucible.stub.UserManagementStubImpl" public="true">
         <interface>com.davidkoudela.crucible.stub.UserManagementStub</interface>

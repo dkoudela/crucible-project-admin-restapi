@@ -37,6 +37,9 @@
     <bean id="responseRepositoryData" name="ResponseRepositoryData" class="com.davidkoudela.crucible.rest.response.ResponseRepositoryDataImpl">
         <plugin:interface>com.davidkoudela.crucible.rest.response.ResponseRepositoryData</plugin:interface>
     </bean>
+    <bean id="responseRepositoryOperation" name="ResponseRepositoryOperation" class="com.davidkoudela.crucible.rest.response.ResponseRepositoryOperationImpl">
+        <plugin:interface>com.davidkoudela.crucible.rest.response.ResponseRepositoryOperation</plugin:interface>
+    </bean>
 
     <!-- Integration test stub beans -->
     <bean id="userManagementStub" name="UserManagementStub" class="com.davidkoudela.crucible.stub.UserManagementStubImpl">

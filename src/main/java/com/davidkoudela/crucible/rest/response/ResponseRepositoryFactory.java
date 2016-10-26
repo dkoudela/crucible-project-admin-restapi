@@ -14,14 +14,14 @@ import java.util.Set;
  * @since 13.8.2015
  */
 public class ResponseRepositoryFactory {
-	public static ResponseRepositoryOperation constructResponse(String code, String message, String cause)
+	public static ResponseRepositoryOperationImpl constructResponse(String code, String message, String cause)
 	{
 		Map<String, String> response = new LinkedHashMap<String, String>();
 		response.put("code", code);
 		response.put("message", message);
 		response.put("cause", cause);
-		ResponseRepositoryOperation responseRepositoryOperation = new ResponseRepositoryOperation(response);
-		return responseRepositoryOperation;
+		ResponseRepositoryOperationImpl responseRepositoryOperationImpl = new ResponseRepositoryOperationImpl(response);
+		return responseRepositoryOperationImpl;
 	}
 
 	public static ResponseRepositoryNameListImpl constructResponseWithList(String code, String message, String cause, Set<String> names)

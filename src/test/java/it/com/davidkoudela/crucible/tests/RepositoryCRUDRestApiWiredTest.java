@@ -3,6 +3,7 @@ package it.com.davidkoudela.crucible.tests;
 import com.davidkoudela.crucible.model.RepositoryAdminModel;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryData;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryNameList;
+import com.davidkoudela.crucible.rest.response.ResponseRepositoryOperation;
 import com.davidkoudela.crucible.stub.UserManagementStub;
 import it.com.davidkoudela.crucible.framework.RepositoryRestDataService;
 import org.junit.*;
@@ -38,7 +39,7 @@ public class RepositoryCRUDRestApiWiredTest extends RepositoryCRUDRestApiWiredAb
 
 	private void executeCRD(String name, String request, String response) {
 		try {
-			this.repositoryAdminModel.newRepository(this.repositoryRestDataService.createRepositoryData(request));
+			ResponseRepositoryOperation responseRepositoryOperation = this.repositoryAdminModel.newRepository(this.repositoryRestDataService.createRepositoryData(request));
 			ResponseRepositoryData responseRepositoryData = this.repositoryAdminModel.listRepository(name);
 			Map<String, String> result = this.repositoryRestDataService.compareRepositoryData(response, responseRepositoryData.getRepositoryRestData());
 			assertEquals("Comparison of expected and actual RepositoryRestData", result.get("expected"), result.get("actual"));
