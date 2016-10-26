@@ -37,15 +37,21 @@ public class RepositoryCRUDRestApiWiredTest extends RepositoryCRUDRestApiWiredAb
 		this.userManagementStub = userManagementStub;
 	}
 
+	private void checkRepositoryAdminModelResponseStatus(Map<String, String> response) {
+		assertEquals("operation succeeded", response.get("message"));
+		assertEquals("200", response.get("code"));
+	}
+
 	private void executeCRD(String name, String request, String response) {
 		try {
 			ResponseRepositoryOperation responseRepositoryOperation = this.repositoryAdminModel.newRepository(this.repositoryRestDataService.createRepositoryData(request));
+			checkRepositoryAdminModelResponseStatus(responseRepositoryOperation.getResponse());
+
 			ResponseRepositoryData responseRepositoryData = this.repositoryAdminModel.listRepository(name);
 			Map<String, String> result = this.repositoryRestDataService.compareRepositoryData(response, responseRepositoryData.getRepositoryRestData());
 			assertEquals("Comparison of expected and actual RepositoryRestData", result.get("expected"), result.get("actual"));
-			Map<String, String> listRepositoryResponse = responseRepositoryData.getResponse();
-			assertEquals("200", listRepositoryResponse.get("code"));
-			assertEquals("operation succeeded", listRepositoryResponse.get("message"));
+			checkRepositoryAdminModelResponseStatus(responseRepositoryData.getResponse());
+
 		} finally {
 			this.repositoryAdminModel.deleteRepository(this.repositoryRestDataService.createRepositoryData(request));
 		}
