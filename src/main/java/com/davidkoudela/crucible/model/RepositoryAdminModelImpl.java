@@ -95,6 +95,7 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 		try {
 			repositoryRestData.verifyOnDelete();
 
+			deleteRepositoryAdminServiceSpecificParameters(repositoryRestData);
 			this.repositoryAdminService.delete(repositoryRestData.name);
 		}
 		catch (Exception e)
@@ -135,16 +136,18 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 	}
 
 	private void setRepositoryAdminServiceSpecificParameters(RepositoryRestData repositoryRestData) throws RepositoryConfigException {
-		if (null != repositoryRestData.extraOptions.requiredGroups) {
-			for (String group : repositoryRestData.extraOptions.requiredGroups) {
-				this.repositoryAdminService.addRequiredGroup(repositoryRestData.name, group);
+		if (null != repositoryRestData.extraOptions) {
+			if (null != repositoryRestData.extraOptions.requiredGroups) {
+				for (String group : repositoryRestData.extraOptions.requiredGroups) {
+					this.repositoryAdminService.addRequiredGroup(repositoryRestData.name, group);
+				}
 			}
-		}
-		if (null != repositoryRestData.extraOptions.allowAnon) {
-			this.repositoryAdminService.setAllowAnonymous(repositoryRestData.name, repositoryRestData.extraOptions.allowAnon);
-		}
-		if (null != repositoryRestData.extraOptions.allowLoggedUsers) {
-			this.repositoryAdminService.setAllowLoggedIn(repositoryRestData.name, repositoryRestData.extraOptions.allowLoggedUsers);
+			if (null != repositoryRestData.extraOptions.allowAnon) {
+				this.repositoryAdminService.setAllowAnonymous(repositoryRestData.name, repositoryRestData.extraOptions.allowAnon);
+			}
+			if (null != repositoryRestData.extraOptions.allowLoggedUsers) {
+				this.repositoryAdminService.setAllowLoggedIn(repositoryRestData.name, repositoryRestData.extraOptions.allowLoggedUsers);
+			}
 		}
 	}
 	private void setRepositoryRestDataFromRepositoryAdminService(RepositoryRestData repositoryRestData) {
@@ -152,5 +155,11 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 		repositoryRestData.extraOptions.requiredGroups = Sets.newHashSet(it);
 		repositoryRestData.extraOptions.allowAnon = this.repositoryAdminService.getAllowAnonymous(repositoryRestData.name);
 		repositoryRestData.extraOptions.allowLoggedUsers = this.repositoryAdminService.getAllowLoggedIn(repositoryRestData.name);
+	}
+
+	private void deleteRepositoryAdminServiceSpecificParameters(RepositoryRestData repositoryRestData) throws RepositoryConfigException {
+		for (String group : this.repositoryAdminService.getRequiredGroups(repositoryRestData.name, PageRequest.createDefault()).getValues()) {
+			this.repositoryAdminService.removeRequiredGroup(repositoryRestData.name, group);
+		}
 	}
 }

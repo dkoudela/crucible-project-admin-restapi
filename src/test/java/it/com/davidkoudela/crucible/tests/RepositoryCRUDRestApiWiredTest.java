@@ -551,7 +551,7 @@ public class RepositoryCRUDRestApiWiredTest
 					"{\"path\":\"test\",\"caseSensitive\":false}," +
 					"{\"path\":\"testautomation\",\"caseSensitive\":false}" +
 				"]," +
-				"\"requiredGroups\":[ \"testGroup01\", \"testGroup02\" ]," +
+				"\"requiredGroups\":[ \"testgroup01\", \"testgroup02\" ]," +
 				"\"showCheckoutURL\":true," +
 				"\"checkoutURL\":{\"URL\":\"\"}"+
 			"}," +
@@ -601,6 +601,9 @@ public class RepositoryCRUDRestApiWiredTest
 			ResponseRepositoryData responseRepositoryData = this.repositoryAdminModel.listRepository(name);
 			Map<String, String> result = this.repositoryRestDataService.compareRepositoryData(response, responseRepositoryData.getRepositoryRestData());
 			assertEquals("Comparison of expected and actual RepositoryRestData", result.get("expected"), result.get("actual"));
+			Map<String, String> listRepositoryResponse = responseRepositoryData.getResponse();
+			assertEquals("200", listRepositoryResponse.get("code"));
+			assertEquals("operation succeeded", listRepositoryResponse.get("message"));
 		} finally {
 			this.repositoryAdminModel.deleteRepository(this.repositoryRestDataService.createRepositoryData(request));
 		}
@@ -627,7 +630,7 @@ public class RepositoryCRUDRestApiWiredTest
 	{
 		verifyCleanEnvironment();
 	}
-/*
+
 	@Test
 	public void testCreateDeleteOneCvsBasicRepository()
 	{
@@ -687,10 +690,11 @@ public class RepositoryCRUDRestApiWiredTest
 	{
 		executeCRD(SVN_NAME, SVN_BASIC_REQUEST, SVN_BASIC_RESPONSE);
 	}
-*/
+
 	@Test
 	public void testCreateDeleteOneSvnExtraRepository()
 	{
 		executeCRD(SVN_NAME, SVN_EXTRA_REQUEST, SVN_EXTRA_RESPONSE);
 	}
+
 }
