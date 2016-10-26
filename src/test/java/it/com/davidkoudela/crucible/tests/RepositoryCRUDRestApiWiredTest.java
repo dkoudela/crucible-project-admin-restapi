@@ -500,14 +500,13 @@ public class RepositoryCRUDRestApiWiredTest
 			"                                \"caseSensitive\" : false }, \n" +
 			"                              { \"path\" : \"testautomation\", \n" +
 			"                                \"caseSensitive\" : false } ],\n" +
-			"      \"requiredGroups\" : [ \"team-1\", \"team-2\" ],\n" +
+			"      \"requiredGroups\" : [ \"testGroup01\", \"testGroup02\" ],\n" +
 			"      \"showCheckoutURL\" : true,\n" +
 			"      \"checkoutURL\" : { \"Host\" : \"checkout.example.com\", \n" +
 			"                        \"Port\" : \"666\", \n" +
 			"                        \"Path\" : \"/opt\" }\n" +
 			"  }\n" +
 			"}";
-	// TODO
 	private final static String SVN_EXTRA_RESPONSE = "{" +
 			"\"name\":\"corp-svn\"," +
 			"\"description\":\"corp-svn description\"," +
@@ -552,7 +551,7 @@ public class RepositoryCRUDRestApiWiredTest
 					"{\"path\":\"test\",\"caseSensitive\":false}," +
 					"{\"path\":\"testautomation\",\"caseSensitive\":false}" +
 				"]," +
-				"\"requiredGroups\":[]," +
+				"\"requiredGroups\":[ \"testGroup01\", \"testGroup02\" ]," +
 				"\"showCheckoutURL\":true," +
 				"\"checkoutURL\":{\"URL\":\"\"}"+
 			"}," +
@@ -610,6 +609,8 @@ public class RepositoryCRUDRestApiWiredTest
 	@BeforeClass
 	public void setClass() {
 		this.userManagementStub.createAdminUserSession();
+		this.userManagementStub.createGroup("testGroup01");
+		this.userManagementStub.createGroup("testGroup02");
 	}
 
 	@Before
@@ -626,7 +627,7 @@ public class RepositoryCRUDRestApiWiredTest
 	{
 		verifyCleanEnvironment();
 	}
-
+/*
 	@Test
 	public void testCreateDeleteOneCvsBasicRepository()
 	{
@@ -686,7 +687,7 @@ public class RepositoryCRUDRestApiWiredTest
 	{
 		executeCRD(SVN_NAME, SVN_BASIC_REQUEST, SVN_BASIC_RESPONSE);
 	}
-
+*/
 	@Test
 	public void testCreateDeleteOneSvnExtraRepository()
 	{

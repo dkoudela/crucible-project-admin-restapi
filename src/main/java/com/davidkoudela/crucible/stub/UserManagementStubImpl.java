@@ -60,4 +60,11 @@ public class UserManagementStubImpl implements UserManagementStub {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void createGroup(String group) {
+		if (!this.userManager.groupExists(group)) {
+			this.userManager.addGroup(group);
+		}
+	}
 }

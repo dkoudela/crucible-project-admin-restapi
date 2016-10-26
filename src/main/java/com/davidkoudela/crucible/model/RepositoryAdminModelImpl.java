@@ -1,11 +1,14 @@
 package com.davidkoudela.crucible.model;
 
+import com.atlassian.fecru.page.PageRequest;
 import com.atlassian.fisheye.spi.admin.data.*;
 import com.atlassian.fisheye.spi.admin.services.RepositoryAdminService;
+import com.atlassian.fisheye.spi.admin.services.RepositoryConfigException;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryDataImpl;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryFactory;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryNameListImpl;
 import com.davidkoudela.crucible.rest.response.ResponseRepositoryOperation;
+import com.google.common.collect.Sets;
 
 import java.util.*;
 
@@ -37,6 +40,7 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 
 			RepositoryOptions options = this.repositoryAdminService.getRepositoryOptions(repositoryRestData.name);
 			this.repositoryAdminService.setRepositoryOptions(repositoryRestData.name, RepositoryDataFactory.setRepositoryOptions(options, repositoryRestData));
+			setRepositoryAdminServiceSpecificParameters(repositoryRestData);
 
 			if (null != repositoryRestData.enabled && true == repositoryRestData.enabled) {
 				this.repositoryAdminService.enable(repositoryRestData.name);
@@ -62,6 +66,7 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 
 			RepositoryOptions options = this.repositoryAdminService.getRepositoryOptions(repositoryRestData.name);
 			this.repositoryAdminService.setRepositoryOptions(repositoryRestData.name, RepositoryDataFactory.setRepositoryOptions(options, repositoryRestData));
+			setRepositoryAdminServiceSpecificParameters(repositoryRestData);
 
 			if (null != repositoryRestData.enabled) {
 				if (true == repositoryRestData.enabled && false == this.repositoryAdminService.isEnabled(repositoryRestData.name)) {
@@ -119,6 +124,7 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 			RepositoryData repositoryData = this.repositoryAdminService.getRepositoryData(repositoryName);
 			RepositoryOptions options = this.repositoryAdminService.getRepositoryOptions(repositoryName);
 			RepositoryDataFactory.setRepositoryRestData(options, repositoryData, repositoryRestData);
+			setRepositoryRestDataFromRepositoryAdminService(repositoryRestData);
 		}
 		catch (Exception e)
 		{
@@ -128,4 +134,23 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 		return ResponseRepositoryFactory.constructResponseWithRepositoryData("200", "operation succeeded", "", repositoryRestData);
 	}
 
+	private void setRepositoryAdminServiceSpecificParameters(RepositoryRestData repositoryRestData) throws RepositoryConfigException {
+		if (null != repositoryRestData.extraOptions.requiredGroups) {
+			for (String group : repositoryRestData.extraOptions.requiredGroups) {
+				this.repositoryAdminService.addRequiredGroup(repositoryRestData.name, group);
+			}
+		}
+		if (null != repositoryRestData.extraOptions.allowAnon) {
+			this.repositoryAdminService.setAllowAnonymous(repositoryRestData.name, repositoryRestData.extraOptions.allowAnon);
+		}
+		if (null != repositoryRestData.extraOptions.allowLoggedUsers) {
+			this.repositoryAdminService.setAllowLoggedIn(repositoryRestData.name, repositoryRestData.extraOptions.allowLoggedUsers);
+		}
+	}
+	private void setRepositoryRestDataFromRepositoryAdminService(RepositoryRestData repositoryRestData) {
+		Iterable<String> it = this.repositoryAdminService.getRequiredGroups(repositoryRestData.name, PageRequest.createDefault()).getValues();
+		repositoryRestData.extraOptions.requiredGroups = Sets.newHashSet(it);
+		repositoryRestData.extraOptions.allowAnon = this.repositoryAdminService.getAllowAnonymous(repositoryRestData.name);
+		repositoryRestData.extraOptions.allowLoggedUsers = this.repositoryAdminService.getAllowLoggedIn(repositoryRestData.name);
+	}
 }

@@ -9,4 +9,5 @@ package com.davidkoudela.crucible.stub;
  */
 public interface UserManagementStub {
 	public void createAdminUserSession();
+	public void createGroup(String group);
 }
