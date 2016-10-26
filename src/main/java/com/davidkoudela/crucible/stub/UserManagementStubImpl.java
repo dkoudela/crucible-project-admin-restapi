@@ -2,16 +2,10 @@ package com.davidkoudela.crucible.stub;
 
 import com.atlassian.fecru.user.EffectiveUserProvider;
 import com.atlassian.fecru.user.FecruUser;
-import com.cenqua.crucible.model.Principal;
-import com.cenqua.crucible.model.managers.PermissionManager;
-import com.cenqua.crucible.model.managers.ProjectManager;
 import com.cenqua.fisheye.LicensePolicyException;
-import com.cenqua.fisheye.config.RepositoryManager;
 import com.cenqua.fisheye.user.AdminUserConfig;
-import com.cenqua.fisheye.user.LoginCookie;
 import com.cenqua.fisheye.user.UserLogin;
 import com.cenqua.fisheye.user.UserManager;
-import com.cenqua.fisheye.user.embeddedcrowd.EmbeddedCrowdAuthTok;
 
 import java.util.Set;
 
