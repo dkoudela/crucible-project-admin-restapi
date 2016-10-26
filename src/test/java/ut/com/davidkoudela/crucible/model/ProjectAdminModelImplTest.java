@@ -93,10 +93,12 @@ public class ProjectAdminModelImplTest extends TestCase
 		Mockito.when(permissionManager.findPermissionSchemeByName(scheme)).thenReturn(permissionScheme);
 		FecruUser user = new FecruUser(1, dmoder);
 		Mockito.when(userManager.getUser(dmoder)).thenReturn(user);
+		// FECRU4.1.1
+		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
+		// FECRU4.2
 		//RepositoryConfig repositoryConfig = Mockito.mock(RepositoryConfig.class);
 		//Mockito.when(repositoryConfig.getName()).thenReturn(repo);
 		//RepositoryHandle repositoryHandle = new RepositoryHandle(repositoryConfig, null, null);
-		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
 
 		ResponseProjectOperation responseProjectOperation = projectAdminModelImpl.newProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object);
@@ -175,10 +177,12 @@ public class ProjectAdminModelImplTest extends TestCase
 		Mockito.when(permissionManager.findPermissionSchemeByName(scheme)).thenReturn(permissionScheme);
 		FecruUser user = new FecruUser(1, dmoder);
 		Mockito.when(userManager.getUser(dmoder)).thenReturn(user);
+		// FECRU4.1.1
+		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
+		// FECRU4.2
 		//RepositoryConfig repositoryConfig = Mockito.mock(RepositoryConfig.class);
 		//Mockito.when(repositoryConfig.getName()).thenReturn(repo);
 		//RepositoryHandle repositoryHandle = new RepositoryHandle(repositoryConfig, null, null);
-		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
 
 		ResponseProjectOperation responseProjectOperation = projectAdminModelImpl.updateProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object);
