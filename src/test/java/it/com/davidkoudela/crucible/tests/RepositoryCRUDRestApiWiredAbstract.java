@@ -38,6 +38,32 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"}," +
 			"\"cvs\":{\"directory\":\"c:\\\\\",\"charset\":{\"charsetName\":\"ISO-8859-1\"}}" +
 			"}";
+	protected final static String CVS_BASIC_UPDATE_REQUEST = "{\n" +
+			"  \"cvs\" : { \"directory\" : \"c:\\\\\", \"charset\" : { \"charsetName\" : \"ISO-8859-1\" } },\n" +
+			"  \"name\" : \"corp-cvs\",\n" +
+			"  \"description\" : \"corp-cvs description\",\n" +
+			"  \"storeDiff\" : true,\n" +
+			"  \"enabled\" : false,\n" +
+			"  \"started\" : false\n" +
+			"}";
+	protected final static String CVS_BASIC_UPDATE_RESPONSE = "{" +
+			"\"name\":\"corp-cvs\"," +
+			"\"description\":\"corp-cvs description\"," +
+			"\"storeDiff\":true," +
+			"\"extraOptions\":{" +
+			"\"usingDefaultsPermissions\":true," +
+			"\"allowAnon\":false," +
+			"\"allowLoggedUsers\":false," +
+			"\"allowIncludes\":[]," +
+			"\"allowExcludes\":[]," +
+			"\"simpleLinkers\":[]," +
+			"\"advancedLinkers\":[]," +
+			"\"hiddenDirectories\":[]," +
+			"\"requiredGroups\":[]," +
+			"\"checkoutURL\":{}" +
+			"}," +
+			"\"cvs\":{\"directory\":\"c:\\\\\",\"charset\":{\"charsetName\":\"ISO-8859-1\"}}" +
+			"}";
 	protected final static String CVS_EXTRA_REQUEST = "{\n" +
 			"  \"cvs\" : { \"directory\" : \"c:\\\\\", \"charset\" : { \"charsetName\" : \"ISO-8859-1\" } },\n" +
 			"  \"name\" : \"corp-cvs\",\n" +
@@ -66,6 +92,43 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"updateOptions\":{" +
 			"\"pollingInterval\":\"45s\"," +
 			"\"cvs\":{\"fullScanInterval\":\"55min\",\"historyFile\":\"./CVSROOT/history\",\"stripPrefix\":\"opt\"}" +
+			"}," +
+			"\"simpleLinkers\":[]," +
+			"\"advancedLinkers\":[]," +
+			"\"hiddenDirectories\":[]," +
+			"\"requiredGroups\":[]," +
+			"\"checkoutURL\":{}" +
+			"}," +
+			"\"cvs\":{\"directory\":\"c:\\\\\",\"charset\":{\"charsetName\":\"ISO-8859-1\"}}" +
+			"}";
+	protected final static String CVS_EXTRA_UPDATE_REQUEST = "{\n" +
+			"  \"cvs\" : { \"directory\" : \"c:\\\\\", \"charset\" : { \"charsetName\" : \"ISO-8859-1\" } },\n" +
+			"  \"name\" : \"corp-cvs\",\n" +
+			"  \"description\" : \"corp-cvs description\",\n" +
+			"  \"storeDiff\" : false,\n" +
+			"  \"enabled\" : false,\n" +
+			"  \"started\" : false,\n" +
+			"  \"extraOptions\" : {\n" +
+			"    \"updateOptions\" : { \"disablePolling\" : false, \"pollingInterval\" : \"55s\", \n" +
+			"                        \"cvs\" : { \"fullScanInterval\" : \"65min\", \n" +
+			"                                  \"historyFile\" : \"./CVSROOT/history\", \n" +
+			"                                  \"stripPrefix\" : \"opt\" } \n" +
+			"    }\n" +
+			"  }\n" +
+			"}";
+	protected final static String CVS_EXTRA_UPDATE_RESPONSE = "{" +
+			"\"name\":\"corp-cvs\"," +
+			"\"description\":\"corp-cvs description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+			"\"usingDefaultsPermissions\":true," +
+			"\"allowAnon\":false," +
+			"\"allowLoggedUsers\":false," +
+			"\"allowIncludes\":[]," +
+			"\"allowExcludes\":[]," +
+			"\"updateOptions\":{" +
+			"\"pollingInterval\":\"55s\"," +
+			"\"cvs\":{\"fullScanInterval\":\"65min\",\"historyFile\":\"./CVSROOT/history\",\"stripPrefix\":\"opt\"}" +
 			"}," +
 			"\"simpleLinkers\":[]," +
 			"\"advancedLinkers\":[]," +
@@ -109,6 +172,41 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"auth\":{}," +
 			"\"blockSize\":1024," +
 			"\"commandTimeout\":\"30 minute\"," +
+			"\"renameDetection\":\"COPIES\"" +
+			"}" +
+			"}";
+	protected final static String GIT_BASIC_UPDATE_REQUEST = "{\n" +
+			"  \"git\" : { \"location\" : \"git@git.example.com:plugins/crucible-plugin.git\", \n" +
+			"          \"path\" : \"crs\", \"blockSize\" : 4096, \"commandTimeout\" : \"60 minute\", \n" +
+			"          \"renameDetection\" : \"COPIES\" },\n" +
+			"  \"name\" : \"corp-git\",\n" +
+			"  \"description\" : \"corp-git description\",\n" +
+			"  \"storeDiff\" : false,\n" +
+			"  \"enabled\" : false,\n" +
+			"  \"started\" : false\n" +
+			"}";
+	protected final static String GIT_BASIC_UPDATE_RESPONSE = "{" +
+			"\"name\":\"corp-git\"," +
+			"\"description\":\"corp-git description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+			"\"usingDefaultsPermissions\":true," +
+			"\"allowAnon\":false," +
+			"\"allowLoggedUsers\":false," +
+			"\"allowIncludes\":[]," +
+			"\"allowExcludes\":[]," +
+			"\"simpleLinkers\":[]," +
+			"\"advancedLinkers\":[]," +
+			"\"hiddenDirectories\":[]," +
+			"\"requiredGroups\":[]," +
+			"\"checkoutURL\":{\"URL\":\"git@git.example.com:plugins/crucible-plugin.git\"}" +
+			"}," +
+			"\"git\":{" +
+			"\"location\":\"git@git.example.com:plugins/crucible-plugin.git\"," +
+			"\"path\":\"crs\"," +
+			"\"auth\":{}," +
+			"\"blockSize\":4096," +
+			"\"commandTimeout\":\"60 minute\"," +
 			"\"renameDetection\":\"COPIES\"" +
 			"}" +
 			"}";
@@ -213,6 +311,41 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"auth\":{}," +
 			"\"commandTimeout\":\"30 minute\"," +
 			"\"blockSize\":1024" +
+			"}" +
+			"}";
+	protected final static String MERCURIAL_BASIC_UPDATE_REQUEST = "{\n" +
+			"  \"hg\" : { \"location\" : \"c:\\\\hg-repo\\\\crucible-plugin-hg\", \n" +
+			"           \"path\" : \"src\", \"blockSize\" : 4096, \n" +
+			"           \"commandTimeout\" : \"60 minute\", \n" +
+			"           \"auth\" : { \"password\" : \"myPassword\" }\n" +
+			"         },\n" +
+			"  \"name\" : \"corp-hg\",\n" +
+			"  \"description\" : \"corp-hg description\",\n" +
+			"  \"storeDiff\" : false,\n" +
+			"  \"enabled\" : false,\n" +
+			"  \"started\" : false\n" +
+			"}";
+	protected final static String MERCURIAL_BASIC_UPDATE_RESPONSE = "{" +
+			"\"name\":\"corp-hg\"," +
+			"\"description\":\"corp-hg description\","+
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+			"\"usingDefaultsPermissions\":true," +
+			"\"allowAnon\":false," +
+			"\"allowLoggedUsers\":false," +
+			"\"allowIncludes\":[]," +
+			"\"allowExcludes\":[]," +
+			"\"simpleLinkers\":[]," +
+			"\"advancedLinkers\":[]," +
+			"\"hiddenDirectories\":[]," +
+			"\"requiredGroups\":[]," +
+			"\"checkoutURL\":{\"URL\":\"c:\\\\hg-repo\\\\crucible-plugin-hg\"}" +
+			"}," +
+			"\"hg\":{" +
+			"\"location\":\"c:\\\\hg-repo\\\\crucible-plugin-hg\"," +
+			"\"auth\":{}," +
+			"\"commandTimeout\":\"60 minute\"," +
+			"\"blockSize\":4096" +
 			"}" +
 			"}";
 	protected final static String MERCURIAL_PASSWORD_REQUEST = "{\n" +
@@ -345,6 +478,61 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"unicode\":true" +
 			"}" +
 			"}";
+	protected final static String P4_BASIC_UPDATE_REQUEST = "{\n" +
+			"  \"p4\" : { \"server\" : \"ssl:p4.example.com\", \n" +
+			"           \"path\" : \"//depot/crucible-plugin/\", \"port\" : 1667,\n" +
+			"           \"username\" : \"p4user\", \"password\" : \"p4password\",\n" +
+			"           \"blockSize\" : 1024, \"commandTimeout\" : \"30 minute\",\n" +
+			"           \"caseSensitive\" : false, \"disableMutli\" : true,\n" +
+			"           \"charset\" : { \"charsetName\" : \"ISO-8859-2\" }, \n" +
+			"           \"commandTimeout\" : \"60 minute\", \n" +
+			"           \"connectionsPerSecond\" : 20.0,\n" +
+			"           \"fileLogLimit\" : 999,\n" +
+			"           \"initialImport\" : false,\n" +
+			"           \"skipLabels\" : false,\n" +
+			"           \"startRevision\" : 1,\n" +
+			"           \"unicode\" : true\n" +
+			"         },\n" +
+			"  \"name\" : \"corp-p4\",\n" +
+			"  \"description\" : \"corp-p4 description\",\n" +
+			"  \"storeDiff\" : false,\n" +
+			"  \"enabled\" : false,\n" +
+			"  \"started\" : false\n" +
+			"}";
+	protected final static String P4_BASIC_UPDATE_RESPONSE = "{" +
+			"\"name\":\"corp-p4\"," +
+			"\"description\":\"corp-p4 description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+			"\"usingDefaultsPermissions\":true," +
+			"\"allowAnon\":false," +
+			"\"allowLoggedUsers\":false," +
+			"\"allowIncludes\":[]," +
+			"\"allowExcludes\":[]," +
+			"\"simpleLinkers\":[]," +
+			"\"advancedLinkers\":[]," +
+			"\"hiddenDirectories\":[]," +
+			"\"requiredGroups\":[]," +
+			"\"checkoutURL\":{\"Host\":\"ssl:p4.example.com\",\"Port\":\"1667\",\"Path\":\"//depot/crucible-plugin/\"}" +
+			"}," +
+			"\"p4\":{" +
+			"\"server\":\"ssl:p4.example.com\"," +
+			"\"path\":\"//depot/crucible-plugin/\"," +
+			"\"username\":\"p4user\"," +
+			"\"blockSize\":1024," +
+			"\"caseSensitive\":false," +
+			"\"disableMutli\":true," +
+			"\"charset\":{\"charsetName\":\"ISO-8859-2\"}," +
+			"\"commandTimeout\":\"60 minute\"," +
+			"\"connectionsPerSecond\":20.0," +
+			"\"fileLogLimit\":999," +
+			"\"initialImport\":false," +
+			"\"port\":1667," +
+			"\"skipLabels\":false," +
+			"\"startRevision\":1," +
+			"\"unicode\":true" +
+			"}" +
+			"}";
 
 	protected final static String SVN_NAME = "corp-svn";
 	protected final static String SVN_BASIC_REQUEST = "{\n" +
@@ -412,6 +600,83 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"usingInbuiltSymbolicRules\":false," +
 			"\"trunks\":[" +
 			"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+			"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+			"]," +
+			"\"branches\":[" +
+			"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+			"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+			"]," +
+			"\"tags\":[" +
+			"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+			"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+			"]" +
+			"}" +
+			"}";
+	protected final static String SVN_BASIC_UPDATE_REQUEST = "{\n" +
+			"  \"svn\" : { \"url\" : \"svn.example.com/crucible-plugin/\", \"path\" : \"src\", \n" +
+			"            \"username\" : \"user\", \"password\" : \"pwd\", \n" +
+			"            \"blockSize\" : 1024, \"commandTimeout\" : \"30 minute\",\n" +
+			"            \"connectionsPerSecond\" : 20.0, \n" +
+			"            \"charset\" : { \"charsetName\" : \"ISO-8859-1\" }, \n" +
+			"            \"accessCode\" : \"md5:dc0c08df1f3e80b599c90f53d7dd05ec\",\n" +
+			"            \"startRevision\" : 1, \"initialImport\" : \"NO_IMPORT\", \n" +
+			"            \"followBase\" : false, \"usingInbuiltSymbolicRules\" : false,\n" +
+			"            \"trunks\" : [ { \"name\" : \"rename1\", \n" +
+			"                           \"regex\" : \"reregex1\", \n" +
+			"                           \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                         { \"name\" : \"name2\", \n" +
+			"                           \"regex\" : \"regex2\", \n" +
+			"                           \"logicalPathPrefix\" : \"logicalPathPrefix2\" } ],\n" +
+			"            \"branches\" : [ { \"name\" : \"name1\", \n" +
+			"                             \"regex\" : \"regex1\", \n" +
+			"                             \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                           { \"name\" : \"name2\", \n" +
+			"                             \"regex\" : \"regex2\", \n" +
+			"                             \"logicalPathPrefix\" : \"logicalPathPrefix2\" }],\n" +
+			"            \"tags\" : [ { \"name\" : \"name1\", \n" +
+			"                         \"regex\" : \"regex1\", \n" +
+			"                         \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                       { \"name\" : \"name2\", \n" +
+			"                         \"regex\" : \"regex2\", \n" +
+			"                         \"logicalPathPrefix\" : \"logicalPathPrefix2\" }]\n" +
+			"          },\n" +
+			"  \"name\" : \"corp-svn\",\n" +
+			"  \"description\" : \"corp-svn description\",\n" +
+			"  \"storeDiff\" : false,\n" +
+			"  \"enabled\" : false,\n" +
+			"  \"started\" : false\n" +
+			"}";
+	protected final static String SVN_BASIC_UPDATE_RESPONSE = "{" +
+			"\"name\":\"corp-svn\"," +
+			"\"description\":\"corp-svn description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+			"\"usingDefaultsPermissions\":true," +
+			"\"allowAnon\":false," +
+			"\"allowLoggedUsers\":false," +
+			"\"allowIncludes\":[]," +
+			"\"allowExcludes\":[]," +
+			"\"simpleLinkers\":[]," +
+			"\"advancedLinkers\":[]," +
+			"\"hiddenDirectories\":[]," +
+			"\"requiredGroups\":[]," +
+			"\"checkoutURL\":{}" +
+			"}," +
+			"\"svn\":{" +
+			"\"url\":\"svn.example.com/crucible-plugin/\"," +
+			"\"path\":\"src\"," +
+			"\"username\":\"user\"," +
+			"\"blockSize\":1024," +
+			"\"commandTimeout\":\"30 minute\"," +
+			"\"connectionsPerSecond\":20.0," +
+			"\"charset\":{\"charsetName\":\"ISO-8859-1\"}," +
+			"\"accessCode\":\"md5:dc0c08df1f3e80b599c90f53d7dd05ec\"," +
+			"\"startRevision\":1," +
+			"\"initialImport\":\"NO_IMPORT\"," +
+			"\"followBase\":false," +
+			"\"usingInbuiltSymbolicRules\":false," +
+			"\"trunks\":[" +
+			"{\"regex\":\"reregex1\",\"name\":\"rename1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
 			"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
 			"]," +
 			"\"branches\":[" +
@@ -518,6 +783,159 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"]," +
 			"\"allowExcludes\":[" +
 			"{\"path\":\"var\",\"caseSensitive\":false}," +
+			"{\"path\":\"log\",\"caseSensitive\":true}" +
+			"]," +
+			"\"tarballSettings\":{" +
+			"\"maxFiles\":1024," +
+			"\"enabled\":true," +
+			"\"excludes\":[" +
+			"{\"baseDirectory\":\"test\",\"excludeSubdirs\":false}," +
+			"{\"baseDirectory\":\"testautomation\",\"excludeSubdirs\":true}" +
+			"]" +
+			"}," +
+			"\"commitMessageSyntaxSettings\":{" +
+			"\"syntaxType\":\"WIKI\"," +
+			"\"wikiSyntaxStartDate\":\"Aug 17, 2015 12:00:00 AM\"" +
+			"}," +
+			"\"maxIndexableSize\":5242880," +
+			"\"updateOptions\":{\"pollingInterval\":\"45s\"}," +
+			"\"simpleLinkers\":[" +
+			"{\"description\":\"SLD1\",\"href\":\"http://example.com\",\"regex\":\"^example\"}," +
+			"{\"description\":\"SLD2\",\"href\":\"http://foo.com\",\"regex\":\"^foo\"}" +
+			"]," +
+			"\"advancedLinkers\":[" +
+			"{\"description\":\"ALD1\",\"syntaxDef\":\"^[0-9]\"}," +
+			"{\"description\":\"ALD1\",\"syntaxDef\":\"^[A-Z]\"}" +
+			"]," +
+			"\"hiddenDirectories\":[" +
+			"{\"path\":\"test\",\"caseSensitive\":false}," +
+			"{\"path\":\"testautomation\",\"caseSensitive\":false}" +
+			"]," +
+			"\"requiredGroups\":[ \"testgroup01\", \"testgroup02\" ]," +
+			"\"showCheckoutURL\":true," +
+			"\"checkoutURL\":{\"URL\":\"\"}"+
+			"}," +
+			"\"svn\":{" +
+			"\"url\":\"svn.example.com/crucible-plugin/\"," +
+			"\"path\":\"src\"," +
+			"\"username\":\"user\"," +
+			"\"blockSize\":1024," +
+			"\"commandTimeout\":\"30 minute\"," +
+			"\"connectionsPerSecond\":20.0," +
+			"\"charset\":{\"charsetName\":\"ISO-8859-1\"}," +
+			"\"accessCode\":\"md5:dc0c08df1f3e80b599c90f53d7dd05ec\"," +
+			"\"startRevision\":1," +
+			"\"initialImport\":\"NO_IMPORT\"," +
+			"\"followBase\":true," +
+			"\"usingInbuiltSymbolicRules\":false," +
+			"\"trunks\":[" +
+			"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+			"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+			"]," +
+			"\"branches\":[" +
+			"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+			"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+			"]," +
+			"\"tags\":[" +
+			"{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+			"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}" +
+			"]" +
+			"}" +
+			"		}";
+	protected final static String SVN_EXTRA_UPDATE_REQUEST = "{\n" +
+			"  \"svn\" : { \"url\" : \"svn.example.com/crucible-plugin/\", \"path\" : \"src\", \n" +
+			"            \"username\" : \"user\", \"password\" : \"pwd\", \n" +
+			"            \"blockSize\" : 1024, \"commandTimeout\" : \"30 minute\",\n" +
+			"            \"connectionsPerSecond\" : 20.0, \n" +
+			"            \"charset\" : { \"charsetName\" : \"ISO-8859-1\" }, \n" +
+			"            \"accessCode\" : \"md5:dc0c08df1f3e80b599c90f53d7dd05ec\",\n" +
+			"            \"startRevision\" : 1, \"initialImport\" : \"NO_IMPORT\", \n" +
+			"            \"followBase\" : true, \"usingInbuiltSymbolicRules\" : false,\n" +
+			"            \"trunks\" : [ { \"name\" : \"name1\", \n" +
+			"                           \"regex\" : \"regex1\", \n" +
+			"                           \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                         { \"name\" : \"name2\", \n" +
+			"                           \"regex\" : \"regex2\", \n" +
+			"                           \"logicalPathPrefix\" : \"logicalPathPrefix2\" } ],\n" +
+			"            \"branches\" : [ { \"name\" : \"name1\", \n" +
+			"                             \"regex\" : \"regex1\", \n" +
+			"                             \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                           { \"name\" : \"name2\", \n" +
+			"                             \"regex\" : \"regex2\", \n" +
+			"                             \"logicalPathPrefix\" : \"logicalPathPrefix2\" }],\n" +
+			"            \"tags\" : [ { \"name\" : \"name1\", \n" +
+			"                         \"regex\" : \"regex1\", \n" +
+			"                         \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                       { \"name\" : \"name2\", \n" +
+			"                         \"regex\" : \"regex2\", \n" +
+			"                         \"logicalPathPrefix\" : \"logicalPathPrefix2\" }]\n" +
+			"          },\n" +
+			"  \"name\" : \"corp-svn\",\n" +
+			"  \"description\" : \"corp-svn description\",\n" +
+			"  \"storeDiff\" : false,\n" +
+			"  \"enabled\" : false,\n" +
+			"  \"started\" : false,\n" +
+			"  \"extraOptions\" : {\n" +
+			"      \"usingDefaultsPermissions\" : false, \"allowAnon\" : false, \n" +
+			"      \"allowLoggedUsers\" : true, \"changesetDiscussionsEnabled\" : true,\n" +
+			"      \"watchesEnabled\" : false,\n" +
+			"      \"allowIncludes\" : [ { \"path\" : \"test\", \n" +
+			"                            \"caseSensitive\" : false }, \n" +
+			"                          { \"path\" : \"testautomation\", \n" +
+			"                            \"caseSensitive\" : false } ],\n" +
+			"      \"allowExcludes\" : [ { \"path\" : \"far\", \n" +
+			"                            \"caseSensitive\" : false }, \n" +
+			"                          { \"path\" : \"log\", \n" +
+			"                            \"caseSensitive\" : true } ],\n" +
+			"      \"tarballSettings\" : { \"enabled\" : true, \"maxFiles\" : 1024, \n" +
+			"                            \"excludes\" : [ \n" +
+			"                                 { \"baseDirectory\" : \"test\", \n" +
+			"                                   \"excludeSubdirs\" : false }, \n" +
+			"                                 { \"baseDirectory\" : \"testautomation\", \n" +
+			"                                   \"excludeSubdirs\" : true } ] },\n" +
+			"      \"commitMessageSyntaxSettings\" : { \n" +
+			"                         \"syntaxType\" : \"WIKI\", \n" +
+			"                         \"wikiSyntaxStartDate\" : \"2015-08-17\" },\n" +
+			"      \"maxIndexableSize\" : 5242880.0,\n" +
+			"      \"updateOptions\" : { \"disablePolling\" : false, \n" +
+			"                          \"pollingInterval\" : \"45s\" },\n" +
+			"      \"simpleLinkers\" : [ { \"description\" : \"SLD1\", \n" +
+			"                            \"href\" : \"http://example.com\", \n" +
+			"                            \"regex\" : \"^example\" }, \n" +
+			"                          { \"description\" : \"SLD2\", \n" +
+			"                            \"href\" : \"http://foo.com\", \n" +
+			"                            \"regex\" : \"^foo\" } ],\n" +
+			"      \"advancedLinkers\" : [ { \"description\" : \"ALD1\", \n" +
+			"                              \"syntaxDef\" : \"^[0-9]\" }, \n" +
+			"                            { \"description\" : \"ALD1\", \n" +
+			"                              \"syntaxDef\" : \"^[A-Z]\" } ],\n" +
+			"      \"hiddenDirectories\" : [ { \"path\" : \"test\", \n" +
+			"                                \"caseSensitive\" : false }, \n" +
+			"                              { \"path\" : \"testautomation\", \n" +
+			"                                \"caseSensitive\" : false } ],\n" +
+			"      \"requiredGroups\" : [ \"testGroup01\", \"testGroup02\" ],\n" +
+			"      \"showCheckoutURL\" : true,\n" +
+			"      \"checkoutURL\" : { \"Host\" : \"checkout.example.com\", \n" +
+			"                        \"Port\" : \"666\", \n" +
+			"                        \"Path\" : \"/opt\" }\n" +
+			"  }\n" +
+			"}";
+	protected final static String SVN_EXTRA_UPDATE_RESPONSE = "{" +
+			"\"name\":\"corp-svn\"," +
+			"\"description\":\"corp-svn description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+			"\"usingDefaultsPermissions\":false," +
+			"\"allowAnon\":false," +
+			"\"allowLoggedUsers\":true," +
+			"\"watchesEnabled\":false," +
+			"\"changesetDiscussionsEnabled\":true," +
+			"\"allowIncludes\":[" +
+			"{\"path\":\"test\",\"caseSensitive\":false}," +
+			"{\"path\":\"testautomation\",\"caseSensitive\":false}" +
+			"]," +
+			"\"allowExcludes\":[" +
+			"{\"path\":\"far\",\"caseSensitive\":false}," +
 			"{\"path\":\"log\",\"caseSensitive\":true}" +
 			"]," +
 			"\"tarballSettings\":{" +

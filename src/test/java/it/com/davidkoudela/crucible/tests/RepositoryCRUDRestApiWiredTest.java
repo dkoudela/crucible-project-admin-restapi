@@ -42,18 +42,26 @@ public class RepositoryCRUDRestApiWiredTest extends RepositoryCRUDRestApiWiredAb
 		assertEquals("200", response.get("code"));
 	}
 
-	private void executeCRD(String name, String request, String response) {
+	private void checkRepositoryAdminModelResponseData(String repositoryName, String response) {
+		ResponseRepositoryData responseRepositoryData = this.repositoryAdminModel.listRepository(repositoryName);
+		Map<String, String> result = this.repositoryRestDataService.compareRepositoryData(response, responseRepositoryData.getRepositoryRestData());
+		assertEquals("Comparison of expected and actual RepositoryRestData", result.get("expected"), result.get("actual"));
+		checkRepositoryAdminModelResponseStatus(responseRepositoryData.getResponse());
+	}
+
+	private void executeCRUD(String repositoryName, String createRequest, String createResponse, String updateRequest, String updateResponse) {
 		try {
-			ResponseRepositoryOperation responseRepositoryOperation = this.repositoryAdminModel.newRepository(this.repositoryRestDataService.createRepositoryData(request));
+			ResponseRepositoryOperation responseRepositoryOperation = this.repositoryAdminModel.newRepository(this.repositoryRestDataService.createRepositoryData(createRequest));
 			checkRepositoryAdminModelResponseStatus(responseRepositoryOperation.getResponse());
+			checkRepositoryAdminModelResponseData(repositoryName, createResponse);
 
-			ResponseRepositoryData responseRepositoryData = this.repositoryAdminModel.listRepository(name);
-			Map<String, String> result = this.repositoryRestDataService.compareRepositoryData(response, responseRepositoryData.getRepositoryRestData());
-			assertEquals("Comparison of expected and actual RepositoryRestData", result.get("expected"), result.get("actual"));
-			checkRepositoryAdminModelResponseStatus(responseRepositoryData.getResponse());
-
+			if (null != updateRequest && null != updateResponse) {
+				responseRepositoryOperation = this.repositoryAdminModel.updateRepository(this.repositoryRestDataService.createRepositoryData(updateRequest));
+				checkRepositoryAdminModelResponseStatus(responseRepositoryOperation.getResponse());
+				checkRepositoryAdminModelResponseData(repositoryName, updateResponse);
+			}
 		} finally {
-			this.repositoryAdminModel.deleteRepository(this.repositoryRestDataService.createRepositoryData(request));
+			this.repositoryAdminModel.deleteRepository(this.repositoryRestDataService.createRepositoryData(createRequest));
 		}
 	}
 
@@ -79,70 +87,74 @@ public class RepositoryCRUDRestApiWiredTest extends RepositoryCRUDRestApiWiredAb
 		verifyCleanEnvironment();
 	}
 
+
+	/**
+	 * Tests
+	 */
 	@Test
 	public void testCreateDeleteOneCvsBasicRepository()
 	{
-		executeCRD(CVS_NAME, CVS_BASIC_REQUEST, CVS_BASIC_RESPONSE);
+		executeCRUD(CVS_NAME, CVS_BASIC_REQUEST, CVS_BASIC_RESPONSE, CVS_BASIC_UPDATE_REQUEST, CVS_BASIC_UPDATE_RESPONSE);
 	}
 
 	@Test
 	public void testCreateDeleteOneCvsExtraRepository()
 	{
-		executeCRD(CVS_NAME, CVS_EXTRA_REQUEST, CVS_EXTRA_RESPONSE);
+		executeCRUD(CVS_NAME, CVS_EXTRA_REQUEST, CVS_EXTRA_RESPONSE, CVS_EXTRA_UPDATE_REQUEST, CVS_EXTRA_UPDATE_RESPONSE);
 	}
 
 	@Test
 	public void testCreateDeleteOneGitBasicRepository()
 	{
-		executeCRD(GIT_NAME, GIT_BASIC_REQUEST, GIT_BASIC_RESPONSE);
+		executeCRUD(GIT_NAME, GIT_BASIC_REQUEST, GIT_BASIC_RESPONSE, GIT_BASIC_UPDATE_REQUEST, GIT_BASIC_UPDATE_RESPONSE);
 	}
 
 	@Test
 	public void testCreateDeleteOneGitPasswordRepository()
 	{
-		executeCRD(GIT_NAME, GIT_PASSWORD_REQUEST, GIT_PASSWORD_RESPONSE);
+		executeCRUD(GIT_NAME, GIT_PASSWORD_REQUEST, GIT_PASSWORD_RESPONSE, null, null);
 	}
 
 	@Test
 	public void testCreateDeleteOneGitKeypairRepository()
 	{
-		executeCRD(GIT_NAME, GIT_KEYPAIR_REQUEST, GIT_KEYPAIR_RESPONSE);
+		executeCRUD(GIT_NAME, GIT_KEYPAIR_REQUEST, GIT_KEYPAIR_RESPONSE, null, null);
 	}
 
 	@Test
 	public void testCreateDeleteOneMercurialBasicRepository()
 	{
-		executeCRD(MERCURIAL_NAME, MERCURIAL_BASIC_REQUEST, MERCURIAL_BASIC_RESPONSE);
+		executeCRUD(MERCURIAL_NAME, MERCURIAL_BASIC_REQUEST, MERCURIAL_BASIC_RESPONSE, MERCURIAL_BASIC_UPDATE_REQUEST, MERCURIAL_BASIC_UPDATE_RESPONSE);
 	}
 
 	@Test
 	public void testCreateDeleteOneMercurialPasswordRepository()
 	{
-		executeCRD(MERCURIAL_NAME, MERCURIAL_PASSWORD_REQUEST, MERCURIAL_PASSWORD_RESPONSE);
+		executeCRUD(MERCURIAL_NAME, MERCURIAL_PASSWORD_REQUEST, MERCURIAL_PASSWORD_RESPONSE, null, null);
 	}
 
 	@Test
 	public void testCreateDeleteOneMercurialKeypairRepository()
 	{
-		executeCRD(MERCURIAL_NAME, MERCURIAL_KEYPAIR_REQUEST, MERCURIAL_KEYPAIR_RESPONSE);
+		executeCRUD(MERCURIAL_NAME, MERCURIAL_KEYPAIR_REQUEST, MERCURIAL_KEYPAIR_RESPONSE, null, null);
 	}
 
 	@Test
 	public void testCreateDeleteOneP4BasicRepository()
 	{
-		executeCRD(P4_NAME, P4_BASIC_REQUEST, P4_BASIC_RESPONSE);
+		executeCRUD(P4_NAME, P4_BASIC_REQUEST, P4_BASIC_RESPONSE, P4_BASIC_UPDATE_REQUEST, P4_BASIC_UPDATE_RESPONSE);
 	}
 
 	@Test
 	public void testCreateDeleteOneSvnBasicRepository()
 	{
-		executeCRD(SVN_NAME, SVN_BASIC_REQUEST, SVN_BASIC_RESPONSE);
+		executeCRUD(SVN_NAME, SVN_BASIC_REQUEST, SVN_BASIC_RESPONSE, SVN_BASIC_UPDATE_REQUEST, SVN_BASIC_UPDATE_RESPONSE);
 	}
 
 	@Test
 	public void testCreateDeleteOneSvnExtraRepository()
 	{
-		executeCRD(SVN_NAME, SVN_EXTRA_REQUEST, SVN_EXTRA_RESPONSE);
+		executeCRUD(SVN_NAME, SVN_EXTRA_REQUEST, SVN_EXTRA_RESPONSE, SVN_EXTRA_UPDATE_REQUEST, SVN_EXTRA_UPDATE_RESPONSE);
 	}
 
 }
