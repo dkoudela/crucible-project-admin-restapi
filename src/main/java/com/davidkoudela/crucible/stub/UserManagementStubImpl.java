@@ -63,8 +63,10 @@ public class UserManagementStubImpl implements UserManagementStub {
 
 	@Override
 	public void createGroup(String group) {
-		if (!this.userManager.groupExists(group)) {
-			this.userManager.addGroup(group);
+		String groupName = group; // FECRU4.1.1
+		//GroupName groupName = GroupName.create(group); // FECRU4.2
+		if (!this.userManager.groupExists(groupName)) {
+			this.userManager.addGroup(groupName);
 		}
 	}
 }
