@@ -45,7 +45,8 @@ public class UserManagementStubImpl implements UserManagementStub {
 
 			FecruUser fecruUser = this.userManager.getUser(TESTUSER);
 			UserLogin userLogin = this.userManager.createTrustedUserLogin(fecruUser.getUsername(), true, false);
-			this.effectiveUserProvider.pushEffectivePrincipal(userLogin, fecruUser, true);
+			//this.effectiveUserProvider.pushEffectivePrincipal(userLogin, fecruUser); // FECRU4.0
+			this.effectiveUserProvider.pushEffectivePrincipal(userLogin, fecruUser, true); // FECRU4.1.1 & FECRU4.2
 		} catch (LicensePolicyException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

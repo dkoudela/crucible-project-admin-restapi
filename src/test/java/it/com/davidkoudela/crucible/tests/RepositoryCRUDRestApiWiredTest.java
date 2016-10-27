@@ -75,10 +75,10 @@ public class RepositoryCRUDRestApiWiredTest extends RepositoryCRUDRestApiWiredAb
 	@Before
 	public void verifyCleanEnvironment() {
 		ResponseRepositoryNameList responseRepositoryNameList = this.repositoryAdminModel.listRepository();
-		assertEquals("Repository name list does not match", "[django-piston, checkstyle, csvparser]", responseRepositoryNameList.getRepositoryNames().toString());
 		Map<String, String> response = responseRepositoryNameList.getResponse();
-		assertEquals("200", response.get("code"));
 		assertEquals("operation succeeded", response.get("message"));
+		assertEquals("200", response.get("code"));
+		assertEquals("Repository name list does not match", "[django-piston, checkstyle, csvparser]", responseRepositoryNameList.getRepositoryNames().toString());
 	}
 
 	@After
