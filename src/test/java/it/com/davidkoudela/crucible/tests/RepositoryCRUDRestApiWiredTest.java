@@ -157,4 +157,16 @@ public class RepositoryCRUDRestApiWiredTest extends RepositoryCRUDRestApiWiredAb
 		executeCRUD(SVN_NAME, SVN_EXTRA_REQUEST, SVN_EXTRA_RESPONSE, SVN_EXTRA_UPDATE_REQUEST, SVN_EXTRA_UPDATE_RESPONSE);
 	}
 
+	@Test
+	public void testCreateDeleteOneSvnExtraWithDefaultsRepository()
+	{
+		executeCRUD(SVN_NAME, SVN_EXTRA_WITH_DEFAULTS_REQUEST, SVN_EXTRA_WITH_DEFAULTS_RESPONSE, null, null);
+	}
+
+	@Test
+	public void testCreateDeleteOneSvnExtraMissingParamsRepository()
+	{
+		executeCRUD(SVN_NAME, SVN_EXTRA_MISSING_PARAMS_REQUEST, SVN_EXTRA_MISSING_PARAMS_RESPONSE, null, null);
+	}
+
 }

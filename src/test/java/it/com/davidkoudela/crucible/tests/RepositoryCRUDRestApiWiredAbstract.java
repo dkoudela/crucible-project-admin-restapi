@@ -995,4 +995,260 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"]" +
 			"}" +
 			"		}";
+	protected final static String SVN_EXTRA_WITH_DEFAULTS_REQUEST = "{\n" +
+			"  \"svn\" : { \"url\" : \"svn.example.com/crucible-plugin/\", \"path\" : \"src\", \n" +
+			"            \"username\" : \"user\", \"password\" : \"pwd\", \n" +
+			"            \"blockSize\" : 1024, \"commandTimeout\" : \"30 minute\",\n" +
+			"            \"connectionsPerSecond\" : 20.0, \n" +
+			"            \"charset\" : { \"charsetName\" : \"ISO-8859-1\" }, \n" +
+			"            \"accessCode\" : \"md5:dc0c08df1f3e80b599c90f53d7dd05ec\",\n" +
+			"            \"startRevision\" : 1, \"initialImport\" : \"NO_IMPORT\", \n" +
+			"            \"followBase\" : true, \"usingInbuiltSymbolicRules\" : false,\n" +
+			"            \"trunks\" : [ { \"name\" : \"name1\", \n" +
+			"                           \"regex\" : \"regex1\", \n" +
+			"                           \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                         { \"name\" : \"name2\", \n" +
+			"                           \"regex\" : \"regex2\", \n" +
+			"                           \"logicalPathPrefix\" : \"logicalPathPrefix2\" } ],\n" +
+			"            \"branches\" : [ { \"name\" : \"name1\", \n" +
+			"                             \"regex\" : \"regex1\", \n" +
+			"                             \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                           { \"name\" : \"name2\", \n" +
+			"                             \"regex\" : \"regex2\", \n" +
+			"                             \"logicalPathPrefix\" : \"logicalPathPrefix2\" }],\n" +
+			"            \"tags\" : [ { \"name\" : \"name1\", \n" +
+			"                         \"regex\" : \"regex1\", \n" +
+			"                         \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                       { \"name\" : \"name2\", \n" +
+			"                         \"regex\" : \"regex2\", \n" +
+			"                         \"logicalPathPrefix\" : \"logicalPathPrefix2\" }]\n" +
+			"          },\n" +
+			"  \"name\" : \"corp-svn\",\n" +
+			"  \"description\" : \"corp-svn description\",\n" +
+			"  \"storeDiff\" : false,\n" +
+			"  \"enabled\" : false,\n" +
+			"  \"started\" : false,\n" +
+			"  \"extraOptions\" : {\n" +
+			"      \"usingDefaultsPermissions\" : true, \"allowAnon\" : false, \n" +
+			"      \"allowLoggedUsers\" : false, \"changesetDiscussionsEnabled\" : false,\n" +
+			"      \"watchesEnabled\" : false,\n" +
+			"      \"allowIncludes\" : [ { \"path\" : \"test\", \n" +
+			"                            \"caseSensitive\" : false }, \n" +
+			"                          { \"path\" : \"testautomation\", \n" +
+			"                            \"caseSensitive\" : false } ],\n" +
+			"      \"allowExcludes\" : [ { \"path\" : \"var\", \n" +
+			"                            \"caseSensitive\" : false }, \n" +
+			"                          { \"path\" : \"log\", \n" +
+			"                            \"caseSensitive\" : true } ],\n" +
+			"      \"tarballSettings\" : { \"enabled\" : true, \"maxFiles\" : 1024, \n" +
+			"                            \"excludes\" : [ \n" +
+			"                                 { \"baseDirectory\" : \"test\", \n" +
+			"                                   \"excludeSubdirs\" : false }, \n" +
+			"                                 { \"baseDirectory\" : \"testautomation\", \n" +
+			"                                   \"excludeSubdirs\" : true } ] },\n" +
+			"      \"commitMessageSyntaxSettings\" : { \n" +
+			"                         \"syntaxType\" : \"WIKI\", \n" +
+			"                         \"wikiSyntaxStartDate\" : \"2015-08-17\" },\n" +
+			"      \"maxIndexableSize\" : 5242880.0,\n" +
+			"      \"updateOptions\" : { \"disablePolling\" : false, \n" +
+			"                          \"pollingInterval\" : \"45s\" },\n" +
+			"      \"simpleLinkers\" : [ { \"description\" : \"SLD1\", \n" +
+			"                            \"href\" : \"http://example.com\", \n" +
+			"                            \"regex\" : \"^example\" }, \n" +
+			"                          { \"description\" : \"SLD2\", \n" +
+			"                            \"href\" : \"http://foo.com\", \n" +
+			"                            \"regex\" : \"^foo\" } ],\n" +
+			"      \"advancedLinkers\" : [ { \"description\" : \"ALD1\", \n" +
+			"                              \"syntaxDef\" : \"^[0-9]\" }, \n" +
+			"                            { \"description\" : \"ALD1\", \n" +
+			"                              \"syntaxDef\" : \"^[A-Z]\" } ],\n" +
+			"      \"hiddenDirectories\" : [ { \"path\" : \"test\", \n" +
+			"                                \"caseSensitive\" : false }, \n" +
+			"                              { \"path\" : \"testautomation\", \n" +
+			"                                \"caseSensitive\" : false } ],\n" +
+			"      \"requiredGroups\" : [ \"testGroup01\", \"testGroup02\" ],\n" +
+			"      \"showCheckoutURL\" : false,\n" +
+			"      \"checkoutURL\" : { \"Host\" : \"checkout.example.com\", \n" +
+			"                        \"Port\" : \"666\", \n" +
+			"                        \"Path\" : \"/opt\" }\n" +
+			"  }\n" +
+			"}";
+	protected final static String SVN_EXTRA_WITH_DEFAULTS_RESPONSE = "{" +
+			"\"name\":\"corp-svn\"," +
+			"\"description\":\"corp-svn description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+				"\"usingDefaultsPermissions\":true," +
+				"\"allowAnon\":false," +
+				"\"allowLoggedUsers\":false," +
+				"\"watchesEnabled\":false," +
+				"\"changesetDiscussionsEnabled\":false," +
+				"\"allowIncludes\":[{\"path\":\"test\",\"caseSensitive\":false}," +
+					"{\"path\":\"testautomation\",\"caseSensitive\":false}]," +
+				"\"allowExcludes\":[{\"path\":\"var\",\"caseSensitive\":false}," +
+					"{\"path\":\"log\",\"caseSensitive\":true}]," +
+				"\"tarballSettings\":{" +
+					"\"maxFiles\":1024,\"enabled\":true," +
+					"\"excludes\":[{\"baseDirectory\":\"test\",\"excludeSubdirs\":false}," +
+					"{\"baseDirectory\":\"testautomation\",\"excludeSubdirs\":true}]}," +
+				"\"commitMessageSyntaxSettings\":{" +
+					"\"syntaxType\":\"WIKI\"," +
+					"\"wikiSyntaxStartDate\":\"Aug 17, 2015 12:00:00 AM\"" +
+				"}," +
+				"\"maxIndexableSize\":5242880," +
+				"\"updateOptions\":{\"pollingInterval\":\"45s\"}," +
+				"\"simpleLinkers\":[{\"description\":\"SLD1\",\"href\":\"http://example.com\",\"regex\":\"^example\"}," +
+					"{\"description\":\"SLD2\",\"href\":\"http://foo.com\",\"regex\":\"^foo\"}]," +
+				"\"advancedLinkers\":[{\"description\":\"ALD1\",\"syntaxDef\":\"^[0-9]\"}," +
+					"{\"description\":\"ALD1\",\"syntaxDef\":\"^[A-Z]\"}]," +
+				"\"hiddenDirectories\":[{\"path\":\"test\",\"caseSensitive\":false}," +
+					"{\"path\":\"testautomation\",\"caseSensitive\":false}]," +
+				"\"requiredGroups\":[\"testgroup01\",\"testgroup02\"]," +
+				"\"showCheckoutURL\":false," +
+				"\"checkoutURL\":{\"URL\":\"\"}}," +
+				"\"svn\":{" +
+					"\"url\":\"svn.example.com/crucible-plugin/\"," +
+					"\"path\":\"src\"," +
+					"\"username\":\"user\"," +
+					"\"blockSize\":1024," +
+					"\"commandTimeout\":\"30 minute\"," +
+					"\"connectionsPerSecond\":20.0," +
+					"\"charset\":{\"charsetName\":\"ISO-8859-1\"}," +
+					"\"accessCode\":\"md5:dc0c08df1f3e80b599c90f53d7dd05ec\"," +
+					"\"startRevision\":1," +
+					"\"initialImport\":\"NO_IMPORT\"," +
+					"\"followBase\":true," +
+					"\"usingInbuiltSymbolicRules\":false," +
+					"\"trunks\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+						"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}]," +
+					"\"branches\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+						"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}]," +
+					"\"tags\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+						"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}]" +
+				"}" +
+			"}";
+	protected final static String SVN_EXTRA_MISSING_PARAMS_REQUEST = "{\n" +
+			"  \"svn\" : { \"url\" : \"svn.example.com/crucible-plugin/\", \"path\" : \"src\", \n" +
+			"            \"username\" : \"user\", \"password\" : \"pwd\", \n" +
+			"            \"blockSize\" : 1024, \"commandTimeout\" : \"30 minute\",\n" +
+			"            \"connectionsPerSecond\" : 20.0, \n" +
+			"            \"charset\" : { \"charsetName\" : \"ISO-8859-1\" }, \n" +
+			"            \"accessCode\" : \"md5:dc0c08df1f3e80b599c90f53d7dd05ec\",\n" +
+			"            \"startRevision\" : 1, \"initialImport\" : \"NO_IMPORT\", \n" +
+			"            \"followBase\" : true, \"usingInbuiltSymbolicRules\" : false,\n" +
+			"            \"trunks\" : [ { \"name\" : \"name1\", \n" +
+			"                           \"regex\" : \"regex1\", \n" +
+			"                           \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                         { \"name\" : \"name2\", \n" +
+			"                           \"regex\" : \"regex2\", \n" +
+			"                           \"logicalPathPrefix\" : \"logicalPathPrefix2\" } ],\n" +
+			"            \"branches\" : [ { \"name\" : \"name1\", \n" +
+			"                             \"regex\" : \"regex1\", \n" +
+			"                             \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                           { \"name\" : \"name2\", \n" +
+			"                             \"regex\" : \"regex2\", \n" +
+			"                             \"logicalPathPrefix\" : \"logicalPathPrefix2\" }],\n" +
+			"            \"tags\" : [ { \"name\" : \"name1\", \n" +
+			"                         \"regex\" : \"regex1\", \n" +
+			"                         \"logicalPathPrefix\" : \"logicalPathPrefix1\" }, \n" +
+			"                       { \"name\" : \"name2\", \n" +
+			"                         \"regex\" : \"regex2\", \n" +
+			"                         \"logicalPathPrefix\" : \"logicalPathPrefix2\" }]\n" +
+			"          },\n" +
+			"  \"name\" : \"corp-svn\",\n" +
+			"  \"description\" : \"corp-svn description\",\n" +
+			"  \"storeDiff\" : false,\n" +
+			"  \"enabled\" : false,\n" +
+			"  \"started\" : false,\n" +
+			"  \"extraOptions\" : {\n" +
+			"      \"usingDefaultsPermissions\" : true, \"allowAnon\" : false, \n" +
+			"      \"allowLoggedUsers\" : false,\n" +
+			"      \"allowIncludes\" : [ { \"path\" : \"test\", \n" +
+			"                            \"caseSensitive\" : false }, \n" +
+			"                          { \"path\" : \"testautomation\", \n" +
+			"                            \"caseSensitive\" : false } ],\n" +
+			"      \"allowExcludes\" : [ { \"path\" : \"var\", \n" +
+			"                            \"caseSensitive\" : false }, \n" +
+			"                          { \"path\" : \"log\", \n" +
+			"                            \"caseSensitive\" : true } ],\n" +
+			"      \"tarballSettings\" : { \"enabled\" : true, \"maxFiles\" : 1024, \n" +
+			"                            \"excludes\" : [ \n" +
+			"                                 { \"baseDirectory\" : \"test\", \n" +
+			"                                   \"excludeSubdirs\" : false }, \n" +
+			"                                 { \"baseDirectory\" : \"testautomation\", \n" +
+			"                                   \"excludeSubdirs\" : true } ] },\n" +
+			"      \"commitMessageSyntaxSettings\" : { \n" +
+			"                         \"syntaxType\" : \"WIKI\", \n" +
+			"                         \"wikiSyntaxStartDate\" : \"2015-08-17\" },\n" +
+			"      \"maxIndexableSize\" : 5242880.0,\n" +
+			"      \"updateOptions\" : { \"disablePolling\" : false, \n" +
+			"                          \"pollingInterval\" : \"45s\" },\n" +
+			"      \"simpleLinkers\" : [ { \"description\" : \"SLD1\", \n" +
+			"                            \"href\" : \"http://example.com\", \n" +
+			"                            \"regex\" : \"^example\" }, \n" +
+			"                          { \"description\" : \"SLD2\", \n" +
+			"                            \"href\" : \"http://foo.com\", \n" +
+			"                            \"regex\" : \"^foo\" } ],\n" +
+			"      \"advancedLinkers\" : [ { \"description\" : \"ALD1\", \n" +
+			"                              \"syntaxDef\" : \"^[0-9]\" }, \n" +
+			"                            { \"description\" : \"ALD1\", \n" +
+			"                              \"syntaxDef\" : \"^[A-Z]\" } ],\n" +
+			"      \"hiddenDirectories\" : [ { \"path\" : \"test\", \n" +
+			"                                \"caseSensitive\" : false }, \n" +
+			"                              { \"path\" : \"testautomation\", \n" +
+			"                                \"caseSensitive\" : false } ],\n" +
+			"      \"requiredGroups\" : [ \"testGroup01\", \"testGroup02\" ]\n" +
+			"  }\n" +
+			"}";
+	protected final static String SVN_EXTRA_MISSING_PARAMS_RESPONSE = "{" +
+			"\"name\":\"corp-svn\"," +
+			"\"description\":\"corp-svn description\"," +
+			"\"storeDiff\":false," +
+			"\"extraOptions\":{" +
+			"\"usingDefaultsPermissions\":true," +
+			"\"allowAnon\":false," +
+			"\"allowLoggedUsers\":false," +
+			"\"allowIncludes\":[{\"path\":\"test\",\"caseSensitive\":false}," +
+			"{\"path\":\"testautomation\",\"caseSensitive\":false}]," +
+			"\"allowExcludes\":[{\"path\":\"var\",\"caseSensitive\":false}," +
+			"{\"path\":\"log\",\"caseSensitive\":true}]," +
+			"\"tarballSettings\":{" +
+			"\"maxFiles\":1024,\"enabled\":true," +
+			"\"excludes\":[{\"baseDirectory\":\"test\",\"excludeSubdirs\":false}," +
+			"{\"baseDirectory\":\"testautomation\",\"excludeSubdirs\":true}]}," +
+			"\"commitMessageSyntaxSettings\":{" +
+			"\"syntaxType\":\"WIKI\"," +
+			"\"wikiSyntaxStartDate\":\"Aug 17, 2015 12:00:00 AM\"" +
+			"}," +
+			"\"maxIndexableSize\":5242880," +
+			"\"updateOptions\":{\"pollingInterval\":\"45s\"}," +
+			"\"simpleLinkers\":[{\"description\":\"SLD1\",\"href\":\"http://example.com\",\"regex\":\"^example\"}," +
+			"{\"description\":\"SLD2\",\"href\":\"http://foo.com\",\"regex\":\"^foo\"}]," +
+			"\"advancedLinkers\":[{\"description\":\"ALD1\",\"syntaxDef\":\"^[0-9]\"}," +
+			"{\"description\":\"ALD1\",\"syntaxDef\":\"^[A-Z]\"}]," +
+			"\"hiddenDirectories\":[{\"path\":\"test\",\"caseSensitive\":false}," +
+			"{\"path\":\"testautomation\",\"caseSensitive\":false}]," +
+			"\"requiredGroups\":[\"testgroup01\",\"testgroup02\"]," +
+			"\"checkoutURL\":{}}," +
+			"\"svn\":{" +
+			"\"url\":\"svn.example.com/crucible-plugin/\"," +
+			"\"path\":\"src\"," +
+			"\"username\":\"user\"," +
+			"\"blockSize\":1024," +
+			"\"commandTimeout\":\"30 minute\"," +
+			"\"connectionsPerSecond\":20.0," +
+			"\"charset\":{\"charsetName\":\"ISO-8859-1\"}," +
+			"\"accessCode\":\"md5:dc0c08df1f3e80b599c90f53d7dd05ec\"," +
+			"\"startRevision\":1," +
+			"\"initialImport\":\"NO_IMPORT\"," +
+			"\"followBase\":true," +
+			"\"usingInbuiltSymbolicRules\":false," +
+			"\"trunks\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+			"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}]," +
+			"\"branches\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+			"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}]," +
+			"\"tags\":[{\"regex\":\"regex1\",\"name\":\"name1\",\"logicalPathPrefix\":\"logicalPathPrefix1\"}," +
+			"{\"regex\":\"regex2\",\"name\":\"name2\",\"logicalPathPrefix\":\"logicalPathPrefix2\"}]" +
+			"}" +
+			"}";
 }
