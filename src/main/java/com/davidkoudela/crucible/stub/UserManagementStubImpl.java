@@ -2,6 +2,7 @@ package com.davidkoudela.crucible.stub;
 
 import com.atlassian.fecru.user.EffectiveUserProvider;
 import com.atlassian.fecru.user.FecruUser;
+import com.atlassian.fecru.user.GroupName;
 import com.cenqua.fisheye.LicensePolicyException;
 import com.cenqua.fisheye.user.AdminUserConfig;
 import com.cenqua.fisheye.user.UserLogin;
@@ -58,8 +59,8 @@ public class UserManagementStubImpl implements UserManagementStub {
 
 	@Override
 	public void createGroup(String group) {
-		String groupName = group; // FECRU4.1.1
-		//GroupName groupName = GroupName.create(group); // FECRU4.2
+		//String groupName = group; // FECRU4.1.1
+		GroupName groupName = GroupName.create(group); // FECRU4.2
 		if (!this.userManager.groupExists(groupName)) {
 			this.userManager.addGroup(groupName);
 		}

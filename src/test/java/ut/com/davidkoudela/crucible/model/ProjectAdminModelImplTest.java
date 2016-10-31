@@ -5,6 +5,7 @@ import com.cenqua.crucible.model.PermissionScheme;
 import com.cenqua.crucible.model.Project;
 import com.cenqua.crucible.model.managers.PermissionManager;
 import com.cenqua.crucible.model.managers.ProjectManager;
+import com.cenqua.fisheye.RepositoryConfig;
 import com.cenqua.fisheye.config.RepositoryManager;
 import com.cenqua.fisheye.rep.RepositoryHandle;
 import com.cenqua.fisheye.user.UserManager;
@@ -94,11 +95,11 @@ public class ProjectAdminModelImplTest extends TestCase
 		FecruUser user = new FecruUser(1, dmoder);
 		Mockito.when(userManager.getUser(dmoder)).thenReturn(user);
 		// FECRU4.1.1
-		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
+		//RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		// FECRU4.2
-		//RepositoryConfig repositoryConfig = Mockito.mock(RepositoryConfig.class);
-		//Mockito.when(repositoryConfig.getName()).thenReturn(repo);
-		//RepositoryHandle repositoryHandle = new RepositoryHandle(repositoryConfig, null, null);
+		RepositoryConfig repositoryConfig = Mockito.mock(RepositoryConfig.class);
+		Mockito.when(repositoryConfig.getName()).thenReturn(repo);
+		RepositoryHandle repositoryHandle = new RepositoryHandle(repositoryConfig, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
 
 		ResponseProjectOperation responseProjectOperation = projectAdminModelImpl.newProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object);
@@ -178,11 +179,11 @@ public class ProjectAdminModelImplTest extends TestCase
 		FecruUser user = new FecruUser(1, dmoder);
 		Mockito.when(userManager.getUser(dmoder)).thenReturn(user);
 		// FECRU4.1.1
-		RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
+		//RepositoryHandle repositoryHandle = new RepositoryHandle(repo, null, null, null);
 		// FECRU4.2
-		//RepositoryConfig repositoryConfig = Mockito.mock(RepositoryConfig.class);
-		//Mockito.when(repositoryConfig.getName()).thenReturn(repo);
-		//RepositoryHandle repositoryHandle = new RepositoryHandle(repositoryConfig, null, null);
+		RepositoryConfig repositoryConfig = Mockito.mock(RepositoryConfig.class);
+		Mockito.when(repositoryConfig.getName()).thenReturn(repo);
+		RepositoryHandle repositoryHandle = new RepositoryHandle(repositoryConfig, null, null);
 		Mockito.when(repositoryManager.getRepository(repo)).thenReturn(repositoryHandle);
 
 		ResponseProjectOperation responseProjectOperation = projectAdminModelImpl.updateProject(name,key,repo,store,scheme,emoder,dmoder,dtime,object);
