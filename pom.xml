@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.davidkoudela.crucible</groupId>
     <artifactId>crucible-project-admin-restapi</artifactId>
-    <version>4.0</version>
+    <version>4.1</version>
 
     <organization>
         <name>David Koudela</name>
@@ -301,8 +301,10 @@
     </build>
 
     <properties>
-        <fecru.version>4.2.0-20160928073034</fecru.version>
-        <fecru.data.version>4.2.0-20160928073034</fecru.data.version>
+        <fecru.version>4.3.0-20170119092650</fecru.version>
+        <fecru.data.version>4.3.0-20170119092650</fecru.data.version>
+        <!--fecru.version>4.2.0-20160928073034</fecru.version>
+        <fecru.data.version>4.2.0-20160928073034</fecru.data.version-->
         <!--fecru.version>4.1.1-20160708100607</fecru.version>
         <fecru.data.version>4.1.1-20160708100607</fecru.data.version-->
         <!--fecru.version>4.1.0-20160624111830</fecru.version>
