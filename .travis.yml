@@ -17,6 +17,7 @@ before_install:
     - wget http://davidkoudela.cz/github/Common/keys/pubkey.txt -O /tmp/pubkey.txt
     - gpg --import /tmp/pubkey.txt
     - export DEBUG_LOG=/tmp/debug.log
+    - export BUILD_LOG=/tmp/build.log
 # Install git-lfs repo and packages for managing large files in GIT
     - curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
     - sudo apt-get install git-lfs
@@ -31,10 +32,9 @@ script:
     - jdk_switcher use oraclejdk8
 # Unit tests are part of the Integration tests.
 # It is kept only for further test downgrade
-# Moreover it could be useful to run it to shorten build log below 4MB (Travis Log Length exceeded error)
-    - sudo atlas-unit-test
+#    - sudo atlas-unit-test
 # Integration tests
-    - sudo atlas-integration-test
+    - sudo atlas-integration-test | tee $BUILD_LOG |sed '/^\[INFO\] 	at/d'
 
 after_success:
 # Create GIT tag
@@ -60,6 +60,9 @@ after_script:
 # Encrypt and upload the debug log
     - gpg --output $DEBUG_LOG.pgp -r $GPGEMAIL --trust-model always --encrypt $DEBUG_LOG
     - curl --ftp-create-dirs --ftp-ssl-control --insecure -T $DEBUG_LOG.pgp "$REPOSITORYURL/$REPO_SUBDIR/"
+# Encrypt and upload the build log
+    - gpg --output $BUILD_LOG.pgp -r $GPGEMAIL --trust-model always --encrypt $BUILD_LOG
+    - curl --ftp-create-dirs --ftp-ssl-control --insecure -T $BUILD_LOG.pgp "$REPOSITORYURL/$REPO_SUBDIR/"
 
 branches:
     except:
