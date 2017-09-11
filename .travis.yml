@@ -31,7 +31,9 @@ script:
     - jdk_switcher use oraclejdk8
 # Unit tests are part of the Integration tests.
 # It is kept only for further test downgrade
-#    - sudo atlas-unit-test
+# Moreover it could be useful to run it to shorten build log below 4MB (Travis Log Length exceeded error)
+    - sudo atlas-unit-test
+# Integration tests
     - sudo atlas-integration-test
 
 after_success:
