@@ -24,6 +24,7 @@ before_install:
 
 install:
 # Setup the global Git hooks for Git LFS
+    - sudo chmod 0777 "$HOME/.gitconfig"
     - git lfs install
     - atlas-mvn -q org.apache.maven.plugins:maven-dependency-plugin:resolve-plugins
 
