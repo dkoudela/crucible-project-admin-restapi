@@ -301,8 +301,10 @@
     </build>
 
     <properties>
-        <fecru.version>4.5.2-20180123112923</fecru.version>
-        <fecru.data.version>4.5.2-20180123112923</fecru.data.version>
+        <fecru.version>4.6.1-20181008080545</fecru.version>
+        <fecru.data.version>4.6.1-20181008080545</fecru.data.version>
+        <!--fecru.version>4.5.2-20180123112923</fecru.version>
+        <fecru.data.version>4.5.2-20180123112923</fecru.data.version-->
         <!--fecru.version>4.5.0-20170908094439</fecru.version>
         <fecru.data.version>4.5.0-20170908094439</fecru.data.version-->
         <!--fecru.version>4.4.2-20170803091957</fecru.version>
