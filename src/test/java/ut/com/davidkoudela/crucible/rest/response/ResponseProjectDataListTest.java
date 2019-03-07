@@ -12,6 +12,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,8 @@ public class ResponseProjectDataListTest extends TestCase {
 		permissionScheme.setId(666);
 		project.setPermissionScheme(permissionScheme);
 		Date date = new Date(1551865213L);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+		String lastUpdatedReviewDate = dateFormat.format(date);
 		ReviewVisitorData reviewVisitorData = new ReviewVisitorData(1, "D-1", project, date, date);
 		projectPropertiesList.add(new ProjectProperties(project, reviewVisitorData));
 		ResponseProjectDataList responseProjectDataList = ResponseProjectFactory.constructResponseWithList("200", "operation succeeded", "", projectPropertiesList);
@@ -40,7 +43,7 @@ public class ResponseProjectDataListTest extends TestCase {
 		String responseProjectDataListAsString = gson.toJson(responseProjectDataList);
 
 		assertNotNull(responseProjectDataListAsString);
-		assertEquals("{\"response\":{\"code\":\"200\",\"message\":\"operation succeeded\",\"cause\":\"\"},\"projectList\":[{\"name\":\"Default\",\"storeRevisions\":false,\"permissionSchemeId\":666,\"moderatorEnabled\":true,\"lastUpdatedReview\":\"D-1\",\"lastUpdatedReviewDate\":\"1970-01-19T00:04:25.213+01:00\"}]}",
+		assertEquals("{\"response\":{\"code\":\"200\",\"message\":\"operation succeeded\",\"cause\":\"\"},\"projectList\":[{\"name\":\"Default\",\"storeRevisions\":false,\"permissionSchemeId\":666,\"moderatorEnabled\":true,\"lastUpdatedReview\":\"D-1\",\"lastUpdatedReviewDate\":\"" + lastUpdatedReviewDate + "\"}]}",
 				responseProjectDataListAsString);
 	}
 }
