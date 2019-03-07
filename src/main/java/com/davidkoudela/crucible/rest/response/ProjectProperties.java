@@ -2,8 +2,11 @@ package com.davidkoudela.crucible.rest.response;
 
 import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.Project;
+import com.davidkoudela.crucible.review.ReviewVisitorData;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import java.text.SimpleDateFormat;
 
 /**
  * Description: Project Properties holder used by Jackson JSON processor
@@ -34,13 +37,17 @@ public class ProjectProperties
 	Integer defaultDuration;
 	@JsonProperty
 	String defaultObjectives;
+	@JsonProperty
+	String lastUpdatedReview;
+	@JsonProperty
+	String lastUpdatedReviewDate;
 
 	/**
 	 * Constructor for ProjectProperties based on provided Crucible project
 	 *
 	 * @param project to be used for the ProjectProperties construction
 	 */
-	public ProjectProperties(Project project)
+	public ProjectProperties(Project project, ReviewVisitorData reviewVisitorData)
 	{
 		name = project.getName();
 		key = project.getProjKey();
@@ -54,6 +61,13 @@ public class ProjectProperties
 			defaultModerator = defaultModeratorUser.getUsername();
 		defaultDuration = project.getDefaultDuration();
 		defaultObjectives = project.getDefaultObjectives();
+		lastUpdatedReview = reviewVisitorData.getPermaId();
+		if (null == reviewVisitorData.getUpdateDate()) {
+			lastUpdatedReviewDate = "";
+		} else {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+			lastUpdatedReviewDate = dateFormat.format(reviewVisitorData.getUpdateDate());
+		}
 	}
 
 	/**
@@ -147,6 +161,26 @@ public class ProjectProperties
 	}
 
 	/**
+	 * Getter for Last Updated Review used by Jackson JSON processor
+	 *
+	 * @return String containing the Last Updated Review
+	 */
+	public String getLastUpdatedReview()
+	{
+		return lastUpdatedReview;
+	}
+
+	/**
+	 * Getter for Last Updated Review Date used by Jackson JSON processor
+	 *
+	 * @return String containing the Last Updated Review Date
+	 */
+	public String getLastUpdatedReviewDate()
+	{
+		return lastUpdatedReviewDate;
+	}
+
+	/**
 	 * Setter for Project Name used by Jackson JSON processor
 	 *
 	 * @param name the Project Name
@@ -237,6 +271,26 @@ public class ProjectProperties
 	}
 
 	/**
+	 * Setter for Last Updated Review used by Jackson JSON processor
+	 *
+	 * @param lastUpdatedReview the Last Updated Review
+	 */
+	public void setLastUpdatedReview(String lastUpdatedReview)
+	{
+		this.lastUpdatedReview = lastUpdatedReview;
+	}
+
+	/**
+	 * Setter for Last Updated Review Date used by Jackson JSON processor
+	 *
+	 * @param lastUpdatedReviewDate the Last Updated Review Date
+	 */
+	public void setLastUpdatedReviewDate(String lastUpdatedReviewDate)
+	{
+		this.lastUpdatedReviewDate = lastUpdatedReviewDate;
+	}
+
+	/**
 	 * Provides a string representation of the Project Properties
 	 *
 	 * @return String containing the string representation of the Project Properties
@@ -251,7 +305,10 @@ public class ProjectProperties
 				"\"moderatorEnabled\":\"" + moderatorEnabled + "\"," +
 				"\"defaultModerator\":\"" + defaultModerator + "\"," +
 				"\"defaultDuration\":\"" + defaultDuration + "\"," +
-				"\"defaultObjectives\":\"" + defaultObjectives + "\"} "
+				"\"defaultObjectives\":\"" + defaultObjectives + "\"," +
+				"\"lastUpdatedReview\":\"" + lastUpdatedReview + "\"," +
+				"\"lastUpdatedReviewDate\":\"" + lastUpdatedReviewDate +
+				"\"} "
 				;
 	}
 }

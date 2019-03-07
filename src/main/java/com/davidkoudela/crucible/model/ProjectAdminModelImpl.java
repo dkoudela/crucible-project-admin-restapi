@@ -2,8 +2,10 @@ package com.davidkoudela.crucible.model;
 
 import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.Project;
+import com.cenqua.crucible.model.managers.LogItemManager;
 import com.cenqua.crucible.model.managers.PermissionManager;
 import com.cenqua.crucible.model.managers.ProjectManager;
+import com.cenqua.crucible.model.managers.ReviewManager;
 import com.cenqua.fisheye.config.RepositoryManager;
 import com.cenqua.fisheye.rep.RepositoryHandle;
 import com.cenqua.fisheye.user.UserManager;
@@ -11,6 +13,7 @@ import com.davidkoudela.crucible.rest.response.ProjectProperties;
 import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
 import com.davidkoudela.crucible.rest.response.ResponseProjectFactory;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
+import com.davidkoudela.crucible.review.ReviewVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +37,8 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 	private ProjectManager projectManager;
 	private RepositoryManager repositoryManager;
 	private UserManager userManager;
+	private ReviewManager reviewManager;
+	private LogItemManager logItemManager;
 
 	/**
 	 * Constructor for Spring class injection.
@@ -44,12 +49,15 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 	 * @param userManager used for getting info about Crucible users
 	 */
 	@org.springframework.beans.factory.annotation.Autowired
-	public ProjectAdminModelImpl(PermissionManager permissionManager, ProjectManager projectManager, RepositoryManager repositoryManager, UserManager userManager)
+	public ProjectAdminModelImpl(PermissionManager permissionManager, ProjectManager projectManager, RepositoryManager repositoryManager,
+								 UserManager userManager, ReviewManager reviewManager, LogItemManager logItemManager)
 	{
 		this.permissionManager = permissionManager;
 		this.projectManager = projectManager;
 		this.repositoryManager = repositoryManager;
 		this.userManager = userManager;
+		this.reviewManager = reviewManager;
+		this.logItemManager = logItemManager;
 	}
 
 	/**
@@ -167,12 +175,15 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 		List<ProjectProperties> projectPropertiesList = new ArrayList<ProjectProperties>();
 		try
 		{
+			log.info("Listing rewiews");
+			ReviewVisitor reviewVisitor = new ReviewVisitor(logItemManager);
+			this.reviewManager.visitAllReviews(reviewVisitor);
 			log.info("Listing projects");
 			projectList = this.projectManager.getAllProjects();
 			log.info("Project list size: " + projectList.size());
 			for (Project project : projectList)
 			{
-				projectPropertiesList.add(new ProjectProperties(project));
+				projectPropertiesList.add(new ProjectProperties(project, reviewVisitor.getReviewVisitorDataByProject(project.getProjKey())));
 			}
 		}
 		catch (Exception e)

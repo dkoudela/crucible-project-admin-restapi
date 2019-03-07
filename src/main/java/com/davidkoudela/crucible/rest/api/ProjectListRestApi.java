@@ -4,10 +4,7 @@ import com.atlassian.plugins.rest.common.interceptor.InterceptorChain;
 import com.davidkoudela.crucible.model.ProjectAdminModelImpl;
 import com.davidkoudela.crucible.rest.intercept.ProjectAdminInterceptor;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
@@ -46,7 +43,7 @@ public class ProjectListRestApi
 	 */
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response deleteProjectGet()
+	public Response listProjectGet()
 	{
 		return listProjectFacade();
 	}
@@ -58,7 +55,7 @@ public class ProjectListRestApi
 	 */
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response deleteProjectPost()
+	public Response listProjectPost()
 	{
 		return listProjectFacade();
 	}

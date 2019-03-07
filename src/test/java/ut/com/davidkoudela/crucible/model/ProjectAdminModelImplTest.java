@@ -3,8 +3,10 @@ package ut.com.davidkoudela.crucible.model;
 import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.PermissionScheme;
 import com.cenqua.crucible.model.Project;
+import com.cenqua.crucible.model.managers.LogItemManager;
 import com.cenqua.crucible.model.managers.PermissionManager;
 import com.cenqua.crucible.model.managers.ProjectManager;
+import com.cenqua.crucible.model.managers.ReviewManager;
 import com.cenqua.fisheye.RepositoryConfig;
 import com.cenqua.fisheye.config.RepositoryManager;
 import com.cenqua.fisheye.rep.RepositoryHandle;
@@ -41,6 +43,8 @@ public class ProjectAdminModelImplTest extends TestCase
 	private static ProjectManager projectManager;
 	private static RepositoryManager repositoryManager;
 	private static UserManager userManager;
+	private static ReviewManager reviewManager;
+	private static LogItemManager logItemManager;
 	public static Logger loggerMockStatic;
 
 	private static ProjectAdminModelImpl projectAdminModelImpl;
@@ -67,8 +71,10 @@ public class ProjectAdminModelImplTest extends TestCase
 		projectManager = Mockito.mock(ProjectManager.class);
 		repositoryManager = Mockito.mock(RepositoryManager.class);
 		userManager = Mockito.mock(UserManager.class);
+		reviewManager = Mockito.mock(ReviewManager.class);
+		logItemManager = Mockito.mock(LogItemManager.class);
 
-		projectAdminModelImpl = new ProjectAdminModelImpl(permissionManager, projectManager, repositoryManager, userManager);
+		projectAdminModelImpl = new ProjectAdminModelImpl(permissionManager, projectManager, repositoryManager, userManager, reviewManager, logItemManager);
 
 		project = new Project();
 
@@ -298,7 +304,7 @@ public class ProjectAdminModelImplTest extends TestCase
 		assertEquals("[{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					 "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					 "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					 "\"defaultObjectives\":\"I object !!!\"} ]",
+					 "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"} ]",
 					 responseProjectDataList.getProjectList().toString());
 	}
 
@@ -321,11 +327,11 @@ public class ProjectAdminModelImplTest extends TestCase
 		assertEquals("[{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					  "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					  "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					  "\"defaultObjectives\":\"I object !!!\"} , " +
+					  "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"} , " +
 					  "{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					  "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					  "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					  "\"defaultObjectives\":\"I object !!!\"} ]",
+					  "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"} ]",
 					 responseProjectDataList.getProjectList().toString());
 	}
 

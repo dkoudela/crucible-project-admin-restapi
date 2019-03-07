@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.davidkoudela.crucible</groupId>
     <artifactId>crucible-project-admin-restapi</artifactId>
-    <version>4.4</version>
+    <version>4.5</version>
 
     <organization>
         <name>David Koudela</name>
@@ -139,6 +139,7 @@
             <scope>test</scope>
         </dependency>
         <!-- INTEGRATION TESTING WITH Selenium DEPENDENCIES END -->
+        <!-- JaCoCo instrumentation DEPENDENCIES START -->
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.agent</artifactId>
@@ -146,7 +147,8 @@
             <version>${jacoco.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- WIRED TEST RUNNER DEPENDENCIES -->
+        <!-- JaCoCo DEPENDENCIES END -->
+        <!-- WIRED TEST RUNNER DEPENDENCIES START -->
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-osgi-testrunner</artifactId>
@@ -165,6 +167,66 @@
             <version>2.1.4</version>
             <scope>test</scope>
         </dependency>
+        <!-- WIRED TEST RUNNER DEPENDENCIES END -->
+        <!-- IntelliJ IDEA compile DEPENDENCIES START -->
+        <!-- Uncomment when IntelliJ IDEA has to be used. It causes Java Beans load failures for atlas-* cmds -->
+        <!--dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.0.1-jre</version>
+        </dependency>
+        <dependency>
+            <artifactId>atlassian-annotations</artifactId>
+            <groupId>com.atlassian.annotations</groupId>
+            <version>1.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.13-atlassian-3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.1.7.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>1.8-atlassian-14</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.crowd</groupId>
+            <artifactId>embedded-crowd-api</artifactId>
+            <version>2.9.5-7fb674b</version>
+            <scope>provided</scope>
+        </dependency-->
+        <!-- IntelliJ IDEA compile DEPENDENCIES END -->
+        <!-- IntelliJ IDEA UNIT TESTING DEPENDENCIES START -->
+        <!-- Uncomment when IntelliJ IDEA has to be used. It causes Java Beans load failures for atlas-* cmds -->
+        <!--dependency>
+            <groupId>it.unimi.dsi</groupId>
+            <artifactId>fastutil</artifactId>
+            <version>6.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>3.3.0-atlassian-1</version>
+            <scope>test</scope>
+        </dependency-->
+        <!-- IntelliJ IDEA UNIT TESTING DEPENDENCIES END -->
     </dependencies>
 
     <build>

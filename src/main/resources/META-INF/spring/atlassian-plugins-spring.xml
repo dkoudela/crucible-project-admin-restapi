@@ -21,6 +21,12 @@
         <constructor-arg>
             <ref bean="userManager"/>
         </constructor-arg>
+        <constructor-arg>
+            <ref bean="reviewService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="logItemManager"/>
+        </constructor-arg>
     </bean>
 
     <bean id="repositoryAdminModel" name="RepositoryAdminModel" class="com.davidkoudela.crucible.model.RepositoryAdminModelImpl">
