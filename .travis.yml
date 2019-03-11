@@ -32,7 +32,7 @@ script:
 # It is kept only for further test downgrade
 #    - sudo atlas-unit-test
 # Integration tests
-    - build.sh
+    - ./build.sh
 
 after_success:
 # Create GIT tag
