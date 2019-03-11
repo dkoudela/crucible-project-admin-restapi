@@ -36,7 +36,8 @@ public class ReviewVisitor implements Visitor<Review> {
 				review.getPermaId(),
 				review.getProject(),
 				review.getCreateDate(),
-				review.getCreateDate()
+				review.getCreateDate(),
+				review.getState().getStateType().getReviewDataState()
 		);
 
 		LogItemSearchCriteria logItemSearchCriteria = LogItemSearchCriteria.create().reviewIds(new Integer[]{reviewVisitorData.getId()}).order(DESC);
@@ -57,7 +58,7 @@ public class ReviewVisitor implements Visitor<Review> {
 		}
 	}
 
-	public ReviewVisitorData getReviewVisitorDataByProject(String projectKey) {
+	public ReviewVisitorData getTheNewestReviewVisitorDataByProject(String projectKey) {
 		try {
 			ReviewVisitorData reviewVisitorData = reviewsWithNewestUpdateDate.get(projectKey);
 			if (null == reviewVisitorData)
@@ -65,6 +66,17 @@ public class ReviewVisitor implements Visitor<Review> {
 			return reviewVisitorData;
 		} catch (Exception e) {
 			return new ReviewVisitorData();
+		}
+	}
+
+	public Collection<ReviewVisitorData> getReviewVisitorDataCollectionByProject(String projectKey) {
+		try {
+			Collection<ReviewVisitorData> reviewVisitorDataCollection = reviewsPerProjectKey.get(projectKey);
+			if (null == reviewVisitorDataCollection)
+				return new ArrayList<ReviewVisitorData>();
+			return reviewVisitorDataCollection;
+		} catch (Exception e) {
+			return new ArrayList<ReviewVisitorData>();
 		}
 	}
 }

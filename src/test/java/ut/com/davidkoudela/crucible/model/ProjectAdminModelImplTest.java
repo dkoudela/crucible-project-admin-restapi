@@ -304,7 +304,10 @@ public class ProjectAdminModelImplTest extends TestCase
 		assertEquals("[{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					 "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					 "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					 "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"} ]",
+					 "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"," +
+					 "\"numberOfReviews\":0," +
+					 "\"reviewsInStateDraft\":0,\"reviewsInStateApproval\":0,\"reviewsInStateReview\":0,\"reviewsInStateSummarize\":0,\"reviewsInStateClosed\":0,\"reviewsInStateDead\":0,\"reviewsInStateRejected\":0,\"reviewsInStateUnknown\":0,\"reviewsInStateOpenSnippet\":0,\"reviewsInStateClosedSnippet\":0" +
+					 "} ]",
 					 responseProjectDataList.getProjectList().toString());
 	}
 
@@ -327,11 +330,17 @@ public class ProjectAdminModelImplTest extends TestCase
 		assertEquals("[{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					  "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					  "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					  "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"} , " +
+					  "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"," +
+					  "\"numberOfReviews\":0," +
+					  "\"reviewsInStateDraft\":0,\"reviewsInStateApproval\":0,\"reviewsInStateReview\":0,\"reviewsInStateSummarize\":0,\"reviewsInStateClosed\":0,\"reviewsInStateDead\":0,\"reviewsInStateRejected\":0,\"reviewsInStateUnknown\":0,\"reviewsInStateOpenSnippet\":0,\"reviewsInStateClosedSnippet\":0" +
+					  "} , " +
 					  "{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					  "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					  "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					  "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"} ]",
+					  "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"," +
+					  "\"numberOfReviews\":0," +
+					  "\"reviewsInStateDraft\":0,\"reviewsInStateApproval\":0,\"reviewsInStateReview\":0,\"reviewsInStateSummarize\":0,\"reviewsInStateClosed\":0,\"reviewsInStateDead\":0,\"reviewsInStateRejected\":0,\"reviewsInStateUnknown\":0,\"reviewsInStateOpenSnippet\":0,\"reviewsInStateClosedSnippet\":0" +
+					  "} ]",
 					 responseProjectDataList.getProjectList().toString());
 	}
 

@@ -28,12 +28,6 @@ install:
 script:
 # Explicitly switch to the right JDK
     - jdk_switcher use oraclejdk8
-# Unit tests are part of the Integration tests.
-# It is kept only for further test downgrade
-#    - sudo atlas-unit-test
-# Integration tests
-    - ls -lisa
-    - pwd
     - ./build.sh
 
 after_success:

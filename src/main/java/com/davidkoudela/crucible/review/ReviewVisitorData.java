@@ -1,5 +1,6 @@
 package com.davidkoudela.crucible.review;
 
+import com.atlassian.crucible.spi.data.ReviewData;
 import com.cenqua.crucible.model.Project;
 
 import java.util.Date;
@@ -17,14 +18,16 @@ public class ReviewVisitorData {
 	Project project;
 	Date createDate;
 	Date updateDate;
+	ReviewData.State state;
 
 
-	public ReviewVisitorData(Integer id, String permaId, Project project, Date createDate, Date updateDate) {
+	public ReviewVisitorData(Integer id, String permaId, Project project, Date createDate, Date updateDate, ReviewData.State state) {
 		this.id = id;
 		this.permaId = permaId;
 		this.project = project;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
+		this.state = state;
 	}
 
 	public ReviewVisitorData() {
@@ -33,6 +36,7 @@ public class ReviewVisitorData {
 		project = new Project();
 		createDate = null;
 		updateDate = null;
+		state = null;
 	}
 
 	public Integer getId() {
@@ -73,5 +77,13 @@ public class ReviewVisitorData {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public ReviewData.State getState() {
+		return state;
+	}
+
+	public void setState(ReviewData.State state) {
+		this.state = state;
 	}
 }

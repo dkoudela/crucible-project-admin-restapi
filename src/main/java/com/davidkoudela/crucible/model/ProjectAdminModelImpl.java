@@ -183,7 +183,9 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 			log.info("Project list size: " + projectList.size());
 			for (Project project : projectList)
 			{
-				projectPropertiesList.add(new ProjectProperties(project, reviewVisitor.getReviewVisitorDataByProject(project.getProjKey())));
+				projectPropertiesList.add(new ProjectProperties(project,
+						reviewVisitor.getTheNewestReviewVisitorDataByProject(project.getProjKey()),
+						reviewVisitor.getReviewVisitorDataCollectionByProject(project.getProjKey())));
 			}
 		}
 		catch (Exception e)

@@ -1,5 +1,6 @@
 package ut.com.davidkoudela.crucible.rest.response;
 
+import com.atlassian.crucible.spi.data.ReviewData;
 import com.cenqua.crucible.model.PermissionScheme;
 import com.cenqua.crucible.model.Project;
 import com.davidkoudela.crucible.rest.response.ProjectProperties;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -36,14 +38,16 @@ public class ResponseProjectDataListTest extends TestCase {
 		Date date = new Date(1551865213L);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 		String lastUpdatedReviewDate = dateFormat.format(date);
-		ReviewVisitorData reviewVisitorData = new ReviewVisitorData(1, "D-1", project, date, date);
-		projectPropertiesList.add(new ProjectProperties(project, reviewVisitorData));
+		ReviewVisitorData reviewVisitorData = new ReviewVisitorData(1, "D-1", project, date, date, ReviewData.State.Review);
+		Collection<ReviewVisitorData> reviewVisitorDataCollection = new ArrayList<ReviewVisitorData>();
+		reviewVisitorDataCollection.add(reviewVisitorData);
+		projectPropertiesList.add(new ProjectProperties(project, reviewVisitorData, reviewVisitorDataCollection));
 		ResponseProjectDataList responseProjectDataList = ResponseProjectFactory.constructResponseWithList("200", "operation succeeded", "", projectPropertiesList);
 		Gson gson = new Gson();
 		String responseProjectDataListAsString = gson.toJson(responseProjectDataList);
 
 		assertNotNull(responseProjectDataListAsString);
-		assertEquals("{\"response\":{\"code\":\"200\",\"message\":\"operation succeeded\",\"cause\":\"\"},\"projectList\":[{\"name\":\"Default\",\"storeRevisions\":false,\"permissionSchemeId\":666,\"moderatorEnabled\":true,\"lastUpdatedReview\":\"D-1\",\"lastUpdatedReviewDate\":\"" + lastUpdatedReviewDate + "\"}]}",
+		assertEquals("{\"response\":{\"code\":\"200\",\"message\":\"operation succeeded\",\"cause\":\"\"},\"projectList\":[{\"name\":\"Default\",\"storeRevisions\":false,\"permissionSchemeId\":666,\"moderatorEnabled\":true,\"lastUpdatedReview\":\"D-1\",\"lastUpdatedReviewDate\":\"" + lastUpdatedReviewDate + "\",\"numberOfReviews\":1,\"reviewsInStateDraft\":0,\"reviewsInStateApproval\":0,\"reviewsInStateReview\":1,\"reviewsInStateSummarize\":0,\"reviewsInStateClosed\":0,\"reviewsInStateDead\":0,\"reviewsInStateRejected\":0,\"reviewsInStateUnknown\":0,\"reviewsInStateOpenSnippet\":0,\"reviewsInStateClosedSnippet\":0}]}",
 				responseProjectDataListAsString);
 	}
 }

@@ -1,5 +1,6 @@
 package com.davidkoudela.crucible.rest.response;
 
+import com.atlassian.crucible.spi.data.ReviewData;
 import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.Project;
 import com.davidkoudela.crucible.review.ReviewVisitorData;
@@ -7,6 +8,7 @@ import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 
 /**
  * Description: Project Properties holder used by Jackson JSON processor
@@ -41,13 +43,35 @@ public class ProjectProperties
 	String lastUpdatedReview;
 	@JsonProperty
 	String lastUpdatedReviewDate;
+	@JsonProperty
+	Integer numberOfReviews;
+	@JsonProperty
+	Integer reviewsInStateDraft;
+	@JsonProperty
+	Integer reviewsInStateApproval;
+	@JsonProperty
+	Integer reviewsInStateReview;
+	@JsonProperty
+	Integer reviewsInStateSummarize;
+	@JsonProperty
+	Integer reviewsInStateClosed;
+	@JsonProperty
+	Integer reviewsInStateDead;
+	@JsonProperty
+	Integer reviewsInStateRejected;
+	@JsonProperty
+	Integer reviewsInStateUnknown;
+	@JsonProperty
+	Integer reviewsInStateOpenSnippet;
+	@JsonProperty
+	Integer reviewsInStateClosedSnippet;
 
 	/**
 	 * Constructor for ProjectProperties based on provided Crucible project
 	 *
 	 * @param project to be used for the ProjectProperties construction
 	 */
-	public ProjectProperties(Project project, ReviewVisitorData reviewVisitorData)
+	public ProjectProperties(Project project, ReviewVisitorData reviewVisitorData, Collection<ReviewVisitorData> reviewVisitorDataCollection)
 	{
 		name = project.getName();
 		key = project.getProjKey();
@@ -67,6 +91,35 @@ public class ProjectProperties
 		} else {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 			lastUpdatedReviewDate = dateFormat.format(reviewVisitorData.getUpdateDate());
+		}
+		numberOfReviews = new Integer(reviewVisitorDataCollection.size());
+		reviewsInStateDraft = 0;
+		reviewsInStateApproval = 0;
+		reviewsInStateReview = 0;
+		reviewsInStateSummarize = 0;
+		reviewsInStateClosed = 0;
+		reviewsInStateDead = 0;
+		reviewsInStateRejected = 0;
+		reviewsInStateUnknown = 0;
+		reviewsInStateOpenSnippet = 0;
+		reviewsInStateClosedSnippet = 0;
+		for (ReviewVisitorData reviewVisitorDataItem : reviewVisitorDataCollection) {
+			ReviewData.State reviewState = reviewVisitorDataItem.getState();
+			if (null == reviewState)
+				continue;
+			switch (reviewState) {
+				case Draft: reviewsInStateDraft++; break;
+				case Approval: reviewsInStateApproval++; break;
+				case Review: reviewsInStateReview++; break;
+				case Summarize: reviewsInStateSummarize++; break;
+				case Closed: reviewsInStateClosed++; break;
+				case Dead: reviewsInStateDead++; break;
+				case Rejected: reviewsInStateRejected++; break;
+				case Unknown: reviewsInStateUnknown++; break;
+				case OpenSnippet: reviewsInStateOpenSnippet++; break;
+				case ClosedSnippet: reviewsInStateClosedSnippet++; break;
+				default: reviewsInStateUnknown++;
+			}
 		}
 	}
 
@@ -307,8 +360,19 @@ public class ProjectProperties
 				"\"defaultDuration\":\"" + defaultDuration + "\"," +
 				"\"defaultObjectives\":\"" + defaultObjectives + "\"," +
 				"\"lastUpdatedReview\":\"" + lastUpdatedReview + "\"," +
-				"\"lastUpdatedReviewDate\":\"" + lastUpdatedReviewDate +
-				"\"} "
+				"\"lastUpdatedReviewDate\":\"" + lastUpdatedReviewDate + "\"," +
+				"\"numberOfReviews\":" + numberOfReviews + "," +
+				"\"reviewsInStateDraft\":" + reviewsInStateDraft + "," +
+				"\"reviewsInStateApproval\":" + reviewsInStateApproval + "," +
+				"\"reviewsInStateReview\":" + reviewsInStateReview + "," +
+				"\"reviewsInStateSummarize\":" + reviewsInStateSummarize + "," +
+				"\"reviewsInStateClosed\":" + reviewsInStateClosed + "," +
+				"\"reviewsInStateDead\":" + reviewsInStateDead + "," +
+				"\"reviewsInStateRejected\":" + reviewsInStateRejected + "," +
+				"\"reviewsInStateUnknown\":" + reviewsInStateUnknown + "," +
+				"\"reviewsInStateOpenSnippet\":" + reviewsInStateOpenSnippet + "," +
+				"\"reviewsInStateClosedSnippet\":" + reviewsInStateOpenSnippet +
+				"} "
 				;
 	}
 }
