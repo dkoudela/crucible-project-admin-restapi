@@ -32,8 +32,7 @@ script:
 # It is kept only for further test downgrade
 #    - sudo atlas-unit-test
 # Integration tests
-    - sudo atlas-integration-test | tee $BUILD_LOG |sed -f .logfilter.txt
-    - exit ${PIPESTATUS[0]}
+    - build.sh
 
 after_success:
 # Create GIT tag
