@@ -33,6 +33,7 @@ script:
 #    - sudo atlas-unit-test
 # Integration tests
     - sudo atlas-integration-test | tee $BUILD_LOG |sed -f .logfilter.txt
+    - exit ${PIPESTATUS[0]}
 
 after_success:
 # Create GIT tag
