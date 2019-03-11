@@ -49,7 +49,7 @@ public class ProjectProperties
 	 */
 	public ProjectProperties(Project project, ReviewVisitorData reviewVisitorData)
 	{
-		name = project.getName()
+		name = project.getName();
 		key = project.getProjKey();
 		defaultRepositoryName = project.getDefaultRepositoryName();
 		storeRevisions = project.isStoreRevisions();
