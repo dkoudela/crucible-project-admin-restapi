@@ -24,7 +24,7 @@ public class RepositoryListRestApiWiredTest
 	}
 
 	@Test
-	public void testListEmptyRepository()
+	public void testListEmptyRepositoryForUnauthorizedUser()
 	{
 		ResponseRepositoryNameList responseRepositoryNameList = repositoryAdminModel.listRepository();
 		assertEquals(true, responseRepositoryNameList.getRepositoryNames().isEmpty());

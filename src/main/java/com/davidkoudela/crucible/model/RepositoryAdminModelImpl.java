@@ -155,6 +155,13 @@ public class RepositoryAdminModelImpl implements RepositoryAdminModel
 		repositoryRestData.extraOptions.requiredGroups = Sets.newHashSet(it);
 		repositoryRestData.extraOptions.allowAnon = this.repositoryAdminService.getAllowAnonymous(repositoryRestData.name);
 		repositoryRestData.extraOptions.allowLoggedUsers = this.repositoryAdminService.getAllowLoggedIn(repositoryRestData.name);
+		repositoryRestData.enabled = this.repositoryAdminService.isEnabled(repositoryRestData.name);
+		if (repositoryRestData.enabled) {
+			RepositoryState repositoryState = this.repositoryAdminService.getState(repositoryRestData.name);
+			repositoryRestData.started = RepositoryState.STOPPED != repositoryState;
+		} else {
+			repositoryRestData.started = false;
+		}
 	}
 
 	private void deleteRepositoryAdminServiceSpecificParameters(RepositoryRestData repositoryRestData) throws RepositoryConfigException {

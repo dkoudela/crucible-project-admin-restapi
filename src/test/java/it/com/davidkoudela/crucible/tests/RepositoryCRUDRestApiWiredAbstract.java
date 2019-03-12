@@ -24,6 +24,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-cvs\"," +
 			"\"description\":\"corp-cvs description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -50,6 +51,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-cvs\"," +
 			"\"description\":\"corp-cvs description\"," +
 			"\"storeDiff\":true," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -83,6 +85,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-cvs\"," +
 			"\"description\":\"corp-cvs description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -120,6 +123,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-cvs\"," +
 			"\"description\":\"corp-cvs description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -154,6 +158,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-git\"," +
 			"\"description\":\"corp-git description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -189,6 +194,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-git\"," +
 			"\"description\":\"corp-git description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -224,6 +230,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-git\"," +
 			"\"description\":\"corp-git description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -258,6 +265,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-git\"," +
 			"\"description\":\"corp-git description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -294,6 +302,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-hg\"," +
 			"\"description\":\"corp-hg description\","+
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -329,6 +338,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-hg\"," +
 			"\"description\":\"corp-hg description\","+
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -364,6 +374,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-hg\"," +
 			"\"description\":\"corp-hg description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -402,6 +413,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-hg\"," +
 			"\"description\":\"corp-hg description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true,"+
 			"\"allowAnon\":false," +
@@ -448,6 +460,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-p4\"," +
 			"\"description\":\"corp-p4 description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -503,6 +516,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-p4\"," +
 			"\"description\":\"corp-p4 description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -573,6 +587,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-svn\"," +
 			"\"description\":\"corp-svn description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -650,6 +665,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-svn\"," +
 			"\"description\":\"corp-svn description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
@@ -771,6 +787,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-svn\"," +
 			"\"description\":\"corp-svn description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":false," +
 			"\"allowAnon\":true," +
@@ -924,6 +941,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-svn\"," +
 			"\"description\":\"corp-svn description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":false," +
 			"\"allowAnon\":false," +
@@ -1077,6 +1095,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-svn\"," +
 			"\"description\":\"corp-svn description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 				"\"usingDefaultsPermissions\":true," +
 				"\"allowAnon\":false," +
@@ -1204,6 +1223,7 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"name\":\"corp-svn\"," +
 			"\"description\":\"corp-svn description\"," +
 			"\"storeDiff\":false," +
+			"\"enabled\":false,\"started\":false," +
 			"\"extraOptions\":{" +
 			"\"usingDefaultsPermissions\":true," +
 			"\"allowAnon\":false," +
