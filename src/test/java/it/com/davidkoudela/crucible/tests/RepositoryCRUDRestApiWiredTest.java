@@ -122,6 +122,12 @@ public class RepositoryCRUDRestApiWiredTest extends RepositoryCRUDRestApiWiredAb
 	}
 
 	@Test
+	public void testCreateEnableDeleteOneGitBasicRepository()
+	{
+		executeCRUD(GIT_NAME, GIT_BASIC_ENABLED_REQUEST, GIT_BASIC_ENABLED_RESPONSE, null, null);
+	}
+
+	@Test
 	public void testCreateDeleteOneMercurialBasicRepository()
 	{
 		executeCRUD(MERCURIAL_NAME, MERCURIAL_BASIC_REQUEST, MERCURIAL_BASIC_RESPONSE, MERCURIAL_BASIC_UPDATE_REQUEST, MERCURIAL_BASIC_UPDATE_RESPONSE);

@@ -284,6 +284,42 @@ abstract public class RepositoryCRUDRestApiWiredAbstract {
 			"\"renameDetection\":\"NONE\"" +
 			"}" +
 			"}";
+	protected final static String GIT_BASIC_ENABLED_REQUEST = "{\n" +
+			"  \"git\" : { \"location\" : \"git@git.example.com:plugins/crucible-plugin.git\", \n" +
+			"          \"path\" : \"src\", \"blockSize\" : 1024, \"commandTimeout\" : \"30 minute\", \n" +
+			"          \"renameDetection\" : \"COPIES\" },\n" +
+			"  \"name\" : \"corp-git\",\n" +
+			"  \"description\" : \"corp-git description\",\n" +
+			"  \"storeDiff\" : false,\n" +
+			"  \"enabled\" : true,\n" +
+			"  \"started\" : false\n" +
+			"}";
+	protected final static String GIT_BASIC_ENABLED_RESPONSE = "{" +
+			"\"name\":\"corp-git\"," +
+			"\"description\":\"corp-git description\"," +
+			"\"storeDiff\":false," +
+			"\"enabled\":true,\"started\":false," +
+			"\"extraOptions\":{" +
+			"\"usingDefaultsPermissions\":true," +
+			"\"allowAnon\":false," +
+			"\"allowLoggedUsers\":false," +
+			"\"allowIncludes\":[]," +
+			"\"allowExcludes\":[]," +
+			"\"simpleLinkers\":[]," +
+			"\"advancedLinkers\":[]," +
+			"\"hiddenDirectories\":[]," +
+			"\"requiredGroups\":[]," +
+			"\"checkoutURL\":{\"URL\":\"git@git.example.com:plugins/crucible-plugin.git\"}" +
+			"}," +
+			"\"git\":{" +
+			"\"location\":\"git@git.example.com:plugins/crucible-plugin.git\"," +
+			"\"path\":\"src\"," +
+			"\"auth\":{}," +
+			"\"blockSize\":1024," +
+			"\"commandTimeout\":\"30 minute\"," +
+			"\"renameDetection\":\"COPIES\"" +
+			"}" +
+			"}";
 
 	protected final static String MERCURIAL_NAME = "corp-hg";
 	protected final static String MERCURIAL_BASIC_REQUEST = "{\n" +
