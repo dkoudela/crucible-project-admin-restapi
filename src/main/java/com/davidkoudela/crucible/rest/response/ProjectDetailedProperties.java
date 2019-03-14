@@ -11,15 +11,15 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 /**
- * Description: Project Properties holder used by Jackson JSON processor
+ * Description: Project Detailed Properties holder used by Jackson JSON processor
  *              for generating Project part of the REST response in JSON.
- * Copyright (C) 2014 David Koudela
+ * Copyright (C) 2019 David Koudela
  *
  * @author dkoudela
- * @since 17.6.2014
+ * @since 14.3.2019
  */
 @JsonAutoDetect
-public class ProjectProperties
+public class ProjectDetailedProperties
 {
 	@JsonProperty
 	String name;
@@ -40,14 +40,67 @@ public class ProjectProperties
 	@JsonProperty
 	String defaultObjectives;
 	@JsonProperty
+	String lastUpdatedReview;
+	@JsonProperty
+	String lastUpdatedReviewDate;
+	@JsonProperty
 	Integer numberOfReviews;
+	@JsonProperty
+	Integer reviewsInStateDraft;
+	@JsonProperty
+	Integer reviewsInStateApproval;
+	@JsonProperty
+	Integer reviewsInStateReview;
+	@JsonProperty
+	Integer reviewsInStateSummarize;
+	@JsonProperty
+	Integer reviewsInStateClosed;
+	@JsonProperty
+	Integer reviewsInStateDead;
+	@JsonProperty
+	Integer reviewsInStateRejected;
+	@JsonProperty
+	Integer reviewsInStateUnknown;
+	@JsonProperty
+	Integer reviewsInStateOpenSnippet;
+	@JsonProperty
+	Integer reviewsInStateClosedSnippet;
+
+	/**
+	 * Default Constructor for ProjectProperties based on provided Crucible project
+	 *
+	 */
+	public ProjectDetailedProperties() {
+		this.name = "";
+		this.key = "";
+		this.defaultRepositoryName = "";
+		this.storeRevisions = false;
+		this.permissionSchemeId = 0;
+		this.moderatorEnabled = false;
+		this.defaultModerator = "";
+		this.defaultDuration = 0;
+		this.defaultObjectives = "";
+		this.lastUpdatedReview = "";
+		this.lastUpdatedReviewDate = "";
+		this.numberOfReviews = 0;
+		this.reviewsInStateDraft = 0;
+		this.reviewsInStateApproval = 0;
+		this.reviewsInStateReview = 0;
+		this.reviewsInStateSummarize = 0;
+		this.reviewsInStateClosed = 0;
+		this.reviewsInStateDead = 0;
+		this.reviewsInStateRejected = 0;
+		this.reviewsInStateUnknown = 0;
+		this.reviewsInStateOpenSnippet = 0;
+		this.reviewsInStateClosedSnippet = 0;
+	}
 
 	/**
 	 * Constructor for ProjectProperties based on provided Crucible project
 	 *
 	 * @param project to be used for the ProjectProperties construction
 	 */
-	public ProjectProperties(Project project, int reviewsInProject)
+	public ProjectDetailedProperties(Project project, ReviewVisitorData reviewVisitorData, Collection<ReviewVisitorData> reviewVisitorDataCollection)
 	{
 		name = project.getName();
 		key = project.getProjKey();
@@ -61,7 +114,42 @@ public class ProjectProperties
 			defaultModerator = defaultModeratorUser.getUsername();
 		defaultDuration = project.getDefaultDuration();
 		defaultObjectives = project.getDefaultObjectives();
-		numberOfReviews = new Integer(reviewsInProject);
+		lastUpdatedReview = reviewVisitorData.getPermaId();
+		if (null == reviewVisitorData.getUpdateDate()) {
+			lastUpdatedReviewDate = "";
+		} else {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+			lastUpdatedReviewDate = dateFormat.format(reviewVisitorData.getUpdateDate());
+		}
+		numberOfReviews = new Integer(reviewVisitorDataCollection.size());
+		reviewsInStateDraft = 0;
+		reviewsInStateApproval = 0;
+		reviewsInStateReview = 0;
+		reviewsInStateSummarize = 0;
+		reviewsInStateClosed = 0;
+		reviewsInStateDead = 0;
+		reviewsInStateRejected = 0;
+		reviewsInStateUnknown = 0;
+		reviewsInStateOpenSnippet = 0;
+		reviewsInStateClosedSnippet = 0;
+		for (ReviewVisitorData reviewVisitorDataItem : reviewVisitorDataCollection) {
+			ReviewData.State reviewState = reviewVisitorDataItem.getState();
+			if (null == reviewState)
+				continue;
+			switch (reviewState) {
+				case Draft: reviewsInStateDraft++; break;
+				case Approval: reviewsInStateApproval++; break;
+				case Review: reviewsInStateReview++; break;
+				case Summarize: reviewsInStateSummarize++; break;
+				case Closed: reviewsInStateClosed++; break;
+				case Dead: reviewsInStateDead++; break;
+				case Rejected: reviewsInStateRejected++; break;
+				case Unknown: reviewsInStateUnknown++; break;
+				case OpenSnippet: reviewsInStateOpenSnippet++; break;
+				case ClosedSnippet: reviewsInStateClosedSnippet++; break;
+				default: reviewsInStateUnknown++;
+			}
+		}
 	}
 
 	/**
@@ -155,6 +243,26 @@ public class ProjectProperties
 	}
 
 	/**
+	 * Getter for Last Updated Review used by Jackson JSON processor
+	 *
+	 * @return String containing the Last Updated Review
+	 */
+	public String getLastUpdatedReview()
+	{
+		return lastUpdatedReview;
+	}
+
+	/**
+	 * Getter for Last Updated Review Date used by Jackson JSON processor
+	 *
+	 * @return String containing the Last Updated Review Date
+	 */
+	public String getLastUpdatedReviewDate()
+	{
+		return lastUpdatedReviewDate;
+	}
+
+	/**
 	 * Setter for Project Name used by Jackson JSON processor
 	 *
 	 * @param name the Project Name
@@ -245,6 +353,26 @@ public class ProjectProperties
 	}
 
 	/**
+	 * Setter for Last Updated Review used by Jackson JSON processor
+	 *
+	 * @param lastUpdatedReview the Last Updated Review
+	 */
+	public void setLastUpdatedReview(String lastUpdatedReview)
+	{
+		this.lastUpdatedReview = lastUpdatedReview;
+	}
+
+	/**
+	 * Setter for Last Updated Review Date used by Jackson JSON processor
+	 *
+	 * @param lastUpdatedReviewDate the Last Updated Review Date
+	 */
+	public void setLastUpdatedReviewDate(String lastUpdatedReviewDate)
+	{
+		this.lastUpdatedReviewDate = lastUpdatedReviewDate;
+	}
+
+	/**
 	 * Provides a string representation of the Project Properties
 	 *
 	 * @return String containing the string representation of the Project Properties
@@ -260,7 +388,19 @@ public class ProjectProperties
 				"\"defaultModerator\":\"" + defaultModerator + "\"," +
 				"\"defaultDuration\":\"" + defaultDuration + "\"," +
 				"\"defaultObjectives\":\"" + defaultObjectives + "\"," +
-				"\"numberOfReviews\":" + numberOfReviews +
+				"\"lastUpdatedReview\":\"" + lastUpdatedReview + "\"," +
+				"\"lastUpdatedReviewDate\":\"" + lastUpdatedReviewDate + "\"," +
+				"\"numberOfReviews\":" + numberOfReviews + "," +
+				"\"reviewsInStateDraft\":" + reviewsInStateDraft + "," +
+				"\"reviewsInStateApproval\":" + reviewsInStateApproval + "," +
+				"\"reviewsInStateReview\":" + reviewsInStateReview + "," +
+				"\"reviewsInStateSummarize\":" + reviewsInStateSummarize + "," +
+				"\"reviewsInStateClosed\":" + reviewsInStateClosed + "," +
+				"\"reviewsInStateDead\":" + reviewsInStateDead + "," +
+				"\"reviewsInStateRejected\":" + reviewsInStateRejected + "," +
+				"\"reviewsInStateUnknown\":" + reviewsInStateUnknown + "," +
+				"\"reviewsInStateOpenSnippet\":" + reviewsInStateOpenSnippet + "," +
+				"\"reviewsInStateClosedSnippet\":" + reviewsInStateOpenSnippet +
 				"} "
 				;
 	}

@@ -27,6 +27,9 @@
         <constructor-arg>
             <ref bean="logItemManager"/>
         </constructor-arg>
+        <constructor-arg>
+            <ref bean="effectiveUserProvider"/>
+        </constructor-arg>
     </bean>
 
     <bean id="repositoryAdminModel" name="RepositoryAdminModel" class="com.davidkoudela.crucible.model.RepositoryAdminModelImpl">

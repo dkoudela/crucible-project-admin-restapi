@@ -1,6 +1,7 @@
 package com.davidkoudela.crucible.model;
 
 import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
+import com.davidkoudela.crucible.rest.response.ResponseProjectDataProperties;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
 
 /**
@@ -73,4 +74,12 @@ public interface ProjectAdminModel {
 	 * @return ResponseProjectDataList containing code, message, cause and project list key-value pairs used in REST responses
 	 */
 	public ResponseProjectDataList listProject();
+
+	/**
+	 * Lists existing Crucible projects
+	 *
+	 * @param key the project key used when giving reviews their unique code names
+	 * @return ResponseProjectDataList containing code, message, cause and project list key-value pairs used in REST responses
+	 */
+	public ResponseProjectDataProperties listProject(String key);
 }

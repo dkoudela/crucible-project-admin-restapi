@@ -1,5 +1,6 @@
 package ut.com.davidkoudela.crucible.model;
 
+import com.atlassian.fecru.user.EffectiveUserProvider;
 import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.PermissionScheme;
 import com.cenqua.crucible.model.Project;
@@ -45,6 +46,7 @@ public class ProjectAdminModelImplTest extends TestCase
 	private static UserManager userManager;
 	private static ReviewManager reviewManager;
 	private static LogItemManager logItemManager;
+	private static EffectiveUserProvider effectiveUserProvider;
 	public static Logger loggerMockStatic;
 
 	private static ProjectAdminModelImpl projectAdminModelImpl;
@@ -73,8 +75,9 @@ public class ProjectAdminModelImplTest extends TestCase
 		userManager = Mockito.mock(UserManager.class);
 		reviewManager = Mockito.mock(ReviewManager.class);
 		logItemManager = Mockito.mock(LogItemManager.class);
+		effectiveUserProvider = Mockito.mock(EffectiveUserProvider.class);
 
-		projectAdminModelImpl = new ProjectAdminModelImpl(permissionManager, projectManager, repositoryManager, userManager, reviewManager, logItemManager);
+		projectAdminModelImpl = new ProjectAdminModelImpl(permissionManager, projectManager, repositoryManager, userManager, reviewManager, logItemManager, effectiveUserProvider);
 
 		project = new Project();
 
@@ -304,9 +307,8 @@ public class ProjectAdminModelImplTest extends TestCase
 		assertEquals("[{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					 "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					 "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					 "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"," +
-					 "\"numberOfReviews\":0," +
-					 "\"reviewsInStateDraft\":0,\"reviewsInStateApproval\":0,\"reviewsInStateReview\":0,\"reviewsInStateSummarize\":0,\"reviewsInStateClosed\":0,\"reviewsInStateDead\":0,\"reviewsInStateRejected\":0,\"reviewsInStateUnknown\":0,\"reviewsInStateOpenSnippet\":0,\"reviewsInStateClosedSnippet\":0" +
+					 "\"defaultObjectives\":\"I object !!!\"," +
+					 "\"numberOfReviews\":0" +
 					 "} ]",
 					 responseProjectDataList.getProjectList().toString());
 	}
@@ -330,16 +332,14 @@ public class ProjectAdminModelImplTest extends TestCase
 		assertEquals("[{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					  "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					  "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					  "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"," +
-					  "\"numberOfReviews\":0," +
-					  "\"reviewsInStateDraft\":0,\"reviewsInStateApproval\":0,\"reviewsInStateReview\":0,\"reviewsInStateSummarize\":0,\"reviewsInStateClosed\":0,\"reviewsInStateDead\":0,\"reviewsInStateRejected\":0,\"reviewsInStateUnknown\":0,\"reviewsInStateOpenSnippet\":0,\"reviewsInStateClosedSnippet\":0" +
+					  "\"defaultObjectives\":\"I object !!!\"," +
+					  "\"numberOfReviews\":0" +
 					  "} , " +
 					  "{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					  "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					  "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
-					  "\"defaultObjectives\":\"I object !!!\",\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\"," +
-					  "\"numberOfReviews\":0," +
-					  "\"reviewsInStateDraft\":0,\"reviewsInStateApproval\":0,\"reviewsInStateReview\":0,\"reviewsInStateSummarize\":0,\"reviewsInStateClosed\":0,\"reviewsInStateDead\":0,\"reviewsInStateRejected\":0,\"reviewsInStateUnknown\":0,\"reviewsInStateOpenSnippet\":0,\"reviewsInStateClosedSnippet\":0" +
+					  "\"defaultObjectives\":\"I object !!!\"," +
+					  "\"numberOfReviews\":0" +
 					  "} ]",
 					 responseProjectDataList.getProjectList().toString());
 	}

@@ -41,13 +41,13 @@ public class ResponseProjectDataListTest extends TestCase {
 		ReviewVisitorData reviewVisitorData = new ReviewVisitorData(1, "D-1", project, date, date, ReviewData.State.Review);
 		Collection<ReviewVisitorData> reviewVisitorDataCollection = new ArrayList<ReviewVisitorData>();
 		reviewVisitorDataCollection.add(reviewVisitorData);
-		projectPropertiesList.add(new ProjectProperties(project, reviewVisitorData, reviewVisitorDataCollection));
+		projectPropertiesList.add(new ProjectProperties(project, 1));
 		ResponseProjectDataList responseProjectDataList = ResponseProjectFactory.constructResponseWithList("200", "operation succeeded", "", projectPropertiesList);
 		Gson gson = new Gson();
 		String responseProjectDataListAsString = gson.toJson(responseProjectDataList);
 
 		assertNotNull(responseProjectDataListAsString);
-		assertEquals("{\"response\":{\"code\":\"200\",\"message\":\"operation succeeded\",\"cause\":\"\"},\"projectList\":[{\"name\":\"Default\",\"storeRevisions\":false,\"permissionSchemeId\":666,\"moderatorEnabled\":true,\"lastUpdatedReview\":\"D-1\",\"lastUpdatedReviewDate\":\"" + lastUpdatedReviewDate + "\",\"numberOfReviews\":1,\"reviewsInStateDraft\":0,\"reviewsInStateApproval\":0,\"reviewsInStateReview\":1,\"reviewsInStateSummarize\":0,\"reviewsInStateClosed\":0,\"reviewsInStateDead\":0,\"reviewsInStateRejected\":0,\"reviewsInStateUnknown\":0,\"reviewsInStateOpenSnippet\":0,\"reviewsInStateClosedSnippet\":0}]}",
+		assertEquals("{\"response\":{\"code\":\"200\",\"message\":\"operation succeeded\",\"cause\":\"\"},\"projectList\":[{\"name\":\"Default\",\"storeRevisions\":false,\"permissionSchemeId\":666,\"moderatorEnabled\":true,\"numberOfReviews\":1}]}",
 				responseProjectDataListAsString);
 	}
 }

@@ -1,5 +1,6 @@
 package com.davidkoudela.crucible.rest.api;
 
+import com.atlassian.annotations.security.XsrfProtectionExcluded;
 import com.atlassian.plugins.rest.common.interceptor.InterceptorChain;
 import com.davidkoudela.crucible.model.ProjectAdminModelImpl;
 import com.davidkoudela.crucible.rest.intercept.ProjectAdminInterceptor;
@@ -62,6 +63,7 @@ public class ProjectDeleteRestApi
 	 */
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
+	@XsrfProtectionExcluded()
 	public Response deleteProjectPost(@FormParam("key") String key)
 	{
 		return deleteProjectFacade(key);

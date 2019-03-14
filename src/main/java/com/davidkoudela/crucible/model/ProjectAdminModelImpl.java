@@ -1,23 +1,25 @@
 package com.davidkoudela.crucible.model;
 
+import com.atlassian.fecru.user.EffectiveUserProvider;
 import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.Project;
+import com.cenqua.crucible.model.Review;
 import com.cenqua.crucible.model.managers.LogItemManager;
 import com.cenqua.crucible.model.managers.PermissionManager;
 import com.cenqua.crucible.model.managers.ProjectManager;
 import com.cenqua.crucible.model.managers.ReviewManager;
+import com.cenqua.crucible.view.reviewfilters.ReviewFilterDef;
+import com.cenqua.crucible.view.reviewfilters.ReviewFilters;
 import com.cenqua.fisheye.config.RepositoryManager;
 import com.cenqua.fisheye.rep.RepositoryHandle;
 import com.cenqua.fisheye.user.UserManager;
-import com.davidkoudela.crucible.rest.response.ProjectProperties;
-import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
-import com.davidkoudela.crucible.rest.response.ResponseProjectFactory;
-import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
+import com.davidkoudela.crucible.rest.response.*;
 import com.davidkoudela.crucible.review.ReviewVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -39,6 +41,7 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 	private UserManager userManager;
 	private ReviewManager reviewManager;
 	private LogItemManager logItemManager;
+	private EffectiveUserProvider effectiveUserProvider;
 
 	/**
 	 * Constructor for Spring class injection.
@@ -50,7 +53,7 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 	 */
 	@org.springframework.beans.factory.annotation.Autowired
 	public ProjectAdminModelImpl(PermissionManager permissionManager, ProjectManager projectManager, RepositoryManager repositoryManager,
-								 UserManager userManager, ReviewManager reviewManager, LogItemManager logItemManager)
+								 UserManager userManager, ReviewManager reviewManager, LogItemManager logItemManager, EffectiveUserProvider effectiveUserProvider)
 	{
 		this.permissionManager = permissionManager;
 		this.projectManager = projectManager;
@@ -58,6 +61,7 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 		this.userManager = userManager;
 		this.reviewManager = reviewManager;
 		this.logItemManager = logItemManager;
+		this.effectiveUserProvider = effectiveUserProvider;
 	}
 
 	/**
@@ -175,17 +179,13 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 		List<ProjectProperties> projectPropertiesList = new ArrayList<ProjectProperties>();
 		try
 		{
-			log.info("Listing rewiews");
-			ReviewVisitor reviewVisitor = new ReviewVisitor(logItemManager);
-			this.reviewManager.visitAllReviews(reviewVisitor);
 			log.info("Listing projects");
 			projectList = this.projectManager.getAllProjects();
 			log.info("Project list size: " + projectList.size());
 			for (Project project : projectList)
 			{
-				projectPropertiesList.add(new ProjectProperties(project,
-						reviewVisitor.getTheNewestReviewVisitorDataByProject(project.getProjKey()),
-						reviewVisitor.getReviewVisitorDataCollectionByProject(project.getProjKey())));
+				int reviewsInProject = this.projectManager.countReviewsInProject(project);
+				projectPropertiesList.add(new ProjectProperties(project, reviewsInProject));
 			}
 		}
 		catch (Exception e)
@@ -194,6 +194,46 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 			return ResponseProjectFactory.constructResponseWithList("400", "project list failed", e.getMessage(), projectPropertiesList);
 		}
 		return ResponseProjectFactory.constructResponseWithList("200", "operation succeeded", "", projectPropertiesList);
+	}
+
+	/**
+	 * Lists existing Crucible projects
+	 *
+	 * @param key the project key used when giving reviews their unique code names
+	 * @return ResponseProjectDataProperties containing code, message, cause and project key-value pairs used in REST responses
+	 */
+	public ResponseProjectDataProperties listProject(String key)
+	{
+		ProjectDetailedProperties projectProperties = new ProjectDetailedProperties();
+		try
+		{
+			log.info("Getting project");
+			Project project = this.projectManager.getProjectByKey(key);
+
+			log.info("Getting project's reviews");
+			FecruUser user = this.effectiveUserProvider.getEffectiveUser();
+			ReviewFilters reviewFilters = new ReviewFilters(user);
+			ReviewFilterDef filterDef = reviewFilters.getCustomFilterDef();
+			filterDef.project = project;
+			Collection<Review> reviewCollection = this.reviewManager.getMatchingReviews(filterDef, "");
+
+			log.info("Visiting Project's reviews");
+			ReviewVisitor reviewVisitor = new ReviewVisitor(logItemManager);
+			for (Review review : reviewCollection) {
+				reviewVisitor.visit(review);
+			}
+
+			log.info("Listing Project's parametes");
+			projectProperties = new ProjectDetailedProperties(project,
+					reviewVisitor.getTheNewestReviewVisitorDataByProject(key),
+					reviewVisitor.getReviewVisitorDataCollectionByProject(key));
+		}
+		catch (Exception e)
+		{
+			log.info("Project listing failed: message: " + e.getMessage());
+			return ResponseProjectFactory.constructResponseWithProperties("400", "project list failed", e.getMessage(), projectProperties);
+		}
+		return ResponseProjectFactory.constructResponseWithProperties("200", "operation succeeded", "", projectProperties);
 	}
 
 	/**

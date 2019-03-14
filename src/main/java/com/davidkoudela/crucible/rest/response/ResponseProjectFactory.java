@@ -70,4 +70,23 @@ public class ResponseProjectFactory
 		ResponseProjectDataList responseProjectDataList = new ResponseProjectDataList(response, list);
 		return responseProjectDataList;
 	}
+
+	/**
+	 * Constructs ResponseProjectDataProperties containing provided code, message, cause and Project Data used in REST responses
+	 *
+	 * @param code contains result code a.k.a. http result code
+	 * @param message contains info about failed operation
+	 * @param cause contains root cause of the failure
+	 * @param projectDetailedProperties contains Project Data provided in the REST response
+	 * @return ResponseProjectDataList containing code, message and cause key-value pairs used in REST responses
+	 */
+	public static ResponseProjectDataProperties constructResponseWithProperties(String code, String message, String cause, ProjectDetailedProperties projectDetailedProperties)
+	{
+		Map<String, String> response = new LinkedHashMap<String, String>();
+		response.put("code", code);
+		response.put("message", message);
+		response.put("cause", cause);
+		ResponseProjectDataProperties responseProjectDataProperties = new ResponseProjectDataProperties(response, projectDetailedProperties);
+		return responseProjectDataProperties;
+	}
 }
