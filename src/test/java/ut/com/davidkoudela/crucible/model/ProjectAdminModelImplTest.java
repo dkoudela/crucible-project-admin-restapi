@@ -4,10 +4,13 @@ import com.atlassian.fecru.user.EffectiveUserProvider;
 import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.PermissionScheme;
 import com.cenqua.crucible.model.Project;
+import com.cenqua.crucible.model.Review;
 import com.cenqua.crucible.model.managers.LogItemManager;
 import com.cenqua.crucible.model.managers.PermissionManager;
 import com.cenqua.crucible.model.managers.ProjectManager;
 import com.cenqua.crucible.model.managers.ReviewManager;
+import com.cenqua.crucible.view.reviewfilters.ReviewFilterDef;
+import com.cenqua.crucible.view.reviewfilters.ReviewFilters;
 import com.cenqua.fisheye.RepositoryConfig;
 import com.cenqua.fisheye.config.RepositoryManager;
 import com.cenqua.fisheye.rep.RepositoryHandle;
@@ -15,6 +18,7 @@ import com.cenqua.fisheye.user.UserManager;
 import com.davidkoudela.crucible.model.ProjectAdminModelImpl;
 import com.davidkoudela.crucible.model.StringConverter;
 import com.davidkoudela.crucible.rest.response.ResponseProjectDataList;
+import com.davidkoudela.crucible.rest.response.ResponseProjectDataProperties;
 import com.davidkoudela.crucible.rest.response.ResponseProjectOperation;
 import junit.framework.TestCase;
 import org.junit.Before;
@@ -25,10 +29,9 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * Description: Testing {@link ProjectAdminModelImpl}
@@ -64,6 +67,8 @@ public class ProjectAdminModelImplTest extends TestCase
 	private static final String path="/";
 
 	private static Project project;
+	private static ReviewFilterDef filterDef;
+	private static Collection<Review> reviewCollection;
 
 	@Before
 	public void init() throws Exception
@@ -92,6 +97,18 @@ public class ProjectAdminModelImplTest extends TestCase
 		project.setDefaultModerator(new FecruUser(666, "dkoudela"));
 		project.setDefaultDuration(1000);
 		project.setDefaultObjectives("I object !!!");
+
+		ReviewFilters reviewFilters = new ReviewFilters(project);
+		filterDef = reviewFilters.getCustomFilterDef();
+		filterDef.project = project;
+
+		reviewCollection = new ArrayList<Review>();
+		Review review = new Review();
+		review.setId(1);
+		review.setName(project.getProjKey() + "-1");
+		review.setProject(project);
+		review.setCreateDate(new Date(0L));
+		reviewCollection.add(review);
 	}
 
 	@Test
@@ -342,6 +359,35 @@ public class ProjectAdminModelImplTest extends TestCase
 					  "\"numberOfReviews\":0" +
 					  "} ]",
 					 responseProjectDataList.getProjectList().toString());
+	}
+
+	@Test
+	public void testListProjectValidDetailedParams() throws IOException {
+		List projects = new ArrayList<Project>();
+		projects.add(project);
+		Mockito.when(projectManager.getProjectByKey(project.getProjKey())).thenReturn(project);
+		Mockito.when(reviewManager.getMatchingReviews(filterDef, "")).thenReturn(reviewCollection);
+
+		ResponseProjectDataProperties responseProjectDataProperties = projectAdminModelImpl.listProject(project.getProjKey());
+
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		map.put("code", "200");
+		map.put("message", "operation succeeded");
+		map.put("cause", "");
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		assertEquals(map.toString(), responseProjectDataProperties.getResponse().toString());
+		assertEquals("{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":null," +
+						"\"storeRevisions\":false,\"permissionSchemeId\":null,\"moderatorEnabled\":false," +
+						"\"defaultModerator\":\"dkoudela\",\"defaultDuration\":1000," +
+						"\"defaultObjectives\":\"I object !!!\"," +
+						"\"lastUpdatedReview\":\"\",\"lastUpdatedReviewDate\":\"\",\"numberOfReviews\":0," +
+						"\"reviewsInStateDraft\":0,\"reviewsInStateApproval\":0,\"reviewsInStateReview\":0," +
+						"\"reviewsInStateSummarize\":0,\"reviewsInStateClosed\":0,\"reviewsInStateDead\":0," +
+						"\"reviewsInStateRejected\":0,\"reviewsInStateUnknown\":0,\"reviewsInStateOpenSnippet\":0," +
+						"\"reviewsInStateClosedSnippet\":0" +
+						"}",
+				objectMapper.writeValueAsString(responseProjectDataProperties.projectProperties()));
 	}
 
 	@Test

@@ -211,8 +211,7 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 			Project project = this.projectManager.getProjectByKey(key);
 
 			log.info("Getting project's reviews");
-			FecruUser user = this.effectiveUserProvider.getEffectiveUser();
-			ReviewFilters reviewFilters = new ReviewFilters(user);
+			ReviewFilters reviewFilters = new ReviewFilters(project);
 			ReviewFilterDef filterDef = reviewFilters.getCustomFilterDef();
 			filterDef.project = project;
 			Collection<Review> reviewCollection = this.reviewManager.getMatchingReviews(filterDef, "");
