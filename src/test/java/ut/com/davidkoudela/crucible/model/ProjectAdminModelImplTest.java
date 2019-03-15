@@ -69,6 +69,7 @@ public class ProjectAdminModelImplTest extends TestCase
 	private static Project project;
 	private static ReviewFilterDef filterDef;
 	private static Collection<Review> reviewCollection;
+	private static FecruUser fecruUser;
 
 	@Before
 	public void init() throws Exception
@@ -109,6 +110,8 @@ public class ProjectAdminModelImplTest extends TestCase
 		review.setProject(project);
 		review.setCreateDate(new Date(0L));
 		reviewCollection.add(review);
+
+		fecruUser = new FecruUser("admin");
 	}
 
 	@Test
@@ -275,13 +278,36 @@ public class ProjectAdminModelImplTest extends TestCase
 	}
 
 	@Test
-	public void testDeleteProject()
+	public void testDeleteEmptyProject()
 	{
 		Mockito.when(projectManager.getProjectByKey(key)).thenReturn(project);
+		Mockito.when(projectManager.deleteProject(project)).thenReturn(true);
 
-		Map mapActual = projectAdminModelImpl.deleteProject(key).getResponse();
+		Map mapActual = projectAdminModelImpl.deleteProject(key, "false").getResponse();
 
 		Mockito.verify(projectManager).deleteProject(project);
+		Mockito.verify(projectManager, Mockito.never()).deleteAllReviews(project, effectiveUserProvider.getEffectiveUser(), reviewManager);
+
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		map.put("code", "200");
+		map.put("message", "operation succeeded");
+		map.put("cause", "");
+
+		assertEquals(map.toString(), mapActual.toString());
+	}
+
+	@Test
+	public void testDeleteNotEmptyProject()
+	{
+		Mockito.when(projectManager.getProjectByKey(key)).thenReturn(project);
+		Mockito.when(effectiveUserProvider.getEffectiveUser()).thenReturn(fecruUser);
+		Mockito.doNothing().when(projectManager).deleteAllReviews(project, fecruUser, reviewManager);
+		Mockito.when(projectManager.deleteProject(project)).thenReturn(true);
+
+		Map mapActual = projectAdminModelImpl.deleteProject(key, "true").getResponse();
+
+		Mockito.verify(projectManager).deleteProject(project);
+		Mockito.verify(projectManager).deleteAllReviews(project, effectiveUserProvider.getEffectiveUser(), reviewManager);
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "200");
@@ -296,7 +322,7 @@ public class ProjectAdminModelImplTest extends TestCase
 	{
 		Mockito.when(projectManager.getProjectByKey(key)).thenThrow(new RuntimeException("test exception"));
 
-		Map mapActual = projectAdminModelImpl.deleteProject(key).getResponse();
+		Map mapActual = projectAdminModelImpl.deleteProject(key, "false").getResponse();
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "400");

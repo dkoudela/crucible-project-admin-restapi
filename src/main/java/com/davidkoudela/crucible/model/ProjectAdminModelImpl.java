@@ -149,16 +149,25 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 	 * Deletes an existing Crucible project
 	 *
 	 * @param key the project key used when giving reviews their unique code names
+	 * @param deleteReviews if reviews of the project have to be deleted, otherwise only empty projects can be deleted
 	 * @return ResponseProjectOperation containing code, message and cause key-value pairs used in REST responses
 	 */
-	public ResponseProjectOperation deleteProject(String key)
+	public ResponseProjectOperation deleteProject(String key, String deleteReviews)
 	{
 		Project project = null;
 		try
 		{
 			log.info("Deleting project: key: " + key);
 			project = this.projectManager.getProjectByKey(key);
-			this.projectManager.deleteProject(project);
+			boolean deleteReviewsBool = Boolean.parseBoolean(deleteReviews);
+			if (deleteReviewsBool) {
+				log.info("Deleting all reviews in the project: key: " + key);
+				this.projectManager.deleteAllReviews(project, effectiveUserProvider.getEffectiveUser(), reviewManager);
+			}
+			if (!this.projectManager.deleteProject(project)) {
+				log.info("Project deleting failed: key: " + key);
+				return ResponseProjectFactory.constructResponse("400", "project delete failed", "returned false result code by the project manager", project);
+			}
 		}
 		catch (Exception e)
 		{

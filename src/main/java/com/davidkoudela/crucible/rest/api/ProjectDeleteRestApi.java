@@ -46,40 +46,47 @@ public class ProjectDeleteRestApi
 	 * Provides HTTP GET method for project Delete operation
 	 *
 	 * @param key the project key used when giving reviews their unique code names
+	 * @param deleteReviews if reviews of the project have to be deleted, otherwise only empty projects can be deleted
 	 * @return ws response containing result of the operation
 	 */
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response deleteProjectGet(@QueryParam("key") String key)
+	public Response deleteProjectGet(@QueryParam("key") String key,
+	                                 @QueryParam("deleteReviews") String deleteReviews
+	)
 	{
-		return deleteProjectFacade(key);
+		return deleteProjectFacade(key, deleteReviews);
 	}
 
 	/**
 	 * Provides HTTP POST method for project Delete operation
 	 *
 	 * @param key the project key used when giving reviews their unique code names
+	 * @param deleteReviews if reviews of the project have to be deleted, otherwise only empty projects can be deleted
 	 * @return ws response containing result of the operation
 	 */
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@XsrfProtectionExcluded()
-	public Response deleteProjectPost(@FormParam("key") String key)
+	public Response deleteProjectPost(@FormParam("key") String key,
+	                                  @FormParam("deleteReviews") String deleteReviews
+	)
 	{
-		return deleteProjectFacade(key);
+		return deleteProjectFacade(key, deleteReviews);
 	}
 
 	/**
 	 * Facade for any error or exception handling coming from model returning just the Response at the end
 	 *
 	 * @param key the project key used when giving reviews their unique code names
+	 * @param deleteReviews if reviews of the project have to be deleted, otherwise only empty projects can be deleted
 	 * @return ws response containing result of the operation
 	 */
-	private Response deleteProjectFacade(String key)
+	private Response deleteProjectFacade(String key, String deleteReviews)
 	{
 		try
 		{
-			return Response.ok().entity(projectAdminModelImpl.deleteProject(key)).build();
+			return Response.ok().entity(projectAdminModelImpl.deleteProject(key, deleteReviews)).build();
 		}
 		catch (Exception e)
 		{
