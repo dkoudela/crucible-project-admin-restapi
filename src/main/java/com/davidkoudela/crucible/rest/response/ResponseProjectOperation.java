@@ -3,6 +3,7 @@ package com.davidkoudela.crucible.rest.response;
 import com.cenqua.crucible.model.Project;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @author dkoudela
  * @since 17.6.2014
  */
+@JsonIgnoreProperties(ignoreUnknown=true, value = { "relatedProject" })
 @JsonAutoDetect
 public class ResponseProjectOperation
 {
