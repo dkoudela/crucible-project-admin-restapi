@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.davidkoudela.crucible</groupId>
     <artifactId>crucible-project-admin-restapi</artifactId>
-    <version>4.8</version>
+    <version>4.9</version>
 
     <organization>
         <name>David Koudela</name>
