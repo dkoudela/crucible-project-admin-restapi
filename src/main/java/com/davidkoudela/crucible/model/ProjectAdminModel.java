@@ -72,9 +72,10 @@ public interface ProjectAdminModel {
 	/**
 	 * Lists existing Crucible projects
 	 *
+	 * @param largeList if more project information must be retrieved
 	 * @return ResponseProjectDataList containing code, message, cause and project list key-value pairs used in REST responses
 	 */
-	public ResponseProjectDataList listProject();
+	public ResponseProjectDataList listProject(boolean largeList);
 
 	/**
 	 * Lists existing Crucible projects

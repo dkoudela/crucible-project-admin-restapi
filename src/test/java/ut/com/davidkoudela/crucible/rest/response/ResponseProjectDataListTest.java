@@ -28,7 +28,31 @@ import java.util.List;
  */
 public class ResponseProjectDataListTest extends TestCase {
 	@Test
-	public void testGsonSerialization() throws JsonParseException, IOException {
+	public void testGsonSerializationShortProjectProperties() throws JsonParseException, IOException {
+		List<ProjectProperties> projectPropertiesList = new ArrayList<ProjectProperties>();
+		Project project = new Project();
+		project.setName("Default");
+		PermissionScheme permissionScheme = new PermissionScheme("MyOwnPermSchema");
+		permissionScheme.setId(666);
+		project.setPermissionScheme(permissionScheme);
+		Date date = new Date(1551865213L);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+		String lastUpdatedReviewDate = dateFormat.format(date);
+		ReviewVisitorData reviewVisitorData = new ReviewVisitorData(1, "D-1", project, date, date, ReviewData.State.Review);
+		Collection<ReviewVisitorData> reviewVisitorDataCollection = new ArrayList<ReviewVisitorData>();
+		reviewVisitorDataCollection.add(reviewVisitorData);
+		projectPropertiesList.add(new ProjectProperties(project, null));
+		ResponseProjectDataList responseProjectDataList = ResponseProjectFactory.constructResponseWithList("200", "operation succeeded", "", projectPropertiesList);
+		Gson gson = new Gson();
+		String responseProjectDataListAsString = gson.toJson(responseProjectDataList);
+
+		assertNotNull(responseProjectDataListAsString);
+		assertEquals("{\"response\":{\"code\":\"200\",\"message\":\"operation succeeded\",\"cause\":\"\"},\"projectList\":[{\"name\":\"Default\",\"storeRevisions\":false,\"permissionSchemeId\":666,\"moderatorEnabled\":true}]}",
+				responseProjectDataListAsString);
+	}
+
+	@Test
+	public void testGsonSerializationFullProjectProperties() throws JsonParseException, IOException {
 		List<ProjectProperties> projectPropertiesList = new ArrayList<ProjectProperties>();
 		Project project = new Project();
 		project.setName("Default");

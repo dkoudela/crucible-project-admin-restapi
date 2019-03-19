@@ -339,7 +339,7 @@ public class ProjectAdminModelImplTest extends TestCase
 		projects.add(project);
 		Mockito.when(projectManager.getAllProjects()).thenReturn(projects);
 
-		ResponseProjectDataList responseProjectDataList = projectAdminModelImpl.listProject();
+		ResponseProjectDataList responseProjectDataList = projectAdminModelImpl.listProject(false);
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "200");
@@ -351,7 +351,7 @@ public class ProjectAdminModelImplTest extends TestCase
 					 "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					 "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
 					 "\"defaultObjectives\":\"I object !!!\"," +
-					 "\"numberOfReviews\":0" +
+					 "\"numberOfReviews\":null" +
 					 "} ]",
 					 responseProjectDataList.getProjectList().toString());
 	}
@@ -364,7 +364,7 @@ public class ProjectAdminModelImplTest extends TestCase
 		projects.add(project);
 		Mockito.when(projectManager.getAllProjects()).thenReturn(projects);
 
-		ResponseProjectDataList responseProjectDataList = projectAdminModelImpl.listProject();
+		ResponseProjectDataList responseProjectDataList = projectAdminModelImpl.listProject(false);
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "200");
@@ -376,13 +376,13 @@ public class ProjectAdminModelImplTest extends TestCase
 					  "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					  "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
 					  "\"defaultObjectives\":\"I object !!!\"," +
-					  "\"numberOfReviews\":0" +
+					  "\"numberOfReviews\":null" +
 					  "} , " +
 					  "{\"name\":\"MyOwnProject\",\"key\":\"MOP\",\"defaultRepositoryName\":\"null\"," +
 					  "\"storeRevisions\":\"false\",\"permissionSchemeId\":\"null\",\"moderatorEnabled\":\"false\"," +
 					  "\"defaultModerator\":\"dkoudela\",\"defaultDuration\":\"1000\"," +
 					  "\"defaultObjectives\":\"I object !!!\"," +
-					  "\"numberOfReviews\":0" +
+					  "\"numberOfReviews\":null" +
 					  "} ]",
 					 responseProjectDataList.getProjectList().toString());
 	}
@@ -421,7 +421,7 @@ public class ProjectAdminModelImplTest extends TestCase
 	{
 		Mockito.when(projectManager.getAllProjects()).thenThrow(new RuntimeException("test exception"));
 
-		Map mapActual = projectAdminModelImpl.listProject().getResponse();
+		Map mapActual = projectAdminModelImpl.listProject(false).getResponse();
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("code", "400");

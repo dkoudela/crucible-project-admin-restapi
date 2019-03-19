@@ -41,43 +41,47 @@ public class ProjectListRestApi
 	 * Provides HTTP GET method for project List operation
 	 *
 	 * @param key the project key used when giving reviews their unique code names
+	 * @param largeList if more project information must be retrieved
 	 * @return ws response containing result of the operation
 	 */
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response listProjectGet(@QueryParam("key") String key)
+	public Response listProjectGet(@QueryParam("key") String key, @QueryParam("largeList") String largeList)
 	{
-		return listProjectFacade(key);
+		return listProjectFacade(key, largeList);
 	}
 
 	/**
 	 * Provides HTTP POST method for project List operation
 	 *
 	 * @param key the project key used when giving reviews their unique code names
+	 * @param largeList if more project information must be retrieved
 	 * @return ws response containing result of the operation
 	 */
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@XsrfProtectionExcluded()
-	public Response listProjectPost(@FormParam("key") String key)
+	public Response listProjectPost(@FormParam("key") String key, @FormParam("largeList") String largeList)
 	{
-		return listProjectFacade(key);
+		return listProjectFacade(key, largeList);
 	}
 
 	/**
 	 * Facade for any error or exception handling coming from model returning just the Response at the end
 	 *
 	 * @param key the project key used when giving reviews their unique code names
+	 * @param largeList if more project information must be retrieved
 	 * @return ws response containing result of the operation
 	 */
-	private Response listProjectFacade(String key)
+	private Response listProjectFacade(String key, String largeList)
 	{
 		try
 		{
 			if (null != key && false == key.isEmpty()) {
 				return Response.ok().entity(projectAdminModelImpl.listProject(key)).build();
 			} else {
-				return Response.ok().entity(projectAdminModelImpl.listProject()).build();
+				boolean largeListBool = Boolean.parseBoolean(largeList);
+				return Response.ok().entity(projectAdminModelImpl.listProject(largeListBool)).build();
 			}
 		}
 		catch (Exception e)

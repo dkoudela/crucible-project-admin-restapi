@@ -180,9 +180,10 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 	/**
 	 * Lists existing Crucible projects
 	 *
+	 * @param largeList if more project information must be retrieved
 	 * @return ResponseProjectDataList containing code, message, cause and project list key-value pairs used in REST responses
 	 */
-	public ResponseProjectDataList listProject()
+	public ResponseProjectDataList listProject(boolean largeList)
 	{
 		List<Project> projectList;
 		List<ProjectProperties> projectPropertiesList = new ArrayList<ProjectProperties>();
@@ -193,7 +194,10 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 			log.info("Project list size: " + projectList.size());
 			for (Project project : projectList)
 			{
-				int reviewsInProject = this.projectManager.countReviewsInProject(project);
+				Integer reviewsInProject = null;
+				if (largeList) {
+					reviewsInProject = this.projectManager.countReviewsInProject(project);
+				}
 				projectPropertiesList.add(new ProjectProperties(project, reviewsInProject));
 			}
 		}

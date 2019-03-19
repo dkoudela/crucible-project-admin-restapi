@@ -47,7 +47,7 @@ public class ProjectProperties
 	 *
 	 * @param project to be used for the ProjectProperties construction
 	 */
-	public ProjectProperties(Project project, int reviewsInProject)
+	public ProjectProperties(Project project, Integer reviewsInProject)
 	{
 		name = project.getName();
 		key = project.getProjKey();
@@ -61,7 +61,7 @@ public class ProjectProperties
 			defaultModerator = defaultModeratorUser.getUsername();
 		defaultDuration = project.getDefaultDuration();
 		defaultObjectives = project.getDefaultObjectives();
-		numberOfReviews = new Integer(reviewsInProject);
+		numberOfReviews = reviewsInProject;
 	}
 
 	/**
