@@ -118,7 +118,7 @@ public class ProjectDetailedProperties
 		if (null == reviewVisitorData.getUpdateDate()) {
 			lastUpdatedReviewDate = "";
 		} else {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 			lastUpdatedReviewDate = dateFormat.format(reviewVisitorData.getUpdateDate());
 		}
 		numberOfReviews = new Integer(reviewVisitorDataCollection.size());

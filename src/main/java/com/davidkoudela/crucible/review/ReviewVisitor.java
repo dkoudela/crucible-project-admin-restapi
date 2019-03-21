@@ -40,7 +40,7 @@ public class ReviewVisitor implements Visitor<Review> {
 				review.getState().getStateType().getReviewDataState()
 		);
 
-		LogItemSearchCriteria logItemSearchCriteria = LogItemSearchCriteria.create().reviewIds(new Integer[]{reviewVisitorData.getId()}).order(DESC).limit(2);
+		LogItemSearchCriteria logItemSearchCriteria = LogItemSearchCriteria.create().reviewIds(new Integer[]{reviewVisitorData.getId()}).order(DESC).limit(1);
 		List<LogItem> logItems = logItemManager.getLogItems(logItemSearchCriteria);
 		if (0 < logItems.size()) {
 			reviewVisitorData.setUpdateDate(logItems.get(0).getCreateDate());

@@ -4,10 +4,7 @@ import com.atlassian.fecru.user.EffectiveUserProvider;
 import com.atlassian.fecru.user.FecruUser;
 import com.cenqua.crucible.model.Project;
 import com.cenqua.crucible.model.Review;
-import com.cenqua.crucible.model.managers.LogItemManager;
-import com.cenqua.crucible.model.managers.PermissionManager;
-import com.cenqua.crucible.model.managers.ProjectManager;
-import com.cenqua.crucible.model.managers.ReviewManager;
+import com.cenqua.crucible.model.managers.*;
 import com.cenqua.crucible.view.reviewfilters.ReviewFilterDef;
 import com.cenqua.crucible.view.reviewfilters.ReviewFilters;
 import com.cenqua.fisheye.config.RepositoryManager;
@@ -18,10 +15,7 @@ import com.davidkoudela.crucible.review.ReviewVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Description: Model class containing the logic functionality for Create / Modify / Delete Crucible Projects.
