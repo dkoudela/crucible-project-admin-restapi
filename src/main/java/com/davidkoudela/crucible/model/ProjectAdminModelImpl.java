@@ -11,6 +11,7 @@ import com.cenqua.fisheye.config.RepositoryManager;
 import com.cenqua.fisheye.rep.RepositoryHandle;
 import com.cenqua.fisheye.user.UserManager;
 import com.davidkoudela.crucible.rest.response.*;
+import com.davidkoudela.crucible.review.DivideAndConquer;
 import com.davidkoudela.crucible.review.ReviewVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -172,6 +173,22 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 	}
 
 	/**
+	 * Deletes an existing Crucible projects
+	 *
+	 * @param keys the project keys used when giving reviews their unique code names
+	 * @param deleteReviews if reviews of the project have to be deleted, otherwise only empty projects can be deleted
+	 * @return ResponseProjectOperation containing code, message and cause key-value pairs used in REST responses
+	 */
+	public ResponseProjectOperation deleteProjects(String keys, String deleteReviews)
+	{
+		ResponseProjectOperation responseProjectOperation = null;
+		for (String key : keys.split(",")) {
+			responseProjectOperation = deleteProject(key, deleteReviews);
+		}
+		return responseProjectOperation;
+	}
+
+	/**
 	 * Lists existing Crucible projects
 	 *
 	 * @param largeList if more project information must be retrieved
@@ -221,18 +238,29 @@ public class ProjectAdminModelImpl implements ProjectAdminModel
 			ReviewFilters reviewFilters = new ReviewFilters(project);
 			ReviewFilterDef filterDef = reviewFilters.getCustomFilterDef();
 			filterDef.project = project;
+			long start = System.currentTimeMillis();
 			Collection<Review> reviewCollection = this.reviewManager.getMatchingReviews(filterDef, "");
+			long finish = System.currentTimeMillis();
+			long timeElapsed = finish - start;
+			log.error("DaKo: Getting Project's reviews: " + reviewCollection.size() + " time spent: " + timeElapsed + " ms");
 
-			log.info("Visiting Project's reviews");
-			ReviewVisitor reviewVisitor = new ReviewVisitor(logItemManager);
-			for (Review review : reviewCollection) {
-				reviewVisitor.visit(review);
-			}
+			log.info("Visiting Project's reviews via DivideAndConquer");
+			start = System.currentTimeMillis();
+			DivideAndConquer divideAndConquer = new DivideAndConquer(logItemManager, reviewCollection);
+			divideAndConquer.run();
+			ReviewVisitor reviewVisitor = divideAndConquer.getReviewVisitor();
+			finish = System.currentTimeMillis();
+			timeElapsed = finish - start;
+			log.error("DaKo: Visiting Project's reviews via DivideAndConquer: " + reviewCollection.size() + " time spent: " + timeElapsed + " ms");
 
 			log.info("Listing Project's parametes");
+			start = System.currentTimeMillis();
 			projectProperties = new ProjectDetailedProperties(project,
 					reviewVisitor.getTheNewestReviewVisitorDataByProject(key),
 					reviewVisitor.getReviewVisitorDataCollectionByProject(key));
+			finish = System.currentTimeMillis();
+			timeElapsed = finish - start;
+			log.error("DaKo: Listing Project's time spent: " + timeElapsed + " ms");
 		}
 		catch (Exception e)
 		{

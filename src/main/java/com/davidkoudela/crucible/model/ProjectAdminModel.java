@@ -70,6 +70,15 @@ public interface ProjectAdminModel {
 	public ResponseProjectOperation deleteProject(String key, String deleteReviews);
 
 	/**
+	 * Deletes an existing Crucible projects
+	 *
+	 * @param keys the project keys used when giving reviews their unique code names
+	 * @param deleteReviews if reviews of the project have to be deleted, otherwise only empty projects can be deleted
+	 * @return ResponseProjectOperation containing code, message and cause key-value pairs used in REST responses
+	 */
+	public ResponseProjectOperation deleteProjects(String keys, String deleteReviews);
+
+	/**
 	 * Lists existing Crucible projects
 	 *
 	 * @param largeList if more project information must be retrieved

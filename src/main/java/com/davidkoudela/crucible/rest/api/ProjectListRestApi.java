@@ -77,7 +77,7 @@ public class ProjectListRestApi
 	{
 		try
 		{
-			if (null != key && false == key.isEmpty()) {
+			if (null != key && !key.isEmpty()) {
 				return Response.ok().entity(projectAdminModelImpl.listProject(key)).build();
 			} else {
 				boolean largeListBool = Boolean.parseBoolean(largeList);

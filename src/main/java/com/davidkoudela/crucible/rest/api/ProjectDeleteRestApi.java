@@ -52,10 +52,11 @@ public class ProjectDeleteRestApi
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response deleteProjectGet(@QueryParam("key") String key,
+	                                 @QueryParam("keys") String keys,
 	                                 @QueryParam("deleteReviews") String deleteReviews
 	)
 	{
-		return deleteProjectFacade(key, deleteReviews);
+		return deleteProjectFacade(key, keys, deleteReviews);
 	}
 
 	/**
@@ -69,24 +70,30 @@ public class ProjectDeleteRestApi
 	@Produces({MediaType.APPLICATION_JSON})
 	@XsrfProtectionExcluded()
 	public Response deleteProjectPost(@FormParam("key") String key,
+	                                  @FormParam("keys") String keys,
 	                                  @FormParam("deleteReviews") String deleteReviews
 	)
 	{
-		return deleteProjectFacade(key, deleteReviews);
+		return deleteProjectFacade(key, keys, deleteReviews);
 	}
 
 	/**
 	 * Facade for any error or exception handling coming from model returning just the Response at the end
 	 *
 	 * @param key the project key used when giving reviews their unique code names
+	 * @param keys the project keys used when giving reviews their unique code names
 	 * @param deleteReviews if reviews of the project have to be deleted, otherwise only empty projects can be deleted
 	 * @return ws response containing result of the operation
 	 */
-	private Response deleteProjectFacade(String key, String deleteReviews)
+	private Response deleteProjectFacade(String key, String keys, String deleteReviews)
 	{
 		try
 		{
-			return Response.ok().entity(projectAdminModelImpl.deleteProject(key, deleteReviews)).build();
+			if (null != keys && !keys.isEmpty()) {
+				return Response.ok().entity(projectAdminModelImpl.deleteProjects(keys, deleteReviews)).build();
+			} else {
+				return Response.ok().entity(projectAdminModelImpl.deleteProject(key, deleteReviews)).build();
+			}
 		}
 		catch (Exception e)
 		{

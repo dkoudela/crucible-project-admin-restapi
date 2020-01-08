@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.davidkoudela.crucible</groupId>
     <artifactId>crucible-project-admin-restapi</artifactId>
-    <version>4.9</version>
+    <version>4.10</version>
 
     <organization>
         <name>David Koudela</name>
@@ -363,6 +363,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
